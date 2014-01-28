@@ -1,0 +1,8 @@
+parameters:
+#    comur_image.example.class: Comur\ImageBundle\Example
+
+services:
+    comur_image_bundle.image_type:
+        class: Comur\ImageBundle\Form\Type\CroppableImageType
+        tags:
+            - { name: form.type, alias: comur_image }

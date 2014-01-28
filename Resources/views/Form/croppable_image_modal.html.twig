@@ -1,0 +1,94 @@
+{% extends 'form_div_layout.html.twig' %}
+{% block form_rest %}
+    {% if not form.parent %}
+    <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+    <script src="{{ asset('bundles/comurimage/js/jquery.ui.widget.js') }}"></script>
+    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="{{ asset('bundles/comurimage/js/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ asset('bundles/comurimage/js/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('bundles/comurimage/js/jquery.Jcrop.min.js') }}"></script>
+    <script src="{{ asset('bundles/comurimage/js/jquery.color.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/comurimage/css/jquery.Jcrop.min.css') }}" type="text/css" />
+
+    <script src="{{ asset('bundles/comurimage/js/comur.imagelibrary.js') }}"></script>
+    
+    <div class="modal-backdrop hidden" id="image_upload_backdrop"></div>
+    <div id="image_upload_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>Insert Image</h3>
+        </div>
+        <div class="modal-body">
+            <ul class="nav nav-tabs" id="image_upload_tabs">
+                <li class="active">
+                    <a href="#upload-image" data-toggle="tab">Upload Image</a>
+                </li>
+                <li><a href="#select-existing" data-toggle="tab">Select Existing</a></li>
+                <li><a href="#crop-and-use" data-toggle="tab">Crop and Use</a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- UPLOAD IMAGE -->
+                <div class="tab-pane active" id="upload-image">
+                    <div class="field-error clearfix hidden">
+                        <div id="image_upload_widget_error" class="alert alert-danger span6">
+                        </div>
+                    </div>
+                    <div id="image_upload_drop_zone" class="image_upload_drop_zone">
+                        <p>Drop your file here</p>
+                        <p>or</p>
+                    </div>
+                    <div id="image_upload_file_container">
+                        <span class="btn btn-info fileinput-button">
+                            <i class="icon-white icon-download-alt"></i>
+                            <span> Select a file...</span>
+                            <input id="image_upload_file" type="file" name="image_upload_file">
+                        </span>
+                    </div>
+                    <div id="image_file_upload_progress" class="progress">
+                        <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                </div>
+                <!-- IMAGE LIB -->
+                <div class="tab-pane hidden" id="select-existing">
+                    <div class="field-error clearfix hidden">
+                        <div id="image_select_widget_error" class="alert alert-danger span6">
+                        </div>
+                    </div>
+                    <div id="existing-images"></div>
+                    <input type="hidden" id="selected_image"/>
+                </div>
+                <!-- CROP IMAGE -->
+                <div class="tab-pane" id="crop-and-use">
+                    <div class="image_preview" id="image_preview" style="z-index: 1050">
+                        <p>Please select or upload an image</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <span class="btn btn-success hidden" id="image_crop_go_now">
+                    <i class="icon-white icon icon-fullscreen"></i>
+                    Crop &amp; Use !
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#image_upload_modal').on({
+            'hide': destroyImageManager
+        });
+      /*$(function(){
+        $.ajax({
+          url: ''
+        })
+      });*/
+    </script>
+    {% endif %}
+    {% spaceless %}
+        {% for child in form %}
+            {% if not child.rendered %}
+                {{ form_row(child) }}
+            {% endif %}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}

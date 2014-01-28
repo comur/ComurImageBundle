@@ -1,0 +1,51 @@
+
+{% block comur_image_widget %}
+    {% spaceless %}
+        {{ block('form_widget_simple') }}
+        <!--div class="image_field_container" id="image_field_container_{{ id }}">
+            <span class="btn btn-success select-image-button">
+                <i class="icon-white icon-download-alt"></i>
+                <span> Select file...</span>
+                <input id="{{ id }}_file" type="file" name="{{ id }}_file">
+            </span>
+        </div-->
+        <div class="field-error clearfix hidden">
+            <div id="{{id}}_widget_error" class="alert alert-danger span6">
+            </div>
+        </div>
+        <div class="image_preview select-image-button" id="image_preview_{{ id }}" style="z-index: 1050">
+            <div class="image_edit_button">
+                <span class="btn btn-success select-image-button">
+                    <i class="icon-edit icon-white"></i> Edit
+                </span>
+            </div>
+            <div id="image_preview_image_{{id}}">
+                {% if value %}
+                    <img src="/{{ options.uploadConfig.webDir ~ '/' ~ value }}?{{ 'now'  | date('U') }}" id="{{ id }}_preview"/>
+                {% else %}
+                    <img src="http://placehold.it/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ id }}_preview"/>
+                {% endif %}
+                
+            </div>
+        </div>
+    {% endspaceless %}
+
+    <script>
+        $(document).ready(function(){
+            $('#image_preview_{{ id }}.select-image-button .image_edit_button').click(function(event){ 
+                initializeImageManager('{{ id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
+                console.log('{{id}} onclick');
+                $('#image_upload_modal').modal('show');
+            });
+        });
+        $('.select-image-button').mouseover(function(){
+            if(!$(this).hasClass('hide-disabled'))
+                $(this).children('.image_edit_button').removeClass('hidden');
+        });
+        $('.select-image-button').mouseout(function(){
+            if(!$(this).hasClass('hide-disabled'))
+                $(this).children('.image_edit_button').addClass('hidden');
+        });
+
+    </script>
+{% endblock %}
