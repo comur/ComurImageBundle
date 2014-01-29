@@ -21,7 +21,11 @@
         "symfony/twig-bridge": "~2.2",
         "symfony/class-loader":"~2.2",
         "twig/twig": "~1.12",
-        "twig/extensions": "~1.0"
+        "twig/extensions": "~1.0",
+        "friendsofsymfony/jsrouting-bundle": "@stable"
     },
-    "target-dir": "Comur/ImageBundle"
+    "target-dir": "Comur/ImageBundle",
+    "autoload": {
+        "psr-0": { "Comur\\ImageBundle": "" }
+    }
 }
