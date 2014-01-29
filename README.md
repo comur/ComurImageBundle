@@ -34,6 +34,7 @@ Installation
     }
     ```
 3. Add this route to your routing.yml:
+
     ``` yaml
     // app/config/routing.yml
     comur_image:
@@ -46,4 +47,21 @@ That's it !
 Configuration
 -------------
 
+For now, there is only one parameter (optional) that you can add to your config.yml:
 
+    ``` yaml
+    comur_image
+        config:
+            cropped_image_dir: 'cropped'
+    ```
+
+It's used to determine relative directory name to put cropped images (see above).
+
+Usage
+-----
+
+1. In simple Symfony forms:
+
+    ``` php
+
+    ```
