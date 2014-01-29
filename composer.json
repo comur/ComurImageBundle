@@ -1,0 +1,27 @@
+{
+    "name": "comur/image-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony ComurImageBundle",
+    "keywords": ["Form Type", "image", "upload", "crop", "jcrop", "jquery upload"],
+    "homepage": "https://github.com/comur/ComurImageBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Can OMUR",
+            "email": "omur.can@gmail.com",
+            "homepage": "http://canomur.com"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "~2.2",
+        "symfony/form": "~2.2",
+        "symfony/validator": "~2.2",
+        "symfony/routing": "~2.2",
+        "symfony/config": "~2.2",
+        "symfony/twig-bridge": "~2.2",
+        "symfony/class-loader":"~2.2",
+        "twig/twig": "~1.12",
+        "twig/extensions": "~1.0",
+    },
+    "target-dir": "Comur/ImageBundle",
+}
