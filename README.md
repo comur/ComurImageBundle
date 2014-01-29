@@ -37,8 +37,8 @@ Installation
     ``` yaml
     // app/config/routing.yml
     comur_image:
-    resource: "@ComurImageBundle/Resources/config/routing.yml"
-    prefix:   /
+        resource: "@ComurImageBundle/Resources/config/routing.yml"
+        prefix:   /
     ```
 
 That's it !
