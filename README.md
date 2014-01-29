@@ -34,7 +34,7 @@ Installation
     }
     ```
 3. Add this route to your routing.yml:
-    ```yml
+    ``` yml
     // app/config/routing.yml
     comur_image:
     resource: "@ComurImageBundle/Resources/config/routing.yml"
