@@ -6,6 +6,7 @@ Image upload / crop bundle for Symfony2
 This bundle helps you easyly create an image upload / crop field in your forms. You don't need to use any type of generator or there is no other requirements.
 It uses bootstrap to make it look well but you can use any other css to customize it.
 
+It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Upload/) to upload files (original UploadHandler has been modified to add namespace and a new config parameter to generate random filenames) and [JCrop](http://deepliquid.com/content/Jcrop.html) to let you crop uploaded images.
 
 Installation
 ------------
