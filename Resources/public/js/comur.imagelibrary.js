@@ -19,10 +19,13 @@ function initializeImageManager(id, options){
             url: Routing.generate(options.uploadConfig.libraryRoute),
             data: {dir: options.uploadConfig.libraryDir},
             success: function(response){
-                var files = $.parseJSON(response);
+                var response = $.parseJSON(response);
+                console.log(response);
+                var files = response.files;
+                console.log(files);
                 for (var i = files.length - 1; i >= 0; i--) {
                     var now = new Date().getTime();
-                    $('#existing-images').append('<div class="image-container" data-src="'+files[i]+'"><img src="/'+options.uploadConfig.webDir + '/'+files[i]+'?'+now+'"/></div>');
+                    $('#existing-images').append('<div class="image-container" data-src="'+files[i]+'"><img src="/'+options.uploadConfig.webDir + '/'+response['thumbsDir']+'/'+files[i]+'?'+now+'"/></div>');
                 };
                 
                 $('.image-container').click(function(){
@@ -121,7 +124,7 @@ function initJCrop(id, options){
         });
 
         if (($('#image_preview_image').width() / $('#image_preview_image').height()) >= (options.cropConfig.minWidth / options.cropConfig.minHeight)) {
-            var selectionWidth = parseInt($('#image_preview_image').height() * (options.cropConfig.minHeight / options.cropConfig.minWidth));
+            var selectionWidth = parseInt($('#image_preview_image').height() / (options.cropConfig.minHeight / options.cropConfig.minWidth));
             var selectionHeight = $('#image_preview_image').height();
         } else {
             var selectionWidth = $('#image_preview_image').width();

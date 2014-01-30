@@ -60,7 +60,7 @@ class CroppableImageType extends AbstractType
                     'minHeight' => isset($value['minHeight']) ? $value['minHeight'] : 1,
                     'aspectRatio' => isset($value['aspectRatio']) ? $value['aspectRatio'] : true,
                     'cropRoute' => isset($value['cropRoute']) ? $value['cropRoute'] : 'comur_api_crop',
-                    'forceResize' => null,
+                    'forceResize' => false,
                     'thumbs' => null
                 );
             }
