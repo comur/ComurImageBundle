@@ -45,6 +45,7 @@ Installation
  
 4. Add Modal template after body tag of your layout:
 	
+	```
 	<body>
 	{% include "ComurImageBundle:Form:croppable_image_modal.html.twig"%}
 	…
