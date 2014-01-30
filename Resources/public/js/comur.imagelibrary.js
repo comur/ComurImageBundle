@@ -39,19 +39,14 @@ function initializeImageManager(id, options){
     }
     console.log('init');
     console.log($('#image_upload_file'));
-    var url = Routing.generate(options.uploadConfig.uploadRoute, { 
-            uploadUrl: encodeURIComponent(options.uploadConfig.uploadUrl), 
-                paramName: "image_upload_file", webDir: encodeURIComponent(options.uploadConfig.webDir), 
-                minWidth: options.cropConfig.minWidth ? options.cropConfig.minWidth : 1, 
-                minHeight: options.cropConfig.minHeight ? options.cropConfig.minHeight : 1
-            });
+    var url = Routing.generate(options.uploadConfig.uploadRoute);
     console.log(url);
     console.log($('.fileinput-button'));
     //$('#image_upload_file').bind('change', function(){console.log('change')});
     $('#image_upload_file').fileupload({
         url: url,
         dataType: 'json',
-        formData: {},
+        formData: {'config': JSON.stringify(options) },
         dropZone: $('#image_upload_drop_zone'),
         done: function (e, data) {
             console.log('uploaded');
@@ -153,17 +148,16 @@ function initJCrop(id, options){
 
 function cropImage(id, options){
     $.ajax({
-        url: Routing.generate(options.cropConfig.cropRoute, {
-            uploadUrl: encodeURIComponent(options.uploadConfig.uploadUrl), 
-            webDir: encodeURIComponent(options.uploadConfig.webDir), imageName: $('#selected_image').val(), 
-            x: c.x, 
-            y: c.y, 
-            w: c.w, 
-            h: c.h, 
-            tarW: options.cropConfig.minWidth,
-            tarH: options.cropConfig.minHeight
-        }),
-        method: 'POST',
+        url: Routing.generate(options.cropConfig.cropRoute),
+        type: 'POST',
+        data: {
+            'config': JSON.stringify(options),
+            'imageName': $('#selected_image').val(), 
+            'x': c.x, 
+            'y': c.y, 
+            'w': c.w, 
+            'h': c.h
+        },
         success: function(data){
             var filename = $.parseJSON(data).filename;
             $('#'+id).val(filename);

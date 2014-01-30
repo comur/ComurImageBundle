@@ -15,37 +15,46 @@ use Comur\ImageBundle\Handler\UploadHandler;
 
 class UploadController extends Controller
 {
-    public function uploadImageAction(Request $request, $uploadUrl, $paramName, $webDir, $minWidth=1, $minHeight=1){
-        
-        $uploadUrl = urldecode($uploadUrl);
+    public function uploadImageAction(Request $request
+        /*, $uploadUrl, $paramName, $webDir, $minWidth=1, $minHeight=1*/
+    ){
+        $config = json_decode($request->request->get('config'),true);
+        // var_dump($config);exit;
+        $uploadUrl = $config['uploadConfig']['uploadUrl'];
         $uploadUrl = substr($uploadUrl, -strlen('/')) === '/' ? $uploadUrl : $uploadUrl . '/';
         $response = new StreamedResponse();
-        $webDir = urldecode($webDir);
+        $webDir = $config['uploadConfig']['webDir'];
         $webDir = substr($webDir, -strlen('/')) === '/' ? $webDir : $webDir . '/';
-        $response->setCallback(function () use($uploadUrl, $paramName, $webDir, $minWidth, $minHeight) {
+        $response->setCallback(function () use($uploadUrl, $webDir, $config) {
             new UploadHandler(array(
                 'upload_dir' => $uploadUrl,
-                'param_name' => $paramName,
+                'param_name' => 'image_upload_file',
                 'file_name' => sha1(uniqid(mt_rand(), true)),
-                'upload_url' => $webDir,
-                'min_width' => $minWidth,
-                'min_height' => $minHeight
-                ));
+                'upload_url' => $config['uploadConfig']['webDir'],
+                'min_width' => $config['cropConfig']['minWidth'],
+                'min_height' => $config['cropConfig']['minHeight']
+            ));
         });
         return $response->send();
     }
 
-    public function cropImageAction(Request $request, $uploadUrl, $webDir, $imageName, $x, $y, $w, $h, $tarW, $tarH)
-    {
-        $x = (int) round($x);
-        $y = (int) round($y);
-        $w = (int) round($w);
-        $h = (int) round($h);
-        $tarW = (int) round($tarW);
-        $tarH = (int) round($tarH);
+    public function cropImageAction(Request $request
+        /*, $uploadUrl, $webDir, $imageName, $x, $y, $w, $h, $tarW, $tarH*/
+    ){
+        $config = json_decode($request->request->get('config'),true);
+        $params = $request->request->all();
+        // var_dump($params);exit;
+        $x = (int) round($params['x']);
+        $y = (int) round($params['y']);
+        $w = (int) round($params['w']);
+        $h = (int) round($params['h']);
+        $tarW = (int) round($config['cropConfig']['minWidth']);
+        $tarH = (int) round($config['cropConfig']['minHeight']);
 
-        $uploadUrl = urldecode($uploadUrl);
-        $webDir = urldecode($webDir);
+        $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
+        $webDir = urldecode($config['uploadConfig']['webDir']);
+
+        $imageName = $params['imageName'];
 
         $src = $uploadUrl.'/'.$imageName;
 
