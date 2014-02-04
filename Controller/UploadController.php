@@ -101,8 +101,10 @@ class UploadController extends Controller
         $destH = $tarH;
 
         if(round($w/$h, 2) != round($tarW/$tarH, 2)){
-            $destW = $w;
-            $destH = $h;
+            // var_dump($destW, $destH, $w, $h, $this->getMaxResizeValues($w, $h, $tarW, $tarH));exit;
+            // $destW = $w;
+            // $destH = $h;
+            list($destW, $destH) = $this->getMaxResizeValues($w, $h, $tarW, $tarH);
         }
 
         $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
@@ -128,13 +130,13 @@ class UploadController extends Controller
      * Calculates and returns maximum size to fit in maxW and maxH for resize
      */
     private function getMaxResizeValues($srcW, $srcH, $maxW, $maxH){
-        if($destH/$destW > $maxH/$maxW){
+        if($srcH/$srcW < $maxH/$maxW){
             $w = $maxW;
-            $h = $maxH * ($destW / $destH);
+            $h = $srcH * ($maxW / $srcW);
         }
         else{
             $h = $maxH;
-            $w = $maxW * ($destH / $destW);
+            $w = $srcW * ($maxH / $srcH);
         }
         return array($w, $h);
     }
