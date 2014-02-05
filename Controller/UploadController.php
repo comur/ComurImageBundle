@@ -110,16 +110,21 @@ class UploadController extends Controller
         $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
 
         //Create thumbs if asked
-        if(isset($config['thumbs']) && $thumbs = $config['thumbs'] && count($thumbs))
+        if(isset($config['cropConfig']['thumbs']) && ($thumbs = $config['cropConfig']['thumbs']) && count($thumbs))
         {
+            $thumbDir = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir') . '/' . $this->container->getParameter('comur_image.thumbs_dir').'/';
+            if(!is_dir($thumbDir))
+            {
+                mkdir($thumbDir);
+            }
             foreach($thumbs as $thumb){
                 $maxW = $thumb['maxWidth'];
                 $maxH = $thumb['maxHeight'];
 
                 list($w, $h) = $this->getMaxResizeValues($destW, $destH, $maxW, $maxH);
 
-                $thumbSrc = $this->container->getParameter('comur_image.thumbs_dir').'/'.$maxW.'x'.$maxH.'-'.$imageName;
-                $this->resizeCropImage($destSrc, $thumbSrc, 0, 0, 0, 0, $w, $h, $destW, $destH);
+                $thumbSrc = $thumbDir .$maxW.'x'.$maxH.'-'.$imageName;
+                $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH);
             }
         }
 

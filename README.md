@@ -71,13 +71,14 @@ That's it !
 Configuration
 -------------
 <br/>
-All parameters are optional:
+**All parameters are optional:**
 
 	comur_image:
 		config:
 			cropped_image_dir: 'cropped'
 			thumbs_dir: 'thumbnails'
 			media_lib_thumb_size: 150
+			web_dirname: 'web'
 
 ###cropped_image_dir###
 
@@ -97,6 +98,12 @@ It's used to determine thumbnails size in pixels (squares) used in media library
 
 **Default value:** 150
 
+###upload_dir###
+
+Dirname of your public directory. It's used to check thumb existence in thumb twig helper.
+
+**Default value:** 'web'
+
 Usage
 -----
 
@@ -104,20 +111,20 @@ Use widget in your forms (works with SonataAdmin too):
 
     ->add('image', 'comur_image', array(
         'uploadConfig' => array(
-            'uploadRoute' => 'comur_api_upload', //optional
+            'uploadRoute' => 'comur_api_upload', 		//optional
             'uploadUrl' => $myObject->getUploadRootDir(),
             'webDir' => $myObject->getUploadDir(),
-            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', //optional
-            'libraryDir' => null, //optional
+            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
+            'libraryDir' => null, 						//optional
             'libraryRoute' => 'comur_api_image_library' //optional
         ),
         'cropConfig' => array(
             'minWidth' => 588,
             'minHeight' => 300,
-            'aspectRatio' => true, //optional
-            'cropRoute' => 'comur_api_crop', //optional
-            'forceResize' => false, //optional
-            'thumbs' => array( //optional
+            'aspectRatio' => true, 				//optional
+            'cropRoute' => 'comur_api_crop', 	//optional
+            'forceResize' => false, 			//optional
+            'thumbs' => array( 					//optional
             	array(
             		'maxWidth' => 180,
             		'maxHeight' => 400
@@ -229,6 +236,12 @@ If true, system will resize image to fit minWidth and minHeight. For now (until 
 
 ###thumbs (optional)###
 
-Array of thums to create automaticly. System will resize images to fit maxWidth and maxHeight.
+Array of thums to create automaticly. System will resize images to fit maxWidth and maxHeight. It will put them in "uploadDir/cropped_images_dir/thumbs_dir/widthxheight-originalfilename.extension" so you can use included Thumb Twig extension to get them, ex:
+
+```
+{# your_themplate.html.twig #}
+<img src="{{ entity.imagePath|thumb(45, 56) }}"
+	
+```
 
 

@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('cropped_image_dir')->defaultValue('cropped')->cannotBeEmpty()->end()
                         ->scalarNode('thumbs_dir')->defaultValue('thumbnail')->cannotBeEmpty()->end()
                         ->scalarNode('media_lib_thumb_size')->defaultValue(150)->cannotBeEmpty()->end()
+                        ->scalarNode('web_dirname')->defaultValue('web')->cannotBeEmpty()->end()
                     ->end()
                 ->end()
             ->end()

@@ -28,5 +28,6 @@ class ComurImageExtension extends Extension
         $container->setParameter('comur_image.cropped_image_dir', $config['config']['cropped_image_dir']);
         $container->setParameter('comur_image.thumbs_dir', $config['config']['thumbs_dir']);
         $container->setParameter('comur_image.media_lib_thumb_size', $config['config']['media_lib_thumb_size']);
+        $container->setParameter('comur_image.web_dirname', $config['config']['web_dirname']);
     }
 }
