@@ -34,7 +34,7 @@ class ThumbExtension extends \Twig_Extension
         $uploadDir = $pathInfo['dirname'] . '/';
         $filename = $pathInfo['basename'];
 
-        $thumbSrc = $uploadDir . $this->thumbsDir . '/' . $height . 'x' . $height . '-' .$filename;
+        $thumbSrc = $uploadDir . $this->thumbsDir . '/' . $width . 'x' . $height . '-' .$filename;
 
         // return $this->webDir.'/'.$thumbSrc;
 
