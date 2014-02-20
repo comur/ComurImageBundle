@@ -82,6 +82,8 @@ class UploadController extends Controller
         $tarW = (int) round($config['cropConfig']['minWidth']);
         $tarH = (int) round($config['cropConfig']['minHeight']);
 
+        // $forceResize = $config['cropConfig']['forceResize'];
+
         $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
         $webDir = urldecode($config['uploadConfig']['webDir']);
 
@@ -100,12 +102,16 @@ class UploadController extends Controller
         $destW = $tarW;
         $destH = $tarH;
 
-        if(round($w/$h, 2) != round($tarW/$tarH, 2)){
-            // var_dump($destW, $destH, $w, $h, $this->getMaxResizeValues($w, $h, $tarW, $tarH));exit;
-            // $destW = $w;
-            // $destH = $h;
-            list($destW, $destH) = $this->getMaxResizeValues($w, $h, $tarW, $tarH);
-        }
+        // if($forceResize){
+
+            if(round($w/$h, 2) != round($tarW/$tarH, 2)){
+                // var_dump($destW, $destH, $w, $h, $this->getMaxResizeValues($w, $h, $tarW, $tarH));exit;
+                // $destW = $w;
+                // $destH = $h;
+                list($destW, $destH) = $this->getMinResizeValues($w, $h, $tarW, $tarH);
+            }
+            
+        // }
 
         $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
 
@@ -142,6 +148,21 @@ class UploadController extends Controller
         else{
             $h = $maxH;
             $w = $srcW * ($maxH / $srcH);
+        }
+        return array($w, $h);
+    }
+
+    /**
+     * Calculates and returns min size to fit in minW and minH for resize
+     */
+    private function getMinResizeValues($srcW, $srcH, $minW, $minH){
+        if($srcH/$srcW > $minH/$minW){
+            $w = $minW;
+            $h = $srcH * ($minW / $srcW);
+        }
+        else{
+            $h = $minH;
+            $w = $srcW * ($minH / $srcH);
         }
         return array($w, $h);
     }
