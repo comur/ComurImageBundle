@@ -34,6 +34,11 @@
     border: dotted 1px #555;
 }
 
+.image_upload_drop_zone p
+{
+    text-align: center;
+}
+
 #upload-image
 {
     text-align: center;
