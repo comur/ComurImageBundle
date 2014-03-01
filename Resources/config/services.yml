@@ -5,8 +5,9 @@ services:
         class: %comur_image_type_class%
         tags:
             - { name: form.type, alias: comur_image }
+        # arguments: [%comur_image.translation_domain%]
     comur.twig.thumb_extension:
         class: Comur\ImageBundle\Twig\ThumbExtension
         tags:
             - { name: twig.extension }
-        arguments: [%comur_image.cropped_image_dir%, %comur_image.thumbs_dir%, "@service_container", %comur_image.web_dirname%]
+        arguments: [%comur_image.cropped_image_dir%, %comur_image.thumbs_dir%, "@service_container", %comur_image.web_dirname%, %comur_image.translation_domain%]

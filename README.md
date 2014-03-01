@@ -79,6 +79,7 @@ Configuration
 			thumbs_dir: 'thumbnails'
 			media_lib_thumb_size: 150
 			web_dirname: 'web'
+			translation_domain: 'ComurImageBundle'
 
 ###cropped_image_dir###
 
@@ -103,6 +104,12 @@ It's used to determine thumbnails size in pixels (squares) used in media library
 Dirname of your public directory. It's used to check thumb existence in thumb twig helper.
 
 **Default value:** 'web'
+
+###translation_domain###
+
+Domain name for translations. For instance two languages are provided (en & fr). To override the domain name, change this parameter to whatever you want.
+
+**Default value:** 'ComurImageBundle'
 
 Usage
 -----
@@ -203,6 +210,12 @@ Directory to look into for images to show in image library.
 Route called to get images to show in library. I recommend you to not change this parameter if you don't know exactly what it does.
 
 **Default value:** comur_api_image_library
+
+###showLibrary (optional)###
+
+Set this to false if you don't want the user see existing images in libraryDir.
+
+**Default value:** true
 
 ##cropConfig##
 

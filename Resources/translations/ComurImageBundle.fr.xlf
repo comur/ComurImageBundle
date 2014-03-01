@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2014-03-01T14:37:31Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="cfdff1de9222ae8e71d10f589f1d6a5b42347477" resname="Crop &amp; Use !">
+        <source><![CDATA[Crop & Use !]]></source>
+        <target state="new"><![CDATA[Cropper & Utiliser !]]></target>
+        <jms:reference-file line="87">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5580c63bc4b0fc39c3db8d3d53b8c6c159a991d1" resname="Crop and Use">
+        <source>Crop and Use</source>
+        <target state="new">Cropper et Utiliser</target>
+        <jms:reference-file line="43">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="65f4b6c70faee1f98e2e20e783c985716f5d3ad9" resname="Drop your file here">
+        <source>Drop your file here</source>
+        <target state="new">Glissez votre fichier ici</target>
+        <jms:reference-file line="53">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5301648dcf6b53cefc9ed52999aaa92d4603cae0" resname="Edit">
+        <source>Edit</source>
+        <target state="new">Modifier</target>
+        <jms:reference-file line="20">views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a2d43587989e2b5142295194edd0c74e3cf29cc8" resname="Insert Image">
+        <source>Insert Image</source>
+        <target state="new">Uploader image</target>
+        <jms:reference-file line="35">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="07abfd9112b9bd5535213abeb01386152ef4c1d4" resname="Please select or upload an image">
+        <source>Please select or upload an image</source>
+        <target state="new">Veuillez uploader ou sélectionner une image existante</target>
+        <jms:reference-file line="79">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6ed2aa6178d845f3246027181bf6cf89322961f0" resname="Select Existing">
+        <source>Select Existing</source>
+        <target state="new">Sélectionner image</target>
+        <jms:reference-file line="42">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5a51202b21f6c3a61551c3aa38c983b981680203" resname="Select a file...">
+        <source>Select a file...</source>
+        <target state="new">Sélectionnez un fichier...</target>
+        <jms:reference-file line="59">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="159031eaeed919231a31e757a438b81530589af3" resname="Upload Image">
+        <source>Upload Image</source>
+        <target state="new">Uploader image</target>
+        <jms:reference-file line="40">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1758356db21759f7c5a0da9b4dd1db8fd6feab3f" resname="or">
+        <source>or</source>
+        <target state="new">ou</target>
+        <jms:reference-file line="54">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

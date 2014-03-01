@@ -6,11 +6,13 @@ class ThumbExtension extends \Twig_Extension
     protected $croppedDir;
     protected $thumbsDir;
     protected $webDir;
+    protected $transDomain;
 
-    public function __construct($croppedDir, $thumbsDir, $container, $webDirName)
+    public function __construct($croppedDir, $thumbsDir, $container, $webDirName, $transDomain)
     {
         $this->croppedDir = $croppedDir;
         $this->thumbsDir = $thumbsDir;
+        $this->transDomain = $transDomain;
         $this->webDir = $container->get('kernel')->getRootdir().'/../' . $webDirName;
     }
 
@@ -49,5 +51,10 @@ class ThumbExtension extends \Twig_Extension
     public function getName()
     {
         return 'comur_thumb_extension';
+    }
+
+    public function getGlobals()
+    {
+        return array('comur_translation_domain' => $this->transDomain);
     }
 }

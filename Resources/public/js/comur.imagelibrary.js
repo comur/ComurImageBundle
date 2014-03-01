@@ -47,6 +47,7 @@ function initializeImageManager(id, options){
         $('#select-existing').addClass('hidden');
         $('#image_upload_tabs li:nth-child(2)').hide();
     }
+    $('#image_upload_tabs li:nth-child(3)').hide();
     console.log('init');
     console.log($('#image_upload_file'));
     var url = Routing.generate(options.uploadConfig.uploadRoute);

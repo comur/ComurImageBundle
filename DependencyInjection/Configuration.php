@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('thumbs_dir')->defaultValue('thumbnail')->cannotBeEmpty()->end()
                         ->scalarNode('media_lib_thumb_size')->defaultValue(150)->cannotBeEmpty()->end()
                         ->scalarNode('web_dirname')->defaultValue('web')->cannotBeEmpty()->end()
+                        ->scalarNode('translation_domain')->defaultValue('ComurImageBundle')->cannotBeEmpty()->end()
                     ->end()
                 ->end()
             ->end()
