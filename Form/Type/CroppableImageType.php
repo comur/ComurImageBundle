@@ -52,6 +52,7 @@ class CroppableImageType extends AbstractType
                     'fileExt' => isset($value['fileExt']) ? $value['fileExt'] : '*.jpg;*.gif;*.png;*.jpeg',
                     'libraryDir' => isset($value['libraryDir']) ? $value['libraryDir'] : null,
                     'libraryRoute' => isset($value['libraryRoute']) ? $value['libraryRoute'] : 'comur_api_image_library',
+                    'showLibrary' => isset($value['showLibrary']) ? $value['showLibrary'] : true,
                 );
             },
             'cropConfig' => function (Options $options, $value) {

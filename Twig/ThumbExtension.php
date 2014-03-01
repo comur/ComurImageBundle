@@ -31,14 +31,19 @@ class ThumbExtension extends \Twig_Extension
     public function getThumb($origFilePath, $width, $height)
     {
         $pathInfo = pathinfo($origFilePath);
-        $uploadDir = $pathInfo['dirname'] . '/';
-        $filename = $pathInfo['basename'];
+        if(!isset($pathInfo['dirname']) && !isset($pathInfo['basename']))
+        {
+            $uploadDir = $pathInfo['dirname'] . '/';
+            $filename = $pathInfo['basename'];
 
-        $thumbSrc = $uploadDir . $this->thumbsDir . '/' . $width . 'x' . $height . '-' .$filename;
+            $thumbSrc = $uploadDir . $this->thumbsDir . '/' . $width . 'x' . $height . '-' .$filename;
 
-        // return $this->webDir.'/'.$thumbSrc;
+            // return $this->webDir.'/'.$thumbSrc;
 
-        return file_exists($this->webDir.'/'.$thumbSrc) ? $thumbSrc : $uploadDir . $filename;
+            return file_exists($this->webDir.'/'.$thumbSrc) ? $thumbSrc : $uploadDir . $filename;
+        }
+
+        return null;
     }
 
     public function getName()

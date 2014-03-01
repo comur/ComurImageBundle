@@ -12,8 +12,14 @@ $(function(){
 });
 
 function initializeImageManager(id, options){
-    if((typeof options.uploadConfig.library == 'undefined' || options.uploadConfig.library) && typeof options.uploadConfig.libraryDir != 'undefined' && options.uploadConfig.libraryRoute != 'undefined'){
+    if((typeof options.uploadConfig.library == 'undefined' || options.uploadConfig.library) 
+        && typeof options.uploadConfig.libraryDir != 'undefined' 
+        && options.uploadConfig.libraryRoute != 'undefined'
+        && (options.uploadConfig.showLibrary == 'undefined'
+        || options.uploadConfig.showLibrary))
+    {
         $('#select-existing').removeClass('hidden');
+        $('#image_upload_tabs li:nth-child(2)').show();
         $('#existing-images .image-container').remove();
         $.ajax({
             url: Routing.generate(options.uploadConfig.libraryRoute),
@@ -39,6 +45,7 @@ function initializeImageManager(id, options){
     }
     else{
         $('#select-existing').addClass('hidden');
+        $('#image_upload_tabs li:nth-child(2)').hide();
     }
     console.log('init');
     console.log($('#image_upload_file'));
