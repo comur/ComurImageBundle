@@ -25,11 +25,19 @@ Here are some screen shots since i didn't have time to put a demo yet:
 
 ###Upload image screen###
 
+![alt tag](http://canomur.com/comur-image/images/upload_image_ss1.png)
+
+###Select image from library screen###
+
 ![alt tag](http://canomur.com/comur-image/images/select_image_ss1.png)
 
 ###Crop image screen###
 
 ![alt tag](http://canomur.com/comur-image/images/crop_image_ss1.png)
+
+###Change gallery image order screen###
+
+![alt tag](http://canomur.com/comur-image/images/order_image_ss1.png)
 
 Installation
 ------------
