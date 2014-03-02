@@ -18,6 +18,7 @@
     width: 150px;
     cursor: move;
     text-align: center;
+    background-color: #fff;
 }
 
 .gallery-image-container img
