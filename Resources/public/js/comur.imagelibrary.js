@@ -1,3 +1,5 @@
+var galleries = {};
+
 $(function(){
     $('.fileinput-button').click(function(event){ 
         if( $( event.target ).is( "span" ) )
@@ -12,6 +14,7 @@ $(function(){
 });
 
 function initializeImageManager(id, options){
+    
     if((typeof options.uploadConfig.library == 'undefined' || options.uploadConfig.library) 
         && typeof options.uploadConfig.libraryDir != 'undefined' 
         && options.uploadConfig.libraryRoute != 'undefined'
@@ -170,17 +173,69 @@ function cropImage(id, options){
             'h': c.h
         },
         success: function(data){
-            var filename = $.parseJSON(data).filename;
-            $('#'+id).val(filename);
-            $('#selected_image').val(filename);
-            $('#image_preview').html('<p>Please select or upload an image</p>');
-            $('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+            var data = $.parseJSON(data);
+            var filename = data.filename;
+            
+            console.log('crop success');
+
+            if(typeof galleries[id] != 'undefined'){
+                console.log('isGallery');
+                console.log(galleries[id]);
+                addImageToGallery(filename, id, data.galleryThumb, options);
+            }
+            else{
+                console.log('simple image');
+                $('#'+id).val(filename);
+                $('#selected_image').val(filename);
+                $('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                $('#image_preview_'+id).removeClass('hide-disabled');
+            }
+            
             destroyJCrop(id);
-            $('#image_preview_'+id).removeClass('hide-disabled');
+            $('#image_preview').html('<p>Please select or upload an image</p>');
             $('#image_crop_go_now').addClass('hidden');
             $('#image_upload_tabs a:first').tab('show');
             $('#image_upload_modal').modal('hide');
         }
+    });
+}
+
+function addImageToGallery(filename, id, thumb, options)
+{
+    // $('#'+id).val(js_array_to_php_array(galleries[id]));
+    var nb = $('#gallery_preview_'+id+' input').length;
+    $('#gallery_preview_'+id).append('<div class="gallery-image-container" data-image="'+filename+'">' +
+        '<span class="remove-image"><i class="icon icon-white icon-remove"></i></span>' +
+        '<span class="gallery-image-helper"></span>' +
+        '<input type="text" id="mvb_bundle_memberbundle_company_gallery_'+nb+'" name="mvb_bundle_memberbundle_company[gallery]['+nb+']" style="padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;" value="'+filename+'">' +
+        '<img src="/'+options.uploadConfig.webDir + '/' + thumb+'?'+ new Date().getTime()+'"/>' +
+    '</div>');
+    rebindGalleryRemove();
+}
+
+function removeImageFromGallery(filename, id)
+{
+    
+    // ADD DELETE FILE HERE !
+    $('#'+id).parent().remove();
+    reorderItems(id);
+
+}
+
+function reorderItems(id)
+{
+    var name = $('#'+id).data('name');
+    $( '#'+id+' .gallery-image-container' ).each(function(i, item){
+        $(item).find('input').attr('name', name+'['+i+']');
+    });
+}
+
+function rebindGalleryRemove()
+{
+    $('.gallery-image-container span').unbind('click');
+    $('.gallery-image-container span').click(function(){
+        removeImageFromGallery($(this).parent().data('image'), $(this).parent().find('input').attr('id'));
+        return false; 
     });
 }
 
@@ -192,3 +247,32 @@ function destroyJCrop(){
     // $('#upload_image_crop').removeClass('hidden');
     $('#upload_image_crop_go').addClass('hidden');
 }
+
+// function js_array_to_php_array (a)
+// This converts a javascript array to a string in PHP serialized format.
+// This is useful for passing arrays to PHP. On the PHP side you can 
+// unserialize this string from a cookie or request variable. For example,
+// assuming you used javascript to set a cookie called "php_array"
+// to the value of a javascript array then you can restore the cookie 
+// from PHP like this:
+//    <?php
+//    session_start();
+//    $my_array = unserialize(urldecode(stripslashes($_COOKIE['php_array'])));
+//    print_r ($my_array);
+//    ?>
+// This automatically converts both keys and values to strings.
+// The return string is not URL escaped, so you must call the
+// Javascript "escape()" function before you pass this string to PHP.
+// {
+//     var a_php = "";
+//     var total = 0;
+//     for (var key in a)
+//     {
+//         ++ total;
+//         a_php = a_php + "s:" +
+//                 String(key).length + ":\"" + String(key) + "\";s:" +
+//                 String(a[key]).length + ":\"" + String(a[key]) + "\";";
+//     }
+//     a_php = "a:" + total + ":{" + a_php + "}";
+//     return a_php;
+// }

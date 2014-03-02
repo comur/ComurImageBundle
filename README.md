@@ -8,6 +8,29 @@ It uses bootstrap to make it look well but you can use any other css to customiz
 
 It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Upload/) to upload files (original UploadHandler has been modified to add namespace and a new config parameter to generate random filenames) and [JCrop](http://deepliquid.com/content/Jcrop.html) to let you crop uploaded images.
 
+**New Since Version 0.2.0 !! you can also create sortable & croppable gallery widgets** without any specific configuration. It only needs an array typed property in your entity (and a text column in your database). See below for examples, screenshots and how to use it.
+
+Screen shots
+------------
+
+Here are some screen shots since i didn't have time to put a demo yet:
+
+###Simple Image widget###
+
+![alt tag](http://canomur.com/comur-image/images/image_widget_ss1.png)
+
+###Gallery widget###
+
+![alt tag](http://canomur.com/comur-image/images/gallery_widget_ss1.png)
+
+###Upload image screen###
+
+![alt tag](http://canomur.com/comur-image/images/select_image_ss1.png)
+
+###Crop image screen###
+
+![alt tag](http://canomur.com/comur-image/images/crop_image_ss1.png)
+
 Installation
 ------------
 
@@ -80,6 +103,8 @@ Configuration
 			media_lib_thumb_size: 150
 			web_dirname: 'web'
 			translation_domain: 'ComurImageBundle'
+			gallery_thumb_size: 150
+			gallery_dir: 'gallery'
 
 ###cropped_image_dir###
 
@@ -111,10 +136,27 @@ Domain name for translations. For instance two languages are provided (en & fr).
 
 **Default value:** 'ComurImageBundle'
 
-Usage
------
+###gallery_thumb_size###
 
-Use widget in your forms (works with SonataAdmin too):
+That's the image size in pixels that you want to show in gallery widget. Gallery widget will automaticaly create square thums having this size and show them in the gallery widget.
+
+**Default value:** 150
+
+###gallery_dir###
+
+That's the gallery directory name. The widget will store all gallery images in a specific directory inside the root directory that you will give when you will add the widget to your forms.
+
+**For eg.** if you put 'uploads/images' as webDir when you add the widget, gallery images will be stored in 'uploads/images/*[gallery_dir]*'. This is added to make gallery use easier so you don't have to add new functions to your entities to get gallery dirs.
+
+#Usage#
+
+
+There are two widgets provided with this bundle. They both have exacly same config parameters.
+
+Image widget
+------------
+
+Use widget in your forms (works with SonataAdmin too) to create a simple image field :
 
     ->add('image', 'comur_image', array(
         'uploadConfig' => array(
@@ -123,7 +165,8 @@ Use widget in your forms (works with SonataAdmin too):
             'webDir' => $myObject->getUploadDir(),
             'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
             'libraryDir' => null, 						//optional
-            'libraryRoute' => 'comur_api_image_library' //optional
+            'libraryRoute' => 'comur_api_image_library', //optional
+            'showLibrary' => true //optional
         ),
         'cropConfig' => array(
             'minWidth' => 588,
@@ -140,9 +183,49 @@ Use widget in your forms (works with SonataAdmin too):
         )
     ))
     
+You need to create a field (named image in this example but you can choose whatever you want):
+
+	// YourBundle\Entity\YourEntity.php
+	
+	…
+	
+	/**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $image;
+    
+    …
+    
 That's all ! This will add an image preview with an edit button in your form and will let you upload / select from library and crop images without reloading the page.
 
-I will put an example soon…
+
+I will put a demo soon…
+
+Gallery widget
+------------
+
+Use widget in your forms (works with SonataAdmin too) to create a **sortable** list of images (so a gallery :)) stored in an array typed field :
+
+	->add('gallery', 'comur_gallery', array(
+		//same parameters as comur_image
+	))
+	
+And create your array typed field for storing images in it. Doctrine (or other ORM) will serialize this field to store it as string in the DB.
+
+	// YourBundle\Entity\YourEntity.php
+	
+	…
+	
+	/**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $gallery;
+    
+    …
+
+That's all ! This will create a widget like on the following image when you will use it in your forms. **You can also reorder them since php serialized arrays are ordered**:
+
+Gallery images will be stored in uploadUrl / gallery_dir (default is gallery). Cropped images will be stored in uploadUrl / gallery_dir / cropped_dir (same as image widget) and thumbs in uploadUrl / gallery_dir / cropped_dir / thumb_dir with specified width. So if you pu
 
 ##uploadConfig##
 
@@ -155,17 +238,6 @@ Route called to send uploaded file. It's recommended to not change this paramete
 ###uploadUrl (required)###
 
 Absolute url to directory where put uploaded image. I recommend you to create a function in your entity and call it like it's showen in the example:
-
-	// YourBundle\Entity\YourEntity.php
-	
-	…
-	
-	/**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $image;
-    
-    …
     
     public function getUploadRootDir()
     {
@@ -191,7 +263,7 @@ Absolute url to directory where put uploaded image. I recommend you to create a 
 
 ###webDir (required)###
 
-Url used to show your image in templates, must be relative url.
+Url used to show your image in templates, must be relative url. If you created related functions as explained in uploadUrl section, then you can user getWebPath() function for webDir parameter.
 
 ###fileExt (optional)###
 
@@ -257,4 +329,10 @@ Array of thums to create automaticly. System will resize images to fit maxWidth 
 	
 ```
 
+#TODO LIST#
+
+* Create tests
+* Add more comments in the code
+* Think about removed image deletion (for now images are not deleted, you have to care about it by yourself…)
+* Update existing images list dynamicly after an image upload
 

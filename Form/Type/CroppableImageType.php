@@ -15,6 +15,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CroppableImageType extends AbstractType
 {
 
+    protected $isGallery = false;
+    protected $galleryDir = null;
+    protected $thumbsDir = null;
+
     public function getParent()
     {
         return 'text';
@@ -38,7 +42,7 @@ class CroppableImageType extends AbstractType
             'fileExt' => '*.jpg;*.gif;*.png;*.jpeg',
             'libraryDir' => null,
             'libraryRoute' => 'comur_api_image_library',
-            'showLibrary' => true,
+            'showLibrary' => true
         );
 
         $cropConfig = array(
@@ -55,9 +59,18 @@ class CroppableImageType extends AbstractType
             'cropConfig' => $cropConfig,
         ));
         
+        $isGallery = $this->isGallery;
+        $galleryDir = $this->galleryDir;
+
         $resolver->setNormalizers(array(
-            'uploadConfig' => function(Options $options, $value) use ($uploadConfig){
+            'uploadConfig' => function(Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir){
                 $config = array_merge($uploadConfig, $value);
+
+                if($isGallery){
+                    $config['uploadUrl'] = $config['uploadUrl'].'/'.$galleryDir;
+                    $config['webDir'] = $config['webDir'].'/'.$galleryDir;
+                }
+
                 if(!isset($config['libraryDir'])){
                     $config['libraryDir'] = $config['uploadUrl'];
                 }

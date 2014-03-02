@@ -3,13 +3,7 @@
     {# trans_default_domain 'ComurImageBundle' #}
     {% spaceless %}
         {{ block('form_widget_simple') }}
-        <!--div class="image_field_container" id="image_field_container_{{ id }}">
-            <span class="btn btn-success select-image-button">
-                <i class="icon-white icon-download-alt"></i>
-                <span> Select file...</span>
-                <input id="{{ id }}_file" type="file" name="{{ id }}_file">
-            </span>
-        </div-->
+        
         <div class="field-error clearfix hidden">
             <div id="{{id}}_widget_error" class="alert alert-danger span6">
             </div>
@@ -46,6 +40,55 @@
         $('.select-image-button').mouseout(function(){
             if(!$(this).hasClass('hide-disabled'))
                 $(this).children('.image_edit_button').addClass('hidden');
+        });
+
+    </script>
+{% endblock %}
+
+{% block comur_gallery_widget %}
+    {% trans_default_domain comur_translation_domain %}
+    {# trans_default_domain 'ComurImageBundle' #}
+
+    {% spaceless %}
+        
+        <div class="field-error clearfix hidden">
+            <div id="{{id}}_widget_error" class="alert alert-danger span6">
+            </div>
+        </div>
+        <div id="gallery_preview_{{id}}" class="well" data-name="{{full_name}}">
+            {% for image in form %}
+                <div class="gallery-image-container" data-image="{{ image.vars.value }}">
+                    <span class="gallery-image-helper"></span>
+                    {{ form_widget(image) }}
+                    <span class="remove-image"><i class="icon icon-white icon-remove" data-delete="image"></i></span>
+                    <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ image.vars.value)|thumb(options.galleryThumbSize, options.galleryThumbSize) }}?{{ 'now'  | date('U') }}"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="image_add_button">
+            <span class="btn btn-success add-image-button">
+                <i class="icon-picture icon-white"></i> {% trans %}Add image{% endtrans %}
+            </span>
+        </div>
+
+    {% endspaceless %}
+
+    <script>
+
+        $(document).ready(function(){
+            rebindGalleryRemove();
+            galleries['{{id}}'] = true;
+            $('.image_add_button').click(function(event){ 
+                initializeImageManager('{{ id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
+                $('#image_upload_modal').modal('show');
+            });
+            $( "#gallery_preview_{{id}}" ).sortable({
+                placeholder: "gallery-image-container placeholder",
+                update: function(e, ui){
+                    reorderItems('gallery_preview_{{id}}');
+                }
+            });
+            $( "#gallery_preview_{{id}}" ).disableSelection();
         });
 
     </script>

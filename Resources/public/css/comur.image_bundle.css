@@ -1,3 +1,49 @@
+.gallery-image-helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.gallery-image-container
+{
+    vertical-align: middle;
+    border: solid 1px #bbbbbb;
+    padding: 2px;
+    display: inline-block;
+    margin: 10px;
+    min-height: 150px;
+    min-width: 150px;
+    height: 150px;
+    width: 150px;
+    cursor: move;
+    text-align: center;
+}
+
+.gallery-image-container img
+{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.gallery-image-container.placeholder
+{
+    border-style: dashed;
+    min-height: 150px;
+    min-width: 150px;
+}
+
+.gallery-image-container span.remove-image
+{
+    position: absolute;
+    line-height: normal;
+    margin-left: -5px;
+    margin-top: -10px;
+    cursor: hand;
+    cursor: pointer;
+    text-align: left;
+}
+
 .image_edit_button
 {
     position: absolute;

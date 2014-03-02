@@ -37,28 +37,45 @@ class UploadController extends Controller
         
         $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
         $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
+
+        $galleryDir = $this->container->getParameter('comur_image.gallery_dir');
+        $gThumbSize = $this->container->getParameter('comur_image.gallery_thumb_size');
+
         $ext = $request->files->get('image_upload_file')->getClientOriginalExtension();//('image_upload_file');
         $completeName = $filename.'.'.$ext;
         $controller = $this;
 
-        $response->setCallback(function () use($uploadUrl, $webDir, $config, $filename, $thumbsDir, $thumbSize, $completeName, $controller) {
-            new UploadHandler(array(
-                'upload_dir' => $uploadUrl,
-                'param_name' => 'image_upload_file',
-                'file_name' => $filename,
-                'upload_url' => $config['uploadConfig']['webDir'],
-                'min_width' => $config['cropConfig']['minWidth'],
-                'min_height' => $config['cropConfig']['minHeight'],
-                'image_versions' => array(
-                    'thumbnail' => array(
-                        'upload_dir' => $uploadUrl.$thumbsDir.'/',
-                        'upload_url' => $config['uploadConfig']['webDir'].'/'.$thumbsDir.'/',
-                        'crop' => true,
-                        'max_width' => $thumbSize,
-                        'max_height' => $thumbSize
-                    )
+        $handlerConfig = array(
+            'upload_dir' => $uploadUrl,
+            'param_name' => 'image_upload_file',
+            'file_name' => $filename,
+            'upload_url' => $config['uploadConfig']['webDir'],
+            'min_width' => $config['cropConfig']['minWidth'],
+            'min_height' => $config['cropConfig']['minHeight'],
+            'image_versions' => array(
+                'thumbnail' => array(
+                    'upload_dir' => $uploadUrl.$thumbsDir.'/',
+                    'upload_url' => $config['uploadConfig']['webDir'].'/'.$thumbsDir.'/',
+                    'crop' => true,
+                    'max_width' => $thumbSize,
+                    'max_height' => $thumbSize
                 )
-            ));
+            )
+        );
+
+        // if(isset($config['uploadConfig']['isGallery']) && $config['uploadConfig']['isGallery'])
+        // {
+        //     $handlerConfig['image_versions']['gallery_thumb'] = array(
+        //         'upload_dir' => $uploadUrl . $thumbsDir . '/' . $galleryDir . '/',
+        //         'upload_url' => $config['uploadConfig']['webDir'].'/'.$thumbsDir . '/' . $galleryDir . '/',
+        //         'crop' => true,
+        //         'max_width' => $gThumbSize,
+        //         'max_height' => $gThumbSize
+        //     );
+        // }
+
+        $response->setCallback(function () use($handlerConfig) {
+            new UploadHandler($handlerConfig);
         });
         
         return $response->send();
@@ -115,6 +132,21 @@ class UploadController extends Controller
 
         $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
 
+        $galleryThumbOk = false;
+        $isGallery = isset($config['uploadConfig']['isGallery']) ? $config['uploadConfig']['isGallery'] : false;
+        $galleryDir = $this->container->getParameter('comur_image.gallery_dir');
+        $gThumbSize = $this->container->getParameter('comur_image.gallery_thumb_size');
+
+        if($isGallery)
+        {
+            if(!isset($config['cropConfig']['thumbs']) || !($thumbs = $config['cropConfig']['thumbs']) || !count($thumbs))
+            {
+                $config['cropConfig']['thumbs'] = array();
+            }
+            $config['cropConfig']['thumbs'][] = array('maxWidth' => $gThumbSize, 'maxHeight' => $gThumbSize, 'forGallery' => true);
+        }
+
+
         //Create thumbs if asked
         if(isset($config['cropConfig']['thumbs']) && ($thumbs = $config['cropConfig']['thumbs']) && count($thumbs))
         {
@@ -123,9 +155,17 @@ class UploadController extends Controller
             {
                 mkdir($thumbDir);
             }
+
+            
+
             foreach($thumbs as $thumb){
                 $maxW = $thumb['maxWidth'];
                 $maxH = $thumb['maxHeight'];
+                
+                if(!isset($thumb['forGallery']) && $maxW == $gThumbSize && $maxH == $gThumbSize){
+                    $galleryThumbOk = true;
+                }
+                if(isset($thumb['forGallery']) && $galleryThumbOk) continue;
 
                 list($w, $h) = $this->getMaxResizeValues($destW, $destH, $maxW, $maxH);
 
@@ -134,7 +174,9 @@ class UploadController extends Controller
             }
         }
 
-        return new Response(json_encode(array('success' => true, 'filename'=>$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName)));
+        return new Response(json_encode(array('success' => true, 
+            'filename'=>$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName, 
+            'galleryThumb' => $this->container->getParameter('comur_image.cropped_image_dir') . '/' . $this->container->getParameter('comur_image.thumbs_dir').'/'.$gThumbSize.'x'.$gThumbSize.'-' .$imageName)));
     }
 
     /**
