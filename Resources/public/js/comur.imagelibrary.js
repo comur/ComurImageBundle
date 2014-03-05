@@ -175,6 +175,7 @@ function cropImage(id, options){
         success: function(data){
             var data = $.parseJSON(data);
             var filename = data.filename;
+            var previewSrc = data.previewSrc;
             
             console.log('crop success');
 
@@ -187,7 +188,8 @@ function cropImage(id, options){
                 console.log('simple image');
                 $('#'+id).val(filename);
                 $('#selected_image').val(filename);
-                $('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                //$('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                $('#image_preview_image_'+id).html('<img src="'+previewSrc+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
                 $('#image_preview_'+id).removeClass('hide-disabled');
             }
             

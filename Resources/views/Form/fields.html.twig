@@ -15,10 +15,18 @@
                 </span>
             </div>
             <div id="image_preview_image_{{id}}">
-                {% if value %}
-                    <img src="/{{ options.uploadConfig.webDir ~ '/' ~ value }}?{{ 'now'  | date('U') }}" id="{{ id }}_preview"/>
+                {% if not options.fieldImage %}
+                    {% if value %}
+                        <img src="/{{ options.uploadConfig.webDir ~ '/' ~ value }}?{{ 'now'  | date('U') }}" id="{{ id }}_preview"/>
+                    {% else %}
+                        <img src="http://placehold.it/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ id }}_preview"/>
+                    {% endif %}
                 {% else %}
-                    <img src="http://placehold.it/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ id }}_preview"/>
+                    {% if value %}
+                        <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ value)|thumb(options.fieldImage.maxWidth, options.fieldImage.maxHeight) }}?{{ 'now'  | date('U') }}" id="{{ id }}_preview"/>
+                    {% else %}
+                        <img src="http://placehold.it/{{ options.fieldImage.maxWidth }}x{{ options.fieldImage.maxHeight}}" id="{{ id }}_preview"/>
+                    {% endif %}
                 {% endif %}
                 
             </div>

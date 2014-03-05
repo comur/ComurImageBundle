@@ -148,6 +148,7 @@ class UploadController extends Controller
 
 
         //Create thumbs if asked
+        $previewSrc = '/'.$config['uploadConfig']['webDir'] . '/' . $this->container->getParameter('comur_image.cropped_image_dir') . '/'. $imageName;
         if(isset($config['cropConfig']['thumbs']) && ($thumbs = $config['cropConfig']['thumbs']) && count($thumbs))
         {
             $thumbDir = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir') . '/' . $this->container->getParameter('comur_image.thumbs_dir').'/';
@@ -169,13 +170,18 @@ class UploadController extends Controller
 
                 list($w, $h) = $this->getMaxResizeValues($destW, $destH, $maxW, $maxH);
 
-                $thumbSrc = $thumbDir .$maxW.'x'.$maxH.'-'.$imageName;
+                $thumbName = $maxW.'x'.$maxH.'-'.$imageName;
+                $thumbSrc = $thumbDir . $thumbName;
                 $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH);
+                if(isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage']){
+                    $previewSrc = '/'.$config['uploadConfig']['webDir'] . '/' . $this->container->getParameter('comur_image.cropped_image_dir') . '/'. $this->container->getParameter('comur_image.thumbs_dir'). '/' . $thumbName;
+                }
             }
         }
 
         return new Response(json_encode(array('success' => true, 
             'filename'=>$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName, 
+            'previewSrc' => $previewSrc,
             'galleryThumb' => $this->container->getParameter('comur_image.cropped_image_dir') . '/' . $this->container->getParameter('comur_image.thumbs_dir').'/'.$gThumbSize.'x'.$gThumbSize.'-' .$imageName)));
     }
 
