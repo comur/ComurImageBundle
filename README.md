@@ -323,9 +323,9 @@ Route to crop action. I recommend you to not change this parameter if you don't 
 **Default value:** comur_api_crop
 
 
-###forceResize (optional, not implemented yet)###
+###forceResize (optional)###
 
-If true, system will resize image to fit minWidth and minHeight. For now (until the implementation of this config parameter) it will always fit minWidth and min Height except you disable aspectRatio.
+If true, system will resize image to fit minWidth and minHeight.
 
 ###thumbs (optional)###
 
