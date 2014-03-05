@@ -185,7 +185,8 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
             'thumbs' => array( 					//optional
             	array(
             		'maxWidth' => 180,
-            		'maxHeight' => 400
+            		'maxHeight' => 400,
+            		'useAsFieldImage' => true  //optional
             	)
             )
         )
@@ -334,8 +335,10 @@ Array of thums to create automaticly. System will resize images to fit maxWidth 
 ```
 {# your_themplate.html.twig #}
 <img src="{{ entity.imagePath|thumb(45, 56) }}"
-	
+			
 ```
+
+**New in 0.2.2:** You can use 'useAsFieldImage' option to use this thumb as image field's preview (in your form you will see this thumb instead of original cropped image). Usefull when you have big cropped images.
 
 #TODO LIST#
 
