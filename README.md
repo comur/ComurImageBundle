@@ -3,7 +3,7 @@ ComurImageBundle
 
 Image upload / crop bundle for Symfony2
 
-This bundle helps you easyly create an image upload / crop field in your forms. You don't need to use any type of generator or there is no other requirements.
+This bundle helps you easily create an image upload / crop field in your forms. You don't need to use any type of generator or there is no other requirements.
 It uses bootstrap to make it look well but you can use any other css to customize it.
 
 It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Upload/) to upload files (original UploadHandler has been modified to add namespace and a new config parameter to generate random filenames) and [JCrop](http://deepliquid.com/content/Jcrop.html) to let you crop uploaded images.
@@ -25,11 +25,19 @@ Here are some screen shots since i didn't have time to put a demo yet:
 
 ###Upload image screen###
 
+![alt tag](http://canomur.com/comur-image/images/upload_image_ss1.png)
+
+###Select image from library screen###
+
 ![alt tag](http://canomur.com/comur-image/images/select_image_ss1.png)
 
 ###Crop image screen###
 
 ![alt tag](http://canomur.com/comur-image/images/crop_image_ss1.png)
+
+###Change gallery image order screen###
+
+![alt tag](http://canomur.com/comur-image/images/order_image_ss1.png)
 
 Installation
 ------------
@@ -315,9 +323,9 @@ Route to crop action. I recommend you to not change this parameter if you don't 
 **Default value:** comur_api_crop
 
 
-###forceResize (optional, not implemented yet)###
+###forceResize (optional)###
 
-If true, system will resize image to fit minWidth and minHeight. For now (until the implementation of this config parameter) it will always fit minWidth and min Height except you disable aspectRatio.
+If true, system will resize image to fit minWidth and minHeight.
 
 ###thumbs (optional)###
 
