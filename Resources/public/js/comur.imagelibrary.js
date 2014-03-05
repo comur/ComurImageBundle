@@ -81,7 +81,7 @@ function initializeImageManager(id, options){
         },
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#image_upload_file_progress .progress-bar').css(
+            $('#image_file_upload_progress .progress-bar').css(
                 'width',
                 progress + '%'
             );
