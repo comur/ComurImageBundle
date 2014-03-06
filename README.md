@@ -177,7 +177,7 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
             'libraryDir' => null, 						//optional
             'libraryRoute' => 'comur_api_image_library', //optional
             'showLibrary' => true, 						//optional
-            'saveOriginal' => 'originalImage'
+            'saveOriginal' => 'originalImage'			//optional
         ),
         'cropConfig' => array(
             'minWidth' => 588,
