@@ -24,7 +24,7 @@ class UploadController extends Controller
         /*, $uploadUrl, $paramName, $webDir, $minWidth=1, $minHeight=1*/
     ){
         $config = json_decode($request->request->get('config'),true);
-        // var_dump($config);exit;
+
         $uploadUrl = $config['uploadConfig']['uploadUrl'];
         $uploadUrl = substr($uploadUrl, -strlen('/')) === '/' ? $uploadUrl : $uploadUrl . '/';
         
@@ -63,17 +63,6 @@ class UploadController extends Controller
             )
         );
 
-        // if(isset($config['uploadConfig']['isGallery']) && $config['uploadConfig']['isGallery'])
-        // {
-        //     $handlerConfig['image_versions']['gallery_thumb'] = array(
-        //         'upload_dir' => $uploadUrl . $thumbsDir . '/' . $galleryDir . '/',
-        //         'upload_url' => $config['uploadConfig']['webDir'].'/'.$thumbsDir . '/' . $galleryDir . '/',
-        //         'crop' => true,
-        //         'max_width' => $gThumbSize,
-        //         'max_height' => $gThumbSize
-        //     );
-        // }
-
         $response->setCallback(function () use($handlerConfig) {
             new UploadHandler($handlerConfig);
         });
@@ -99,7 +88,8 @@ class UploadController extends Controller
         $tarW = (int) round($config['cropConfig']['minWidth']);
         $tarH = (int) round($config['cropConfig']['minHeight']);
 
-        // $forceResize = $config['cropConfig']['forceResize'];
+        $forceResize = $config['cropConfig']['forceResize'];
+        // $disableCrop = $config['cropConfig']['disableCrop'];
 
         $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
         $webDir = urldecode($config['uploadConfig']['webDir']);
@@ -107,6 +97,14 @@ class UploadController extends Controller
         $imageName = $params['imageName'];
 
         $src = $uploadUrl.'/'.$imageName;
+
+        // if($disableCrop){
+        //     list($w, $h) = getimagesize($src);
+        //     if($config['cropConfig']['aspectRatio'])
+        //     {
+        //         list($w, $h) = $this->getMaxCropValues($w, $h, $tarW, $tarH);
+        //     }
+        // }
 
         if (!is_dir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/')) {
             mkdir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/', 0755, true);
@@ -116,10 +114,13 @@ class UploadController extends Controller
         $destSrc = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName;
         //$writeFunc($dstR,$src,$imageQuality);
 
-        $destW = $tarW;
-        $destH = $tarH;
+        $destW = $w;
+        $destH = $h;
 
-        // if($forceResize){
+        if($forceResize){
+
+            $destW = $tarW;
+            $destH = $tarH;
 
             if(round($w/$h, 2) != round($tarW/$tarH, 2)){
                 // var_dump($destW, $destH, $w, $h, $this->getMaxResizeValues($w, $h, $tarW, $tarH));exit;
@@ -128,7 +129,7 @@ class UploadController extends Controller
                 list($destW, $destH) = $this->getMinResizeValues($w, $h, $tarW, $tarH);
             }
             
-        // }
+        }
 
         $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
 

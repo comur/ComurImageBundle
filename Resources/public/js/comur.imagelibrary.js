@@ -112,52 +112,58 @@ function initJCrop(id, options){
     if(api){
         api.destroy();
     }
-    var now = new Date().getTime();
-    $('#image_preview img').remove();
-    $('#image_preview').html('<img src="/'+options.uploadConfig.webDir + '/'+$('#selected_image').val()+'?'+now+'" id="image_preview_image"/>');
-    $('#image_preview img').load(function(){
+    // if(!options.cropConfig.disableCrop){
+        var now = new Date().getTime();
+        $('#image_preview img').remove();
+        $('#image_preview').html('<img src="/'+options.uploadConfig.webDir + '/'+$('#selected_image').val()+'?'+now+'" id="image_preview_image"/>');
+        $('#image_preview img').load(function(){
 
-        
-        $('#image_preview img').Jcrop({
-            // start off with jcrop-light class
-            bgOpacity: 0.8,
-            bgColor: 'black',
-            addClass: 'jcrop-dark',
-            aspectRatio: options.cropConfig.aspectRatio ? options.cropConfig.minWidth/options.cropConfig.minHeight : false ,
-            minSize: [ options.cropConfig.minWidth, options.cropConfig.minHeight ],
-            boxWidth: 600, 
-            boxHeight: 400,
-            onSelect: updateCoords
-        },function(){
-            api = this;
-            api.setOptions({ bgFade: true });
-            api.ui.selection.addClass('jcrop-selection');
+            
+            $('#image_preview img').Jcrop({
+                // start off with jcrop-light class
+                bgOpacity: 0.8,
+                bgColor: 'black',
+                addClass: 'jcrop-dark',
+                aspectRatio: options.cropConfig.aspectRatio ? options.cropConfig.minWidth/options.cropConfig.minHeight : false ,
+                minSize: [ options.cropConfig.minWidth, options.cropConfig.minHeight ],
+                boxWidth: 600, 
+                boxHeight: 400,
+                onSelect: updateCoords
+            },function(){
+                api = this;
+                api.setOptions({ bgFade: true });
+                api.ui.selection.addClass('jcrop-selection');
+            });
+
+            if (($('#image_preview_image').width() / $('#image_preview_image').height()) >= (options.cropConfig.minWidth / options.cropConfig.minHeight)) {
+                var selectionWidth = parseInt($('#image_preview_image').height() / (options.cropConfig.minHeight / options.cropConfig.minWidth));
+                var selectionHeight = $('#image_preview_image').height();
+            } else {
+                var selectionWidth = $('#image_preview_image').width();
+                var selectionHeight = parseInt($('#image_preview_image').width() / (options.cropConfig.minWidth / options.cropConfig.minHeight));
+            }
+            console.log(parseInt(($('#image_preview_image').width() - selectionWidth)/2),
+                parseInt(($('#image_preview_image').height() - selectionHeight)/2),
+                selectionWidth, 
+                selectionHeight);
+
+            api.setSelect([
+                parseInt(($('#image_preview_image').width() - selectionWidth)/2),
+                parseInt(($('#image_preview_image').height() - selectionHeight)/2),
+                selectionWidth, 
+                selectionHeight
+            ]);
+            //$('#image_crop').addClass('hidden');
+            $('#image_crop_go_now').removeClass('hidden');
+            $('#image_upload_tabs a:last').tab('show');
         });
-
-        if (($('#image_preview_image').width() / $('#image_preview_image').height()) >= (options.cropConfig.minWidth / options.cropConfig.minHeight)) {
-            var selectionWidth = parseInt($('#image_preview_image').height() / (options.cropConfig.minHeight / options.cropConfig.minWidth));
-            var selectionHeight = $('#image_preview_image').height();
-        } else {
-            var selectionWidth = $('#image_preview_image').width();
-            var selectionHeight = parseInt($('#image_preview_image').width() / (options.cropConfig.minWidth / options.cropConfig.minHeight));
-        }
-        console.log(parseInt(($('#image_preview_image').width() - selectionWidth)/2),
-            parseInt(($('#image_preview_image').height() - selectionHeight)/2),
-            selectionWidth, 
-            selectionHeight);
-
-        api.setSelect([
-            parseInt(($('#image_preview_image').width() - selectionWidth)/2),
-            parseInt(($('#image_preview_image').height() - selectionHeight)/2),
-            selectionWidth, 
-            selectionHeight
-        ]);
-        //$('#image_crop').addClass('hidden');
-        $('#image_crop_go_now').removeClass('hidden');
-        $('#image_upload_tabs a:last').tab('show');
-    });
-    //$('#image_backdrop').removeClass('hidden');
-    //$('#image_preview').css({ 'position': 'relative'});
+        //$('#image_backdrop').removeClass('hidden');
+        //$('#image_preview').css({ 'position': 'relative'});
+    // }
+    // else{
+    //     c = {x: 0, y: 0, w: 0, h: 0};
+    //     cropImage(id, options);
+    // }
 }
 
 function cropImage(id, options){
