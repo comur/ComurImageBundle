@@ -8,6 +8,8 @@ It uses bootstrap to make it look well but you can use any other css to customiz
 
 It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Upload/) to upload files (original UploadHandler has been modified to add namespace and a new config parameter to generate random filenames) and [JCrop](http://deepliquid.com/content/Jcrop.html) to let you crop uploaded images.
 
+**New Since Version 0.2.3 !! you can also save original file in a separate field** See saveOriginal parameter below.
+
 **New Since Version 0.2.0 !! you can also create sortable & croppable gallery widgets** without any specific configuration. It only needs an array typed property in your entity (and a text column in your database). See below for examples, screenshots and how to use it.
 
 Screen shots
@@ -174,7 +176,8 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
             'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
             'libraryDir' => null, 						//optional
             'libraryRoute' => 'comur_api_image_library', //optional
-            'showLibrary' => true //optional
+            'showLibrary' => true, 						//optional
+            'saveOriginal' => 'originalImage'
         ),
         'cropConfig' => array(
             'minWidth' => 588,
@@ -206,6 +209,20 @@ You need to create a field (named image in this example but you can choose whate
     …
     
 That's all ! This will add an image preview with an edit button in your form and will let you upload / select from library and crop images without reloading the page.
+
+To save original image path, you have to create another field and name it same as saveOriginal parameter:
+
+	// YourBundle\Entity\YourEntity.php
+	
+	…
+	
+	/**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $originalImage;
+    
+    …
+
 
 
 I will put a demo soon…
@@ -297,6 +314,12 @@ Route called to get images to show in library. I recommend you to not change thi
 Set this to false if you don't want the user see existing images in libraryDir.
 
 **Default value:** true
+
+###originalImage (optional)###
+
+Use this parameter if you want to save original file's path (for eg. to show big image in a lightbox). You have to put property name of your entity and the bundle will use it to save original file path in it.
+
+**Default value:** false
 
 ##cropConfig##
 

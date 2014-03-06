@@ -4,7 +4,7 @@ $(function(){
     $('.fileinput-button').click(function(event){ 
         if( $( event.target ).is( "span" ) )
         {
-            console.log('click');
+            // console.log('click');
             $('#image_upload_file').click();
             event.stopPropagation();
             return false;
@@ -29,9 +29,9 @@ function initializeImageManager(id, options){
             data: {dir: options.uploadConfig.libraryDir},
             success: function(response){
                 var response = $.parseJSON(response);
-                console.log(response);
+                // console.log(response);
                 var files = response.files;
-                console.log(files);
+                // console.log(files);
                 for (var i = files.length - 1; i >= 0; i--) {
                     var now = new Date().getTime();
                     $('#existing-images').append('<div class="image-container" data-src="'+files[i]+'"><img src="/'+options.uploadConfig.webDir + '/'+response['thumbsDir']+'/'+files[i]+'?'+now+'"/></div>');
@@ -51,11 +51,11 @@ function initializeImageManager(id, options){
         $('#image_upload_tabs li:nth-child(2)').hide();
     }
     $('#image_upload_tabs li:nth-child(3)').hide();
-    console.log('init');
-    console.log($('#image_upload_file'));
+    // console.log('init');
+    // console.log($('#image_upload_file'));
     var url = Routing.generate(options.uploadConfig.uploadRoute);
-    console.log(url);
-    console.log($('.fileinput-button'));
+    // console.log(url);
+    // console.log($('.fileinput-button'));
     //$('#image_upload_file').bind('change', function(){console.log('change')});
     $('#image_upload_file').fileupload({
         url: url,
@@ -63,7 +63,7 @@ function initializeImageManager(id, options){
         formData: {'config': JSON.stringify(options) },
         dropZone: $('#image_upload_drop_zone'),
         done: function (e, data) {
-            console.log('uploaded');
+            // console.log('uploaded');
             if(data.result['image_upload_file'][0].error){
                 $('#image_upload_widget_error').text(data.result['image_upload_file'][0].error);
                 $('#image_upload_widget_error').parent().removeClass('hidden');
@@ -71,7 +71,7 @@ function initializeImageManager(id, options){
             else{
                 $('#image_upload_widget_error').text('');
                 $('#image_upload_widget_error').parent().addClass('hidden');
-                console.log(data.result, data.result['image_upload_file']);
+                // console.log(data.result, data.result['image_upload_file']);
                 // $('#image_preview img').remove();
                 // $('#image_preview').html('<img src="/'+data.result['image_upload_file'][0].url+'" id="image_preview_image"/>');
                 $('#selected_image').val(data.result['image_upload_file'][0].name); 
@@ -183,23 +183,35 @@ function cropImage(id, options){
             var filename = data.filename;
             var previewSrc = data.previewSrc;
             
-            console.log('crop success');
+            // console.log('crop success');
 
             if(typeof galleries[id] != 'undefined'){
-                console.log('isGallery');
-                console.log(galleries[id]);
+                // console.log('isGallery');
+                // console.log(galleries[id]);
                 addImageToGallery(filename, id, data.galleryThumb, options);
             }
             else{
-                console.log('simple image');
+                // console.log('simple image');
                 $('#'+id).val(filename);
-                $('#selected_image').val(filename);
-                //$('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
                 $('#image_preview_image_'+id).html('<img src="'+previewSrc+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                // console.log(options.uploadConfig.saveOriginal, $('#'+options.originalImageFieldId), options.originalImageFieldId);
+                if(options.uploadConfig.saveOriginal){
+                    // console.log('set '+$('#selected_image').val());
+                    $('#'+options.originalImageFieldId).val($('#selected_image').val());                    
+                    $('#image_preview_image_'+id+' img').css('cursor: hand; cursor: pointer;');
+                    $('#image_preview_image_'+id+' img').click(function(e){
+                        if($( event.target ).is( "img" )){
+                            $('<div class="modal hide fade"><img src="'+options.uploadConfig.webDir+'/'+$('#selected_image').val()+'"/></div>').modal();
+                            return false;
+                        }
+                    });
+                }
+                //$('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
                 $('#image_preview_'+id).removeClass('hide-disabled');
             }
             
             destroyJCrop(id);
+            $('#selected_image').val('');
             $('#image_preview').html('<p>Please select or upload an image</p>');
             $('#image_crop_go_now').addClass('hidden');
             $('#image_upload_tabs a:first').tab('show');
@@ -211,11 +223,13 @@ function cropImage(id, options){
 function addImageToGallery(filename, id, thumb, options)
 {
     // $('#'+id).val(js_array_to_php_array(galleries[id]));
+    // console.log('add #gallery_preview_'+id+' input');
     var nb = $('#gallery_preview_'+id+' input').length;
+    var name = $('#gallery_preview_'+id).data('name');
     $('#gallery_preview_'+id).append('<div class="gallery-image-container" data-image="'+filename+'">' +
         '<span class="remove-image"><i class="icon icon-white icon-remove"></i></span>' +
         '<span class="gallery-image-helper"></span>' +
-        '<input type="text" id="mvb_bundle_memberbundle_company_gallery_'+nb+'" name="mvb_bundle_memberbundle_company[gallery]['+nb+']" style="padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;" value="'+filename+'">' +
+        '<input type="text" id="'+id+'_'+nb+'" name="'+name+'['+nb+']" style="padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;" value="'+filename+'">' +
         '<img src="/'+options.uploadConfig.webDir + '/' + thumb+'?'+ new Date().getTime()+'"/>' +
     '</div>');
     rebindGalleryRemove();

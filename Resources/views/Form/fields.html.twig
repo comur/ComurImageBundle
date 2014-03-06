@@ -2,30 +2,34 @@
     {% trans_default_domain comur_translation_domain %}
     {# trans_default_domain 'ComurImageBundle' #}
     {% spaceless %}
-        {{ block('form_widget_simple') }}
+        {# block('form_widget_simple') #}
+        {{ form_widget(form[name])}}
+        {% if options.uploadConfig.saveOriginal %}
+            {{ form_widget(form[options.uploadConfig.saveOriginal])}}
+        {% endif %}
         
         <div class="field-error clearfix hidden">
-            <div id="{{id}}_widget_error" class="alert alert-danger span6">
+            <div id="{{form[name].vars.id}}_widget_error" class="alert alert-danger span6">
             </div>
         </div>
-        <div class="image_preview select-image-button" id="image_preview_{{ id }}" style="z-index: 1050">
+        <div class="image_preview select-image-button" id="image_preview_{{ form[name].vars.id }}" style="z-index: 1050">
             <div class="image_edit_button">
                 <span class="btn btn-success select-image-button">
                     <i class="icon-edit icon-white"></i> {% trans %}Edit{% endtrans %}
                 </span>
             </div>
-            <div id="image_preview_image_{{id}}">
+            <div id="image_preview_image_{{form[name].vars.id}}">
                 {% if not options.fieldImage %}
-                    {% if value %}
-                        <img src="/{{ options.uploadConfig.webDir ~ '/' ~ value }}?{{ 'now'  | date('U') }}" id="{{ id }}_preview"/>
+                    {% if form[name].vars.value %}
+                        <img src="/{{ options.uploadConfig.webDir ~ '/' ~ form[name].vars.value }}?{{ 'now'  | date('U') }}" id="{{ form[name].vars.id }}_preview" style="{{ options.uploadConfig.saveOriginal ? 'cursor:hand; cursor: pointer' : ''}}"/>
                     {% else %}
-                        <img src="http://placehold.it/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ id }}_preview"/>
+                        <img src="http://placehold.it/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ form[name].vars.id }}_preview"/>
                     {% endif %}
                 {% else %}
-                    {% if value %}
-                        <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ value)|thumb(options.fieldImage.maxWidth, options.fieldImage.maxHeight) }}?{{ 'now'  | date('U') }}" id="{{ id }}_preview"/>
+                    {% if form[name].vars.value %}
+                        <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ form[name].vars.value)|thumb(options.fieldImage.maxWidth, options.fieldImage.maxHeight) }}?{{ 'now'  | date('U') }}" id="{{ form[name].vars.id }}_preview" style="{{ options.uploadConfig.saveOriginal ? 'cursor:hand; cursor: pointer' : ''}}"/>
                     {% else %}
-                        <img src="http://placehold.it/{{ options.fieldImage.maxWidth }}x{{ options.fieldImage.maxHeight}}" id="{{ id }}_preview"/>
+                        <img src="http://placehold.it/{{ options.fieldImage.maxWidth }}x{{ options.fieldImage.maxHeight}}" id="{{ form[name].vars.id }}_preview"/>
                     {% endif %}
                 {% endif %}
                 
@@ -35,9 +39,24 @@
 
     <script>
         $(document).ready(function(){
-            $('#image_preview_{{ id }}.select-image-button .image_edit_button').click(function(event){ 
-                initializeImageManager('{{ id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
-                console.log('{{id}} onclick');
+            {% if options.uploadConfig.saveOriginal %}
+                if($('#{{ form[options.uploadConfig.saveOriginal].vars.id }}').val()){
+                    $('#{{ form[name].vars.id }}_preview').click(function(e){
+                        // console.log(e.target);
+                        if($( e.target ).is( "img" )){
+                            $('<div class="modal hide fade"><img src="/{{options.uploadConfig.webDir}}/{{ form[options.uploadConfig.saveOriginal].vars.value }}"/></div>').modal();
+                            return false;
+                        }
+                    });
+                }
+            {% endif %}
+            $('#image_preview_{{ form[name].vars.id }}.select-image-button .image_edit_button').click(function(event){ 
+                var options = $.parseJSON('{{ options | json_encode() | raw }}');
+                {% if options.uploadConfig.saveOriginal %}
+                    options['originalImageFieldId'] = '{{ form[options.uploadConfig.saveOriginal].vars.id }}';
+                {% endif %}
+                initializeImageManager('{{ form[name].vars.id }}', options);
+                // console.log('{{form[name].vars.id}} onclick');
                 $('#image_upload_modal').modal('show');
             });
         });
@@ -60,11 +79,12 @@
     {% spaceless %}
         
         <div class="field-error clearfix hidden">
-            <div id="{{id}}_widget_error" class="alert alert-danger span6">
+            <div id="{{form[name].vars.id}}_widget_error" class="alert alert-danger span6">
             </div>
         </div>
-        <div id="gallery_preview_{{id}}" class="well" data-name="{{full_name}}">
-            {% for image in form %}
+        <div id="gallery_preview_{{form[name].vars.id}}" class="well" data-name="{{form[name].vars.full_name}}">
+
+            {% for image in form[name] %}
                 <div class="gallery-image-container" data-image="{{ image.vars.value }}">
                     <span class="gallery-image-helper"></span>
                     {{ form_widget(image) }}
@@ -85,18 +105,18 @@
 
         $(document).ready(function(){
             rebindGalleryRemove();
-            galleries['{{id}}'] = true;
+            galleries['{{form[name].vars.id}}'] = true;
             $('.image_add_button').click(function(event){ 
-                initializeImageManager('{{ id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
+                initializeImageManager('{{ form[name].vars.id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
                 $('#image_upload_modal').modal('show');
             });
-            $( "#gallery_preview_{{id}}" ).sortable({
+            $( "#gallery_preview_{{form[name].vars.id}}" ).sortable({
                 placeholder: "gallery-image-container placeholder",
                 update: function(e, ui){
-                    reorderItems('gallery_preview_{{id}}');
+                    reorderItems('gallery_preview_{{form[name].vars.id}}');
                 }
             });
-            $( "#gallery_preview_{{id}}" ).disableSelection();
+            $( "#gallery_preview_{{form[name].vars.id}}" ).disableSelection();
         });
 
     </script>

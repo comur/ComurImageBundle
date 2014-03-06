@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,14 +20,43 @@ class CroppableGalleryType extends CroppableImageType
     protected $isGallery = true;
     protected $galleryThumbSize = null;
 
-    public function getParent()
-    {
-        return 'collection';
-    }
+    // public function getParent()
+    // {
+    //     return 'collection';
+    // }
 
     public function getName()
     {
         return 'comur_gallery';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+
+        // if($options['uploadConfig']['saveOriginal']){
+        //     $form->getParent()->add($options['uploadConfig']['saveOriginal'], 'hidden');
+        // }
+        // var_dump($builder->getDataMapper());exit;
+        // if($options['uploadConfig']['saveOriginal']){
+        //     $builder->add($options['uploadConfig']['saveOriginal'], 'text', array(
+        //         // 'inherit_data' => true,
+        //         // 'property_path' => $options['uploadConfig']['saveOriginal'],
+        //         'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;')));
+        // }
+
+        $builder->add($builder->getName(), 'collection', array(
+            // 'property_path' => $builder->getName(),
+            // 'inherit_data' => true,
+            'allow_add' => function(Options $options, $value){ return true; },
+            'allow_delete' => function(Options $options, $value){ return true; },
+            'options' => array(
+                'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;padding: 0; position: absolute;'
+                    )
+                )
+            ));
     }
 
     public function __construct($galleryDir, $thumbsDir, $galleryThumbSize)
@@ -47,18 +77,10 @@ class CroppableGalleryType extends CroppableImageType
 
         $galleryDir = $this->galleryDir;
 
-        $resolver->setNormalizers(array(
-            'options' => function(Options $options, $value){
-                return array_merge($value, array(
-                    'attr' => array('style' => 'padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;'),
-                    // 'allow_add' => true,
-                    // 'allow_delete' => true
-                ));
-            },
-            'allow_add' => function(Options $options, $value){ return true; },
-            'allow_delete' => function(Options $options, $value){ return true; }
+        // $resolver->setNormalizers(array(
             
-        ));
+            
+        // ));
     //     $uploadConfig = array(
     //         'uploadRoute' => 'comur_api_upload',
     //         'uploadUrl' => null,
