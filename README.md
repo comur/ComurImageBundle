@@ -315,7 +315,7 @@ Set this to false if you don't want the user see existing images in libraryDir.
 
 **Default value:** true
 
-###originalImage (optional)###
+###saveOriginal (optional)###
 
 Use this parameter if you want to save original file's path (for eg. to show big image in a lightbox). You have to put property name of your entity and the bundle will use it to save original file path in it.
 
