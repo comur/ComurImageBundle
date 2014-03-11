@@ -63,7 +63,7 @@ class UploadController extends Controller
             )
         );
 
-        $transDomain = $this->container->getParameter('comur_translation_domain');
+        $transDomain = $this->container->getParameter('comur_image.translation_domain');
 
         $errorMessages = array(
             1 => $this->get('translator')->trans('The uploaded file exceeds the upload_max_filesize directive in php.ini', array(), $transDomain),
@@ -86,7 +86,7 @@ class UploadController extends Controller
             'image_resize' => $this->get('translator')->trans('Failed to resize image', array(), $transDomain),
         );
 
-        $response->setCallback(function () use($handlerConfig) {
+        $response->setCallback(function () use($handlerConfig, $errorMessages) {
             new UploadHandler($handlerConfig, true, $errorMessages);
         });
         
