@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2014-03-10T10:57:56Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2014-05-14T17:40:34Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -19,7 +19,7 @@
       <trans-unit id="cfdff1de9222ae8e71d10f589f1d6a5b42347477" resname="Crop &amp; Use !">
         <source><![CDATA[Crop & Use !]]></source>
         <target><![CDATA[Cropper & Utiliser !]]></target>
-        <jms:reference-file line="87">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+        <jms:reference-file line="88">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5580c63bc4b0fc39c3db8d3d53b8c6c159a991d1" resname="Crop and Use">
         <source>Crop and Use</source>
@@ -106,10 +106,15 @@
         <target state="new">No file was uploaded</target>
         <jms:reference-file line="72">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="f0b2d3388f908ce093306f083487d583f5aa3c57" resname="Please adjust selection to your image">
+        <source>Please adjust selection to your image</source>
+        <target state="new">Veuillez ajuster la selection à votre image</target>
+        <jms:reference-file line="78">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="07abfd9112b9bd5535213abeb01386152ef4c1d4" resname="Please select or upload an image">
         <source>Please select or upload an image</source>
         <target>Veuillez uploader ou sélectionner une image existante</target>
-        <jms:reference-file line="79">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+        <jms:reference-file line="80">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6ed2aa6178d845f3246027181bf6cf89322961f0" resname="Select Existing">
         <source>Select Existing</source>
