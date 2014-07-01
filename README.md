@@ -54,7 +54,7 @@ Installation
     }
     ```
 
-2. Add this bundle to your app/AppKernel.php:
+2. Register FOSJsRouting and this bundle to your app/AppKernel.php:
 
     ```
     // app/AppKernel.php
@@ -62,6 +62,7 @@ Installation
     {
         return array(
             // ...
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Comur\ImageBundle\ComurImageBundle(),
             // ...
         );
