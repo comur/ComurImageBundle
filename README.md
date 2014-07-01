@@ -63,6 +63,7 @@ Installation
         return array(
             // ...
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
             new Comur\ImageBundle\ComurImageBundle(),
             // ...
         );
@@ -72,6 +73,9 @@ Installation
 
     ```
     # app/config/routing.yml
+    fos_js_routing:
+    	resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    	
     comur_image:
         resource: "@ComurImageBundle/Resources/config/routing.yml"
         prefix:   /
