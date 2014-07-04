@@ -1,3 +1,5 @@
+Use master branch for Bootstrap 2.x compatibility and 1.0 for Bootstrap 3.x
+
 ComurImageBundle
 ============
 
