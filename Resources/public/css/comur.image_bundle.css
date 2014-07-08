@@ -38,11 +38,20 @@
 {
     position: absolute;
     line-height: normal;
-    margin-left: -5px;
+    margin-left: -10px;
     margin-top: -10px;
     cursor: hand;
     cursor: pointer;
     text-align: left;
+}
+
+.gallery-image-container span.remove-image i
+{
+    color: red;
+    background-color: white;
+    padding: 2px;
+    border: solid 1px #aaa;
+    border-radius: 15px;
 }
 
 .image_edit_button
