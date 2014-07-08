@@ -15,7 +15,7 @@
     min-height: 150px;
     min-width: 150px;
     height: 150px;
-    width: 150px;
+    /*width: 150px;*/
     cursor: move;
     text-align: center;
     background-color: #fff;
@@ -120,8 +120,8 @@
 
 #existing-images div.image-container
 {
-    width: 150px;
-    height: 150px;
+    /*width: 150px;
+    height: 150px;*/
     border: solid 1px #888;
     display: inline-block;
     margin: 5px;

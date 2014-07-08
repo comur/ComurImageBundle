@@ -89,6 +89,7 @@ function initializeImageManager(id, options){
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
     // $('#image_upload_file').bind('fileuploadadd', function (e, data) {console.log('add')});
+    $('#image_crop_go_now').unbind('click');
     $('#image_crop_go_now').click(function(){ cropImage(id, options)});
     // $('#'+id+'_image_crop span').click(initJCrop_{{id}});
     // $('#'+id+'_image_crop_go_cancel').click(destroyJCrop);

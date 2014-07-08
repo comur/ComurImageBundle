@@ -93,7 +93,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="image_add_button">
+        <div class="image_add_button" id="image_add_button_{{form[name].vars.id}}">
             <span class="btn btn-success add-image-button">
                 <i class="icon-picture icon-white"></i> {% trans %}Add image{% endtrans %}
             </span>
@@ -106,7 +106,7 @@
         $(document).ready(function(){
             rebindGalleryRemove();
             galleries['{{form[name].vars.id}}'] = true;
-            $('.image_add_button').click(function(event){ 
+            $('#image_add_button_{{form[name].vars.id}}').click(function(event){ 
                 initializeImageManager('{{ form[name].vars.id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
                 $('#image_upload_modal').modal('show');
             });

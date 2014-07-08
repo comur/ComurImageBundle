@@ -273,6 +273,10 @@ class UploadController extends Controller
 
         $result['thumbsDir'] = $this->container->getParameter('comur_image.thumbs_dir');
         
+        if (!is_dir($request->request->get('dir'))) {
+            mkdir($request->request->get('dir').'/', 0755, true);
+        }
+
         foreach ($finder->in($request->request->get('dir'))->files() as $file) {
             $files[] = $file->getFilename();
         }
