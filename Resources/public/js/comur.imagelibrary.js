@@ -228,7 +228,7 @@ function addImageToGallery(filename, id, thumb, options)
     var nb = $('#gallery_preview_'+id+' input').length;
     var name = $('#gallery_preview_'+id).data('name');
     $('#gallery_preview_'+id).append('<div class="gallery-image-container" data-image="'+filename+'">' +
-        '<span class="remove-image"><i class="icon icon-white icon-remove"></i></span>' +
+        '<span class="remove-image"><i class="glyphicon glyphicon-remove"></i></span>' +
         '<span class="gallery-image-helper"></span>' +
         '<input type="text" id="'+id+'_'+nb+'" name="'+name+'['+nb+']" style="padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;" value="'+filename+'">' +
         '<img src="/'+options.uploadConfig.webDir + '/' + thumb+'?'+ new Date().getTime()+'"/>' +
