@@ -174,6 +174,7 @@ Image widget
 ------------
 
 Use widget in your forms (works with SonataAdmin too) to create a simple image field :
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    // get your entity related with your form type
@@ -218,6 +219,29 @@ You need to create a field (named image in this example but you can choose whate
     protected $image;
     
     …
+    
+And create your functions in your entity to have directory paths, for ex :
+
+	public function getUploadRootDir()
+	{
+	    // absolute path to your directory where images must be saved
+	    return __DIR__.'/../../../../../web/'.$this->getUploadDir();
+	}
+	
+	public function getUploadDir()
+	{
+	    return 'uploads/myentity';
+	}
+	
+	public function getAbsolutePath()
+	{
+	    return null === $this->image ? null : $this->getUploadRootDir().'/'.$this->image;
+	}
+	
+	public function getWebPath()
+	{
+	    return null === $this->image ? null : '/'.$this->getUploadDir().'/'.$this->image;
+	}
     
 That's all ! This will add an image preview with an edit button in your form and will let you upload / select from library and crop images without reloading the page.
 
