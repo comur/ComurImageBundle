@@ -174,33 +174,38 @@ Image widget
 ------------
 
 Use widget in your forms (works with SonataAdmin too) to create a simple image field :
-
-    ->add('image', 'comur_image', array(
-        'uploadConfig' => array(
-            'uploadRoute' => 'comur_api_upload', 		//optional
-            'uploadUrl' => $myObject->getUploadRootDir(),
-            'webDir' => $myObject->getUploadDir(),
-            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
-            'libraryDir' => null, 						//optional
-            'libraryRoute' => 'comur_api_image_library', //optional
-            'showLibrary' => true, 						//optional
-            'saveOriginal' => 'originalImage'			//optional
-        ),
-        'cropConfig' => array(
-            'minWidth' => 588,
-            'minHeight' => 300,
-            'aspectRatio' => true, 				//optional
-            'cropRoute' => 'comur_api_crop', 	//optional
-            'forceResize' => false, 			//optional
-            'thumbs' => array( 					//optional
-            	array(
-            		'maxWidth' => 180,
-            		'maxHeight' => 400,
-            		'useAsFieldImage' => true  //optional
-            	)
-            )
-        )
-    ))
+    
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+	    // get your entity related with your form type
+	    $myEntity = $builder->getForm()->getData();
+	    ...
+	    ->add('image', 'comur_image', array(
+	        'uploadConfig' => array(
+	            'uploadRoute' => 'comur_api_upload', 		//optional
+	            'uploadUrl' => $myEntity->getUploadRootDir(),       // required - see explanation below (you can also put just a dir path)
+	            'webDir' => $myEntity->getUploadDir(),				// required - see explanation below (you can also put just a dir path)
+	            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
+	            'libraryDir' => null, 						//optional
+	            'libraryRoute' => 'comur_api_image_library', //optional
+	            'showLibrary' => true, 						//optional
+	            'saveOriginal' => 'originalImage'			//optional
+	        ),
+	        'cropConfig' => array(
+	            'minWidth' => 588,
+	            'minHeight' => 300,
+	            'aspectRatio' => true, 				//optional
+	            'cropRoute' => 'comur_api_crop', 	//optional
+	            'forceResize' => false, 			//optional
+	            'thumbs' => array( 					//optional
+	            	array(
+	            		'maxWidth' => 180,
+	            		'maxHeight' => 400,
+	            		'useAsFieldImage' => true  //optional
+	            	)
+	            )
+	        )
+	    ))
     
 You need to create a field (named image in this example but you can choose whatever you want):
 
@@ -214,6 +219,29 @@ You need to create a field (named image in this example but you can choose whate
     protected $image;
     
     …
+    
+And create your functions in your entity to have directory paths, for ex :
+
+	public function getUploadRootDir()
+	{
+	    // absolute path to your directory where images must be saved
+	    return __DIR__.'/../../../../../web/'.$this->getUploadDir();
+	}
+	
+	public function getUploadDir()
+	{
+	    return 'uploads/myentity';
+	}
+	
+	public function getAbsolutePath()
+	{
+	    return null === $this->image ? null : $this->getUploadRootDir().'/'.$this->image;
+	}
+	
+	public function getWebPath()
+	{
+	    return null === $this->image ? null : '/'.$this->getUploadDir().'/'.$this->image;
+	}
     
 That's all ! This will add an image preview with an edit button in your form and will let you upload / select from library and crop images without reloading the page.
 
@@ -255,6 +283,29 @@ And create your array typed field for storing images in it. Doctrine (or other O
     protected $gallery;
     
     …
+    
+And create your functions in your entity to have directory paths, for ex :
+
+	public function getUploadRootDir()
+    {
+        // absolute path to your directory where images must be saved
+        return __DIR__.'/../../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getUploadDir()
+    {
+        return 'uploads/myentity';
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->image ? null : $this->getUploadRootDir().'/'.$this->image;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->image ? null : '/'.$this->getUploadDir().'/'.$this->image;
+    }
 
 That's all ! This will create a widget like on the following image when you will use it in your forms. **You can also reorder them since php serialized arrays are ordered**:
 
@@ -274,7 +325,7 @@ Absolute url to directory where put uploaded image. I recommend you to create a 
     
     public function getUploadRootDir()
     {
-        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
+        // absolute path to your directory where images must be saved
         return __DIR__.'/../../../../../web/'.$this->getUploadDir();
     }
 
