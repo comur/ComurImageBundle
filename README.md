@@ -51,7 +51,7 @@ Installation
 	```
     {
         "require": {
-            "comur/image-bundle": "dev-master",
+            "comur/image-bundle": "1.0.*@dev",
         }
     }
     ```
