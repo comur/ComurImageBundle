@@ -156,7 +156,7 @@
         <target>или</target>
         <jms:reference-file line="54">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="1758356db21759f7c5a0da9b4dd1db8fd6feab3g" resname="Close">
+      <trans-unit id="bbfa773e5a63a5ea58c9b6207e608ca0120e592a" resname="Close">
         <source>Close</source>
         <target>Закрыть</target>
       </trans-unit>
