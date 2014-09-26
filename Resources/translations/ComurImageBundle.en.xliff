@@ -156,6 +156,10 @@
         <target>or</target>
         <jms:reference-file line="54">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="bbfa773e5a63a5ea58c9b6207e608ca0120e592a" resname="Close">
+        <source>Close</source>
+        <target>Close</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
