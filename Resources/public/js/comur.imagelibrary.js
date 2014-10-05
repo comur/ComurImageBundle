@@ -112,7 +112,7 @@ function initJCrop(id, options){
     if(api){
         api.destroy();
     }
-    // if(!options.cropConfig.disableCrop){
+    if(!options.cropConfig.disableCrop){
         var now = new Date().getTime();
         $('#image_preview img').remove();
         $('#image_preview').html('<img src="/'+options.uploadConfig.webDir + '/'+$('#selected_image').val()+'?'+now+'" id="image_preview_image"/>');
@@ -159,11 +159,11 @@ function initJCrop(id, options){
         });
         //$('#image_backdrop').removeClass('hidden');
         //$('#image_preview').css({ 'position': 'relative'});
-    // }
-    // else{
-    //     c = {x: 0, y: 0, w: 0, h: 0};
-    //     cropImage(id, options);
-    // }
+     }
+     else{
+         c = {x: 0, y: 0, w: 0, h: 0};
+         cropImage(id, options);
+     }
 }
 
 function cropImage(id, options){

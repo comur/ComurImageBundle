@@ -112,7 +112,7 @@ class UploadController extends Controller
         $tarH = (int) round($config['cropConfig']['minHeight']);
 
         $forceResize = $config['cropConfig']['forceResize'];
-        // $disableCrop = $config['cropConfig']['disableCrop'];
+        $disableCrop = $config['cropConfig']['disableCrop'];
 
         $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
         $webDir = urldecode($config['uploadConfig']['webDir']);
@@ -121,13 +121,13 @@ class UploadController extends Controller
 
         $src = $uploadUrl.'/'.$imageName;
 
-        // if($disableCrop){
-        //     list($w, $h) = getimagesize($src);
-        //     if($config['cropConfig']['aspectRatio'])
-        //     {
-        //         list($w, $h) = $this->getMaxCropValues($w, $h, $tarW, $tarH);
-        //     }
-        // }
+         if($disableCrop){
+             list($w, $h) = getimagesize($src);
+             if($config['cropConfig']['aspectRatio'])
+             {
+                 list($w, $h) = $this->getMaxCropValues($w, $h, $tarW, $tarH);
+             }
+         }
 
         if (!is_dir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/')) {
             mkdir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/', 0755, true);
@@ -272,7 +272,7 @@ class UploadController extends Controller
         $files = array();
 
         $result['thumbsDir'] = $this->container->getParameter('comur_image.thumbs_dir');
-        
+
         if (!is_dir($request->request->get('dir'))) {
             mkdir($request->request->get('dir').'/', 0755, true);
         }
