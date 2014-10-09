@@ -196,7 +196,8 @@ class UploadController extends Controller
 
                 $thumbName = $maxW.'x'.$maxH.'-'.$imageName;
                 $thumbSrc = $thumbDir . $thumbName;
-                $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH);
+                $jpeg_quality = isset($thumb['jpeg_quality']) ? $thumb['jpeg_quality'] : 90;
+                $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH, $jpeg_quality);
                 if(isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage']){
                     $previewSrc = '/'.$config['uploadConfig']['webDir'] . '/' . $this->container->getParameter('comur_image.cropped_image_dir') . '/'. $this->container->getParameter('comur_image.thumbs_dir'). '/' . $thumbName;
                 }
@@ -289,7 +290,7 @@ class UploadController extends Controller
     /**
      * Crops or resizes image and writes it on disk
      */
-    private function resizeCropImage($destSrc, $imgSrc, $destX, $destY, $srcX, $srcY, $destW, $destH, $srcW, $srcH)
+    private function resizeCropImage($destSrc, $imgSrc, $destX, $destY, $srcX, $srcY, $destW, $destH, $srcW, $srcH, $jpeg_quality = 90)
     {
         $type = strtolower(pathinfo($imgSrc, PATHINFO_EXTENSION));
 
@@ -298,7 +299,7 @@ class UploadController extends Controller
             case 'jpeg':
                 $srcFunc = 'imagecreatefromjpeg';
                 $writeFunc = 'imagejpeg';
-                $imageQuality = 100;
+                $imageQuality = $jpeg_quality;
                 break;
             case 'gif':
                 $srcFunc = 'imagecreatefromgif';
