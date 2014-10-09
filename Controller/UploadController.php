@@ -112,6 +112,7 @@ class UploadController extends Controller
         $tarH = (int) round($config['cropConfig']['minHeight']);
 
         $forceResize = $config['cropConfig']['forceResize'];
+        $defaultJpegQuality = $config['cropConfig']['jpeg_quality'];
         // $disableCrop = $config['cropConfig']['disableCrop'];
 
         $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
@@ -154,7 +155,8 @@ class UploadController extends Controller
             
         }
 
-        $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
+        $jpegQuality = isset($config['cropConfig']['jpeg_quality']) ? $config['cropConfig']['jpeg_quality'] : $defaultJpegQuality;
+        $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h,$jpegQuality);
 
         $galleryThumbOk = false;
         $isGallery = isset($config['uploadConfig']['isGallery']) ? $config['uploadConfig']['isGallery'] : false;
@@ -196,8 +198,8 @@ class UploadController extends Controller
 
                 $thumbName = $maxW.'x'.$maxH.'-'.$imageName;
                 $thumbSrc = $thumbDir . $thumbName;
-                $jpeg_quality = isset($thumb['jpeg_quality']) ? $thumb['jpeg_quality'] : 90;
-                $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH, $jpeg_quality);
+                $thumbJpegQuality = isset($thumb['jpeg_quality']) ? $thumb['jpeg_quality'] : $jpegQuality;
+                $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH, $thumbJpegQuality);
                 if(isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage']){
                     $previewSrc = '/'.$config['uploadConfig']['webDir'] . '/' . $this->container->getParameter('comur_image.cropped_image_dir') . '/'. $this->container->getParameter('comur_image.thumbs_dir'). '/' . $thumbName;
                 }
