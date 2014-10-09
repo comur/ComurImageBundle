@@ -122,6 +122,7 @@ Configuration
 			translation_domain: 'ComurImageBundle'
 			gallery_thumb_size: 150
 			gallery_dir: 'gallery'
+			jpeg_quality: 90
 
 ###cropped_image_dir###
 
@@ -164,6 +165,10 @@ That's the image size in pixels that you want to show in gallery widget. Gallery
 That's the gallery directory name. The widget will store all gallery images in a specific directory inside the root directory that you will give when you will add the widget to your forms.
 
 **For eg.** if you put 'uploads/images' as webDir when you add the widget, gallery images will be stored in 'uploads/images/*[gallery_dir]*'. This is added to make gallery use easier so you don't have to add new functions to your entities to get gallery dirs.
+
+###jpeg_quality###
+
+That's the quality of jpeg. It will be applied to all cropped images (and thumbs), if their aren't have own quality option.
 
 #Usage#
 
@@ -261,6 +266,52 @@ To save original image path, you have to create another field and name it same a
 
 
 I will put a demo soon…
+
+Setting JPEG quality of cropped images
+------------
+
+If your field definition doesn't have specified value, then its param will be get from global option (from config.yml) or set to default value (`90`).
+
+But you may set jpegQuality option for any field and even for any separate thumb:
+    
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+	    // get your entity related with your form type
+	    $myEntity = $builder->getForm()->getData();
+	    ...
+	    ->add('image', 'comur_image', array(
+	        'uploadConfig' => array(
+	            'uploadRoute' => 'comur_api_upload', 		//optional
+	            'uploadUrl' => $myEntity->getUploadRootDir(),       // required
+	            'webDir' => $myEntity->getUploadDir(),				// required
+	            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
+	            'libraryDir' => null, 						//optional
+	            'libraryRoute' => 'comur_api_image_library', //optional
+	            'showLibrary' => true, 						//optional
+	            'saveOriginal' => 'originalImage'			//optional
+	        ),
+	        'cropConfig' => array(
+	            'minWidth' => 588,
+	            'minHeight' => 300,
+	            'aspectRatio' => true, 				//optional
+	            'cropRoute' => 'comur_api_crop', 	//optional
+	            'forceResize' => false, 			//optional
+	            'jpegQuality' => 75, 				//optional, set quality for all thumbs of this field
+	            'thumbs' => array( 					//optional
+	            	array(
+	            		'maxWidth' => 180,
+	            		'maxHeight' => 400,
+	            		'useAsFieldImage' => true  //optional
+	            	),
+	            	array(
+	            		'maxWidth' => 180,
+	            		'maxHeight' => 400,
+	            		'jpegQuality' => 60 		// override quality for this thumb
+	            	)
+	            )
+	        )
+	    ))
+    
 
 Gallery widget
 ------------
