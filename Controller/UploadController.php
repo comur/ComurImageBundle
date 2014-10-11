@@ -112,7 +112,7 @@ class UploadController extends Controller
         $tarH = (int) round($config['cropConfig']['minHeight']);
 
         $forceResize = $config['cropConfig']['forceResize'];
-        $defaultJpegQuality = $config['cropConfig']['jpeg_quality'];
+        $default_jpeg_quality = $this->container->getParameter('comur_image.jpeg_quality');
         // $disableCrop = $config['cropConfig']['disableCrop'];
 
         $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
