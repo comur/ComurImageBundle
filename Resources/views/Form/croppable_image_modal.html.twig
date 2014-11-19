@@ -57,8 +57,9 @@
                     <span class="btn btn-info fileinput-button">
                         <i class="icon-white icon-download-alt"></i>
                         <span> {% trans %}Select a file...{% endtrans %}</span>
-                        <input id="image_upload_file" type="file" name="image_upload_file">
+                        {#<input id="image_upload_file" type="file" name="image_upload_file">#}
                     </span>
+					<input id="image_upload_file" type="file" name="image_upload_file" style="opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;">
                 </div>
                 <div id="image_file_upload_progress" class="progress">
                     <div class="progress-bar progress-bar-success"></div>
@@ -76,7 +77,7 @@
             <!-- CROP IMAGE -->
             <div class="tab-pane" id="crop-and-use">
                 <p>{% trans %}Please adjust selection to your image{% endtrans %}</p>
-                <div class="image_preview" id="image_preview" style="z-index: 1050">
+                <div class="image_preview" id="image_preview" style="z-index: 1050; margin-bottom: 20px;">
                     <p>{% trans %}Please select or upload an image{% endtrans %}</p>
                 </div>
             </div>

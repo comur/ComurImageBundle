@@ -14,7 +14,7 @@
         </div>
         <div class="image_preview select-image-button" id="image_preview_{{ form[name].vars.id }}" style="z-index: 1050">
             <div class="image_edit_button">
-                <span class="btn btn-success select-image-button">
+                <span class="btn btn-success {% if options.fieldImage and options.cropConfig.minWidth < 100 %}btn-sm{% endif %} select-image-button">
                     <i class="icon-edit icon-white"></i> {% trans %}Edit{% endtrans %}
                 </span>
             </div>

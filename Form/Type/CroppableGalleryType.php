@@ -125,6 +125,13 @@ class CroppableGalleryType extends CroppableImageType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        // @Tersoal
+        // Hack to fix windows routes. Windows create routes with \ instead of /
+        foreach($options['uploadConfig'] as $key => $optiontotransform) {
+            $options['uploadConfig'][$key] = str_replace('\\', '/', $optiontotransform);
+        }
+        // @Tersoal
+		
         $uploadConfig = $options['uploadConfig'];
         $cropConfig = $options['cropConfig'];
         // $options['type'] = 'text';
