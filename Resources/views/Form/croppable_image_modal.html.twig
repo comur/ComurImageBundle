@@ -18,6 +18,9 @@
 {% endif %}
 <!-- ComurImageBundle script. Do not remove this -->
 <script src="{{ asset('bundles/comurimage/js/comur.imagelibrary.js') }}"></script>
+{% if include_holder is not defined or include_holder %}
+    <script src="{{ asset('bundles/comurimage/js/holder.js') }}"></script>
+{% endif %}
 {% endblock %}
 
 {% block comur_image_stylesheets %}
