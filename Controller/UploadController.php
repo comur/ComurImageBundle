@@ -321,7 +321,12 @@ class UploadController extends Controller
             $destH = $srcH;
         }
         $dstR = imagecreatetruecolor( $destW, $destH );
-
+        
+        if($type == 'png'){
+            imagealphablending( $dstR, false );
+            imagesavealpha( $dstR, true );
+        }
+        
         imagecopyresampled($dstR,$imgR,$destX,$destY,$srcX,$srcY,$destW,$destH,$srcW,$srcH);
 
         switch ($type) {
