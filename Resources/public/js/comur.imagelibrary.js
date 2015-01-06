@@ -123,7 +123,7 @@ function initJCrop(id, options){
             $('#image_preview img').Jcrop({
                 // start off with jcrop-light class
                 bgOpacity: 0.8,
-                bgColor: 'black',
+                bgColor: 'white',
                 addClass: 'jcrop-dark',
                 aspectRatio: options.cropConfig.aspectRatio ? options.cropConfig.minWidth/options.cropConfig.minHeight : false ,
                 minSize: [ options.cropConfig.minWidth, options.cropConfig.minHeight ],
