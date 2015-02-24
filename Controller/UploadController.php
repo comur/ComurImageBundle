@@ -111,6 +111,20 @@ class UploadController extends Controller
         $tarW = (int) round($config['cropConfig']['minWidth']);
         $tarH = (int) round($config['cropConfig']['minHeight']);
 
+        //Issue 36
+        if($x < 0) 
+        {
+            $w = $w + $x;
+            $x = 0;
+        }
+
+        if($y < 0)
+        {
+            $h = $h + $y;
+            $y = 0;
+        }
+        //End issue 36
+
         $forceResize = $config['cropConfig']['forceResize'];
         // $disableCrop = $config['cropConfig']['disableCrop'];
 
