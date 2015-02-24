@@ -25,7 +25,8 @@
         "twig/twig": "~1.12",
         "twig/extensions": "~1.0",
         "friendsofsymfony/jsrouting-bundle": "@stable",
-        "jms/translation-bundle": "@stable"
+        "jms/translation-bundle": "@stable",
+        "imsky/holder": "2.5.*"
     },
     "target-dir": "Comur/ImageBundle",
     "autoload": {
@@ -35,6 +36,8 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
-
+    },
+    "config": {
+        "component-dir": "Resources/public/components"
     }
 }
