@@ -89,6 +89,7 @@ function initializeImageManager(id, options){
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
     // $('#image_upload_file').bind('fileuploadadd', function (e, data) {console.log('add')});
+    $('#image_crop_go_now').unbind('click');
     $('#image_crop_go_now').click(function(){ cropImage(id, options)});
     // $('#'+id+'_image_crop span').click(initJCrop_{{id}});
     // $('#'+id+'_image_crop_go_cancel').click(destroyJCrop);
@@ -122,7 +123,7 @@ function initJCrop(id, options){
             $('#image_preview img').Jcrop({
                 // start off with jcrop-light class
                 bgOpacity: 0.8,
-                bgColor: 'black',
+                bgColor: 'transparent',
                 addClass: 'jcrop-dark',
                 aspectRatio: options.cropConfig.aspectRatio ? options.cropConfig.minWidth/options.cropConfig.minHeight : false ,
                 minSize: [ options.cropConfig.minWidth, options.cropConfig.minHeight ],
@@ -227,7 +228,7 @@ function addImageToGallery(filename, id, thumb, options)
     var nb = $('#gallery_preview_'+id+' input').length;
     var name = $('#gallery_preview_'+id).data('name');
     $('#gallery_preview_'+id).append('<div class="gallery-image-container" data-image="'+filename+'">' +
-        '<span class="remove-image"><i class="icon icon-white icon-remove"></i></span>' +
+        '<span class="remove-image"><i class="glyphicon glyphicon-remove"></i></span>' +
         '<span class="gallery-image-helper"></span>' +
         '<input type="text" id="'+id+'_'+nb+'" name="'+name+'['+nb+']" style="padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;" value="'+filename+'">' +
         '<img src="/'+options.uploadConfig.webDir + '/' + thumb+'?'+ new Date().getTime()+'"/>' +

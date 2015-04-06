@@ -322,8 +322,6 @@ class UploadController extends Controller
         }
         $dstR = imagecreatetruecolor( $destW, $destH );
 
-        imagecopyresampled($dstR,$imgR,$destX,$destY,$srcX,$srcY,$destW,$destH,$srcW,$srcH);
-
         switch ($type) {
             case 'gif':
             case 'png':
@@ -333,6 +331,8 @@ class UploadController extends Controller
                 imagesavealpha($dstR, true);
                 break;
         }
+
+        imagecopyresampled($dstR,$imgR,$destX,$destY,$srcX,$srcY,$destW,$destH,$srcW,$srcH);
         
         $writeFunc($dstR,$destSrc,$imageQuality);
     }

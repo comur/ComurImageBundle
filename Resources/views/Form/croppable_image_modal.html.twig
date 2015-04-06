@@ -32,65 +32,70 @@
 <link rel="stylesheet" href="{{ asset('bundles/comurimage/css/comur.image_bundle.css') }}" type="text/css" />
 {% endblock %}
 
-<div id="image_upload_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>{% trans %}Insert Image{% endtrans %}</h3>
-    </div>
-    <div class="modal-body">
-        <ul class="nav nav-pills" id="image_upload_tabs">
-            <li class="active">
-                <a href="#upload-image" data-toggle="tab">{% trans %}Upload Image{% endtrans %}</a>
-            </li>
-            <li><a href="#select-existing" data-toggle="tab">{% trans %}Select Existing{% endtrans %}</a></li>
-            <li><a href="#crop-and-use" data-toggle="tab">{% trans %}Crop and Use{% endtrans %}</a></li>
-        </ul>
-        <div class="tab-content">
-            <!-- UPLOAD IMAGE -->
-            <div class="tab-pane active" id="upload-image">
-                <div class="field-error clearfix hidden">
-                    <div id="image_upload_widget_error" class="alert alert-danger span6">
+<div id="image_upload_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>{% trans %}Insert Image{% endtrans %}</h3>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-pills" id="image_upload_tabs">
+                    <li class="active">
+                        <a href="#upload-image" data-toggle="tab">{% trans %}Upload Image{% endtrans %}</a>
+                    </li>
+                    <li><a href="#select-existing" data-toggle="tab">{% trans %}Select Existing{% endtrans %}</a></li>
+                    <li><a href="#crop-and-use" data-toggle="tab">{% trans %}Crop and Use{% endtrans %}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <!-- UPLOAD IMAGE -->
+                    <div class="tab-pane active" id="upload-image">
+                        <div class="field-error clearfix hidden">
+                            <div id="image_upload_widget_error" class="alert alert-danger span6">
+                            </div>
+                        </div>
+                        <div id="image_upload_drop_zone" class="image_upload_drop_zone">
+                            <p>{% trans %}Drop your file here{% endtrans %}</p>
+                            <p>{% trans %}or{% endtrans %}</p>
+                        </div>
+                        <div id="image_upload_file_container">
+                            <p>
+                                <span class="btn btn-info fileinput-button">
+                                    <i class="icon-white icon-download-alt"></i>
+                                    <span> {% trans %}Select a file...{% endtrans %}</span>
+                                </span>
+                                <input id="image_upload_file" type="file" name="image_upload_file" style="opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;">
+                            </p>
+                        </div>
+                        <div id="image_file_upload_progress" class="progress">
+                            <div class="progress-bar progress-bar-success"></div>
+                        </div>
+                    </div>
+                    <!-- IMAGE LIB -->
+                    <div class="tab-pane hidden" id="select-existing">
+                        <div class="field-error clearfix hidden">
+                            <div id="image_select_widget_error" class="alert alert-danger span6">
+                            </div>
+                        </div>
+                        <div id="existing-images"></div>
+                        <input type="hidden" id="selected_image"/>
+                    </div>
+                    <!-- CROP IMAGE -->
+                    <div class="tab-pane" id="crop-and-use">
+                        <p>{% trans %}Please adjust selection to your image{% endtrans %}</p>
+                        <div class="image_preview" id="image_preview" style="z-index: 1050; margin-bottom: 20px;">
+                            <p>{% trans %}Please select or upload an image{% endtrans %}</p>
+                        </div>
                     </div>
                 </div>
-                <div id="image_upload_drop_zone" class="image_upload_drop_zone">
-                    <p>{% trans %}Drop your file here{% endtrans %}</p>
-                    <p>{% trans %}or{% endtrans %}</p>
-                </div>
-                <div id="image_upload_file_container">
-                    <span class="btn btn-info fileinput-button">
-                        <i class="icon-white icon-download-alt"></i>
-                        <span> {% trans %}Select a file...{% endtrans %}</span>
-                        {#<input id="image_upload_file" type="file" name="image_upload_file">#}
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <span class="btn btn-success hidden" id="image_crop_go_now">
+                        <i class="icon-white icon icon-fullscreen"></i>
+                        {% trans %}Crop & Use !{% endtrans %}
                     </span>
-					<input id="image_upload_file" type="file" name="image_upload_file" style="opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;">
-                </div>
-                <div id="image_file_upload_progress" class="progress">
-                    <div class="progress-bar progress-bar-success"></div>
                 </div>
             </div>
-            <!-- IMAGE LIB -->
-            <div class="tab-pane hidden" id="select-existing">
-                <div class="field-error clearfix hidden">
-                    <div id="image_select_widget_error" class="alert alert-danger span6">
-                    </div>
-                </div>
-                <div id="existing-images"></div>
-                <input type="hidden" id="selected_image"/>
-            </div>
-            <!-- CROP IMAGE -->
-            <div class="tab-pane" id="crop-and-use">
-                <p>{% trans %}Please adjust selection to your image{% endtrans %}</p>
-                <div class="image_preview" id="image_preview" style="z-index: 1050; margin-bottom: 20px;">
-                    <p>{% trans %}Please select or upload an image{% endtrans %}</p>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Close{% endtrans %}</button>
-            <span class="btn btn-success hidden" id="image_crop_go_now">
-                <i class="icon-white icon icon-fullscreen"></i>
-                {% trans %}Crop & Use !{% endtrans %}
-            </span>
         </div>
     </div>
 </div>
