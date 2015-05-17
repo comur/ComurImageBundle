@@ -78,12 +78,12 @@
       </trans-unit>
       <trans-unit id="f76440548252f7ec5f8f71dab44abf6362c6c9f4" resname="Image requires a minimum height (%min%)">
         <source>Image requires a minimum height (%min%)</source>
-        <target state="new">A képnek szüksége van minimális magasságra (%min%)</target>
+        <target state="new">A kép magasságának legalább %min% pixelnek kell lennie</target>
         <jms:reference-file line="84">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="20f8dd578ff08ac1f5cc021de47e4955e51104b4" resname="Image requires a minimum width (%min%)">
-        <source>A képnek szüksége van minimális szélességre (%min%)</source>
-        <target state="new">Image requires a minimum width (%min%)</target>
+        <source>Image requires a minimum width (%min%)</source>
+        <target state="new">A kép szélességének legalább %min% pixelnek kell lennie</target>
         <jms:reference-file line="82">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a2d43587989e2b5142295194edd0c74e3cf29cc8" resname="Insert Image">
@@ -93,7 +93,7 @@
       </trans-unit>
       <trans-unit id="271b0fba656eb1287e7e4b976ae28b4fa8385631" resname="Maximum number of files exceeded">
         <source>Maximum number of files exceeded</source>
-        <target state="new">Elérthe a feltölthető fájlok darabszámának maximumát</target>
+        <target state="new">Elérte a feltölthető fájlok darabszámának maximumát</target>
         <jms:reference-file line="80">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="59ab5045799af0bb9301f3e52d84cf0aca1b6383" resname="Missing a temporary folder">
@@ -118,7 +118,7 @@
       </trans-unit>
       <trans-unit id="6ed2aa6178d845f3246027181bf6cf89322961f0" resname="Select Existing">
         <source>Select Existing</source>
-        <target>Kiválaszt</target>
+        <target>Korábban feltöltött kép kiválasztása</target>
         <jms:reference-file line="42">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5a51202b21f6c3a61551c3aa38c983b981680203" resname="Select a file...">
@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="159031eaeed919231a31e757a438b81530589af3" resname="Upload Image">
         <source>Upload Image</source>
-        <target>Feltölt</target>
+        <target>Új kép feltöltése</target>
         <jms:reference-file line="40">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1758356db21759f7c5a0da9b4dd1db8fd6feab3f" resname="or">
