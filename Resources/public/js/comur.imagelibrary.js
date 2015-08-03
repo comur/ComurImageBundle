@@ -100,6 +100,10 @@ function destroyImageManager(){
     destroyJCrop();
     $('#image_crop_go_now').unbind('click');
     $('#image_preview').html('<p>Please select or upload an image</p>');
+    
+    $('#selected_image').val('');
+    $('#image_crop_go_now').addClass('hidden');
+    $('#image_upload_tabs a:first').tab('show');
 }
 
 var api;
