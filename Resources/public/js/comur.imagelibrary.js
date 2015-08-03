@@ -91,6 +91,12 @@ function initializeImageManager(id, options){
     // $('#image_upload_file').bind('fileuploadadd', function (e, data) {console.log('add')});
     $('#image_crop_go_now').unbind('click');
     $('#image_crop_go_now').click(function(){ cropImage(id, options)});
+    $('#image_crop_cancel').click(function () {
+        $('#selected_image').val('');
+        $('#image_crop_go_now').addClass('hidden');
+        $('#image_crop_cancel').addClass('hidden');
+        $('#image_upload_tabs a:first').tab('show');
+    });
     // $('#'+id+'_image_crop span').click(initJCrop_{{id}});
     // $('#'+id+'_image_crop_go_cancel').click(destroyJCrop);
 }
@@ -100,6 +106,7 @@ function destroyImageManager(){
     destroyJCrop();
     $('#image_crop_go_now').unbind('click');
     $('#image_preview').html('<p>Please select or upload an image</p>');
+    $('#image_crop_cancel').addClass('hidden');
 }
 
 var api;
@@ -156,6 +163,7 @@ function initJCrop(id, options){
             ]);
             //$('#image_crop').addClass('hidden');
             $('#image_crop_go_now').removeClass('hidden');
+            $('#image_crop_cancel').removeClass('hidden');
             $('#image_upload_tabs a:last').tab('show');
         });
         //$('#image_backdrop').removeClass('hidden');
@@ -215,6 +223,7 @@ function cropImage(id, options){
             $('#selected_image').val('');
             $('#image_preview').html('<p>Please select or upload an image</p>');
             $('#image_crop_go_now').addClass('hidden');
+            $('#image_crop_cancel').addClass('hidden');
             $('#image_upload_tabs a:first').tab('show');
             $('#image_upload_modal').modal('hide');
         }
