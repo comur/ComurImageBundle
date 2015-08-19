@@ -74,7 +74,7 @@ function initializeImageManager(id, options){
                 // console.log(data.result, data.result['image_upload_file']);
                 // $('#image_preview img').remove();
                 // $('#image_preview').html('<img src="/'+data.result['image_upload_file'][0].url+'" id="image_preview_image"/>');
-                $('#selected_image').val(data.result['image_upload_file'][0].name); 
+                $('#selected_image').val(data.result['image_upload_file'][0].name).trigger('change'); 
                 initJCrop(id, options);
             }
             
