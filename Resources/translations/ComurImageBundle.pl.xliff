@@ -67,8 +67,8 @@
         <jms:reference-file line="79">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="d73c1bca58fa06b119eebdd304c3564f96d6384f" resname="Image exceeds maximum height">
-        <source>Wyskość obraza przekroczyła maksimum</source>
-        <target state="new">La imagen excede el alto máximo</target>
+        <source>Image exceeds maximum height</source>
+        <target state="new">Wysokość obraza przekroczyła maksimum</target>
         <jms:reference-file line="83">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="03b322027141834c06666386057a1c8cb2c1a4b3" resname="Image exceeds maximum width">
