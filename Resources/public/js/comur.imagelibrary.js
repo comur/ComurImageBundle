@@ -206,7 +206,7 @@ function cropImage(id, options){
                 // console.log(options.uploadConfig.saveOriginal, $('#'+options.originalImageFieldId), options.originalImageFieldId);
                 if(options.uploadConfig.saveOriginal){
                     // console.log('set '+$('#selected_image').val());
-                    $('#'+options.originalImageFieldId).val($('#selected_image').val());                    
+                    $('#'+options.originalImageFieldId).val(data.filename);
                     $('#image_preview_image_'+id+' img').css('cursor: hand; cursor: pointer;');
                     $('#image_preview_image_'+id+' img').click(function(e){
                         if($( event.target ).is( "img" )){
