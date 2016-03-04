@@ -5,11 +5,11 @@ namespace Comur\ImageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 // use Symfony\Component\Form\FormBuilder;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +25,7 @@ class CroppableImageType extends AbstractType
     //     return 'text';
     // }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'comur_image';
     }
@@ -46,7 +46,7 @@ class CroppableImageType extends AbstractType
                 // 'property_path' => $options['uploadConfig']['saveOriginal'],
                 'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;')));
         }
-        $builder->add($builder->getName(), 'text', array(
+        $builder->add($builder->getName(), TextType::class, array(
             // 'property_path' => $builder->getName(),
             // 'inherit_data' => true,
             'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;')));
@@ -55,7 +55,7 @@ class CroppableImageType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 
         $uploadConfig = array(
@@ -89,7 +89,7 @@ class CroppableImageType extends AbstractType
             // 'property_path' => null,
             // 'data_class' => 'MVB\Bundle\MemberBundle\Entity\Member'
         ));
-        
+
         $isGallery = $this->isGallery;
         $galleryDir = $this->galleryDir;
 
@@ -118,7 +118,7 @@ class CroppableImageType extends AbstractType
             //     return $options['uploadConfig']['saveOriginal'] ? true : false;
             // }
         ));
-        
+
     }
 
     /**

@@ -1,6 +1,6 @@
 parameters:
-    comur_image_type_class: "Comur\ImageBundle\Form\Type\CroppableImageType"
-    comur_gallery_type_class: "Comur\ImageBundle\Form\Type\CroppableGalleryType"
+    comur_image_type_class: Comur\ImageBundle\Form\Type\CroppableImageType
+    comur_gallery_type_class: Comur\ImageBundle\Form\Type\CroppableGalleryType
 services:
     comur_image_bundle.image_type:
         class: %comur_image_type_class%
