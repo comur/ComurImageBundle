@@ -26,7 +26,7 @@
         "twig/twig": "~1.12",
         "twig/extensions": "~1.0",
         "friendsofsymfony/jsrouting-bundle": "@stable",
-        "jms/translation-bundle": "@stable"
+        "jms/translation-bundle": "dev-master"
     },
     "target-dir": "Comur/ImageBundle",
     "autoload": {
