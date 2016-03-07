@@ -5,7 +5,6 @@
     "keywords": ["Form Type", "image", "upload", "crop", "jcrop", "jquery upload"],
     "homepage": "https://github.com/comur/ComurImageBundle",
     "license": "MIT",
-    "minimum-stability" : "dev",
     "authors": [
         {
             "name": "Can OMUR",
