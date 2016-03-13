@@ -93,8 +93,8 @@ class CroppableImageType extends AbstractType
         $isGallery = $this->isGallery;
         $galleryDir = $this->galleryDir;
 
-        $resolver->setNormalizers(array(
-            'uploadConfig' => function(Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir){
+        $resolver->setNormalizer(
+            'uploadConfig', function(Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir){
                 $config = array_merge($uploadConfig, $value);
 
                 if($isGallery){
@@ -110,14 +110,13 @@ class CroppableImageType extends AbstractType
                 //     $options['compound']=true;
                 // }
                 return $config;
-            },
-            'cropConfig' => function(Options $options, $value) use($cropConfig){
+            }
+        );
+        $resolver->setNormalizer(
+            'cropConfig', function(Options $options, $value) use($cropConfig){
                 return array_merge($cropConfig, $value);
-            },
-            // 'compound' => function(Options $options, $value) use($cropConfig){
-            //     return $options['uploadConfig']['saveOriginal'] ? true : false;
-            // }
-        ));
+            }
+        );
 
     }
 
