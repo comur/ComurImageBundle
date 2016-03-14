@@ -1,3 +1,7 @@
+Use branch master for compatibility with Syfony 2
+------------
+Use branch 1.3 for compatibility with Symfony 3
+------------
 Use 0.X releases for compatibility with bootstrap 2.x.
 ------------
 Compatibility with bootstrap 2.X is no more maintained
