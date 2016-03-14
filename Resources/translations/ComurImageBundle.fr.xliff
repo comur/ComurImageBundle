@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file date="2014-05-14T17:40:34Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
@@ -8,153 +8,123 @@
     <body>
       <trans-unit id="3b3178ea73e58ae157242b483e93783805e612b2" resname="A PHP extension stopped the file upload">
         <source>A PHP extension stopped the file upload</source>
-        <target state="new">A PHP extension stopped the file upload</target>
-        <jms:reference-file line="75">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Une extension PHP a arrêté le chargement du fichier</target>
       </trans-unit>
       <trans-unit id="5375634e24c9546cbfc6f564d68908236dee6cc7" resname="Add image">
         <source>Add image</source>
-        <target state="new">Add image</target>
-        <jms:reference-file line="98">views/Form/fields.html.twig</jms:reference-file>
+        <target state="new">Ajouter une image</target>
       </trans-unit>
       <trans-unit id="cfdff1de9222ae8e71d10f589f1d6a5b42347477" resname="Crop &amp; Use !">
         <source><![CDATA[Crop & Use !]]></source>
         <target><![CDATA[Cropper & Utiliser !]]></target>
-        <jms:reference-file line="88">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5580c63bc4b0fc39c3db8d3d53b8c6c159a991d1" resname="Crop and Use">
         <source>Crop and Use</source>
         <target>Cropper et Utiliser</target>
-        <jms:reference-file line="43">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="65f4b6c70faee1f98e2e20e783c985716f5d3ad9" resname="Drop your file here">
         <source>Drop your file here</source>
         <target>Glissez votre fichier ici</target>
-        <jms:reference-file line="53">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5301648dcf6b53cefc9ed52999aaa92d4603cae0" resname="Edit">
         <source>Edit</source>
         <target>Modifier</target>
-        <jms:reference-file line="18">views/Form/fields.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8bd3c6f566a0fd76aae945c738a720c9b4b8e463" resname="Failed to resize image">
         <source>Failed to resize image</source>
-        <target state="new">Failed to resize image</target>
-        <jms:reference-file line="86">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Erreur dans le changement de  de l'image</target>
       </trans-unit>
       <trans-unit id="4c2245b072634a037bb78dc105292c776c8f0254" resname="Failed to write file to disk">
         <source>Failed to write file to disk</source>
-        <target state="new">Failed to write file to disk</target>
-        <jms:reference-file line="74">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Echec d'écriture du fichier sur le disque</target>
       </trans-unit>
       <trans-unit id="71dbb98d20c737c6d0c0d581d8b2315665f47fb1" resname="File is too big">
         <source>File is too big</source>
-        <target state="new">File is too big</target>
-        <jms:reference-file line="77">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Le fichier est trop gros</target>
       </trans-unit>
       <trans-unit id="ad09d7a26a005a3ad4f85fb076d54ca132c53b2b" resname="File is too small">
         <source>File is too small</source>
-        <target state="new">File is too small</target>
-        <jms:reference-file line="78">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Le fichier est trop petit</target>
       </trans-unit>
       <trans-unit id="232088acd1bf9aa81e8066239a9ae083d4c32245" resname="File upload aborted">
         <source>File upload aborted</source>
-        <target state="new">File upload aborted</target>
-        <jms:reference-file line="85">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Chargement interrompu</target>
       </trans-unit>
       <trans-unit id="be836b7f50e1c17a3077712614a8dd03dea08c47" resname="Filetype not allowed">
         <source>Filetype not allowed</source>
-        <target state="new">Filetype not allowed</target>
-        <jms:reference-file line="79">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Type de fichier non autorisé</target>
       </trans-unit>
       <trans-unit id="d73c1bca58fa06b119eebdd304c3564f96d6384f" resname="Image exceeds maximum height">
         <source>Image exceeds maximum height</source>
-        <target state="new">Image exceeds maximum height</target>
-        <jms:reference-file line="83">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">L'image dépasse la hauteur maximum</target>
       </trans-unit>
       <trans-unit id="03b322027141834c06666386057a1c8cb2c1a4b3" resname="Image exceeds maximum width">
         <source>Image exceeds maximum width</source>
-        <target state="new">Image exceeds maximum width</target>
-        <jms:reference-file line="81">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">L'image dépasse la largeur maximum</target>
       </trans-unit>
       <trans-unit id="f76440548252f7ec5f8f71dab44abf6362c6c9f4" resname="Image requires a minimum height (%min%)">
         <source>Image requires a minimum height (%min%)</source>
-        <target state="new">Image requires a minimum height (%min%)</target>
-        <jms:reference-file line="84">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">L'image doit avoir une hauteur minimum (%min%)</target>
       </trans-unit>
       <trans-unit id="20f8dd578ff08ac1f5cc021de47e4955e51104b4" resname="Image requires a minimum width (%min%)">
         <source>Image requires a minimum width (%min%)</source>
-        <target state="new">Image requires a minimum width (%min%)</target>
-        <jms:reference-file line="82">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">L'image doit avoir une largeur minimum (%min%)</target>
       </trans-unit>
       <trans-unit id="a2d43587989e2b5142295194edd0c74e3cf29cc8" resname="Insert Image">
         <source>Insert Image</source>
         <target>Uploader image</target>
-        <jms:reference-file line="35">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="271b0fba656eb1287e7e4b976ae28b4fa8385631" resname="Maximum number of files exceeded">
         <source>Maximum number of files exceeded</source>
-        <target state="new">Maximum number of files exceeded</target>
-        <jms:reference-file line="80">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Nombre de fichiers maximum atteint</target>
       </trans-unit>
       <trans-unit id="59ab5045799af0bb9301f3e52d84cf0aca1b6383" resname="Missing a temporary folder">
         <source>Missing a temporary folder</source>
-        <target state="new">Missing a temporary folder</target>
-        <jms:reference-file line="73">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Dossier temporaire manquant</target>
       </trans-unit>
       <trans-unit id="2e0d79e701969987c315b500d98918f024faad65" resname="No file was uploaded">
         <source>No file was uploaded</source>
-        <target state="new">No file was uploaded</target>
-        <jms:reference-file line="72">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Aucun fichier chargé</target>
       </trans-unit>
       <trans-unit id="f0b2d3388f908ce093306f083487d583f5aa3c57" resname="Please adjust selection to your image">
         <source>Please adjust selection to your image</source>
         <target state="new">Veuillez ajuster la selection à votre image</target>
-        <jms:reference-file line="78">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="07abfd9112b9bd5535213abeb01386152ef4c1d4" resname="Please select or upload an image">
         <source>Please select or upload an image</source>
         <target>Veuillez uploader ou sélectionner une image existante</target>
-        <jms:reference-file line="80">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6ed2aa6178d845f3246027181bf6cf89322961f0" resname="Select Existing">
         <source>Select Existing</source>
-        <target>Sélectionner image</target>
-        <jms:reference-file line="42">views/Form/croppable_image_modal.html.twig</jms:reference-file>
+        <target>Sélectionner une image existante</target>
       </trans-unit>
       <trans-unit id="5a51202b21f6c3a61551c3aa38c983b981680203" resname="Select a file...">
         <source>Select a file...</source>
         <target>Sélectionnez un fichier...</target>
-        <jms:reference-file line="59">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6b6798bbf0327818f4b94b98377cba6c9dcd2e78" resname="The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form">
         <source>The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form</source>
-        <target state="new">The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form</target>
-        <jms:reference-file line="70">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">La taille du fichier dépasse le paramètre MAX_FILE_SIZE spécifié dans le formulaire.</target>
       </trans-unit>
       <trans-unit id="b2462aa0c80f72abbe506243d1c98bae643249c9" resname="The uploaded file exceeds the post_max_size directive in php.ini">
         <source>The uploaded file exceeds the post_max_size directive in php.ini</source>
-        <target state="new">The uploaded file exceeds the post_max_size directive in php.ini</target>
-        <jms:reference-file line="76">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">La taille du fichier dépasse le paramètre post_max_filesize du fichier php.ini</target>
       </trans-unit>
       <trans-unit id="d53598af157a5cdf862b3a52c47d843d673f5cf7" resname="The uploaded file exceeds the upload_max_filesize directive in php.ini">
         <source>The uploaded file exceeds the upload_max_filesize directive in php.ini</source>
-        <target state="new">The uploaded file exceeds the upload_max_filesize directive in php.ini</target>
-        <jms:reference-file line="69">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">La taille du fichier dépasse le paramètre upload_max_filesize du fichier php.ini</target>
       </trans-unit>
       <trans-unit id="886dd2ec0ae0c0544751384c3b1122620a960a23" resname="The uploaded file was only partially uploaded">
         <source>The uploaded file was only partially uploaded</source>
-        <target state="new">The uploaded file was only partially uploaded</target>
-        <jms:reference-file line="71">ImageBundle/Controller/UploadController.php</jms:reference-file>
+        <target state="new">Le fichier a été partiellement chargé.</target>
       </trans-unit>
       <trans-unit id="159031eaeed919231a31e757a438b81530589af3" resname="Upload Image">
         <source>Upload Image</source>
         <target>Uploader image</target>
-        <jms:reference-file line="40">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1758356db21759f7c5a0da9b4dd1db8fd6feab3f" resname="or">
         <source>or</source>
         <target>ou</target>
-        <jms:reference-file line="54">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bbfa773e5a63a5ea58c9b6207e608ca0120e592a" resname="Close">
         <source>Close</source>

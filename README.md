@@ -1,3 +1,7 @@
+Use branch master for compatibility with Syfony 2
+------------
+Use branch 1.3 for compatibility with Symfony 3
+------------
 Use 0.X releases for compatibility with bootstrap 2.x.
 ------------
 Compatibility with bootstrap 2.X is no more maintained
@@ -183,7 +187,7 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
 	    // get your entity related with your form type
 	    $myEntity = $builder->getForm()->getData();
 	    ...
-	    ->add('image', 'comur_image', array(
+	    ->add('image', CroppableImageType::class, array(
 	        'uploadConfig' => array(
 	            'uploadRoute' => 'comur_api_upload', 		//optional
 	            'uploadUrl' => $myEntity->getUploadRootDir(),       // required - see explanation below (you can also put just a dir path)
@@ -270,7 +274,7 @@ Gallery widget
 
 Use widget in your forms (works with SonataAdmin too) to create a **sortable** list of images (so a gallery :)) stored in an array typed field :
 
-	->add('gallery', 'comur_gallery', array(
+	->add('gallery', CroppableGalleryType::class, array(
 		//same parameters as comur_image
 	))
 	
