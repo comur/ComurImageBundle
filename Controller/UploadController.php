@@ -33,8 +33,15 @@ class UploadController extends Controller
         
         $webDir = $config['uploadConfig']['webDir'];
         $webDir = substr($webDir, -strlen('/')) === '/' ? $webDir : $webDir . '/';
-        $filename = sha1(uniqid(mt_rand(), true));
-        
+        if($config['uploadConfig']['generateFilename']) $filename = sha1(uniqid(mt_rand(), true));
+        else 
+        {
+            $filename = $request->files->get('image_upload_file')->getClientOriginalName();
+            if(file_exists($uploadUrl.$thumbsDir.'/'.$filename))
+            {
+                $filename = date('U').$filename;
+            }   
+        }
         $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
         $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
 
