@@ -49,6 +49,7 @@ class UploadController extends Controller
             'upload_dir' => $uploadUrl,
             'param_name' => 'image_upload_file',
             'file_name' => $filename,
+            'generate_filename'=>$config['uploadConfig']['generateFilename'],
             'upload_url' => $config['uploadConfig']['webDir'],
             'min_width' => $config['cropConfig']['minWidth'],
             'min_height' => $config['cropConfig']['minHeight'],
