@@ -67,6 +67,7 @@ class CroppableImageType extends AbstractType
             'libraryRoute' => 'comur_api_image_library',
             'showLibrary' => true,
             'saveOriginal' => false, //save original file name
+            'generateFilename' => true //generate an uniq filename
         );
 
         $cropConfig = array(
