@@ -192,7 +192,8 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
 	            'libraryDir' => null, 						//optional
 	            'libraryRoute' => 'comur_api_image_library', //optional
 	            'showLibrary' => true, 						//optional
-	            'saveOriginal' => 'originalImage'			//optional
+	            'saveOriginal' => 'originalImage',			//optional
+	            'generateFilename' => true			//optional
 	        ),
 	        'cropConfig' => array(
 	            'minWidth' => 588,
@@ -383,6 +384,13 @@ Use this parameter if you want to save original file's path (for eg. to show big
 **Attention:** This parameter is disabled for gallery for instance. It will be implemented soon.
 
 **Default value:** false
+
+###generateFilename (optional)###
+
+This parameter is used to generate an uniq file name. Setted to false, it will keep the original filename.
+
+**Default value:** true
+
 
 ##cropConfig##
 
