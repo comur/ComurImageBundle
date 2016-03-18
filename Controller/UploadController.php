@@ -148,7 +148,8 @@ class UploadController extends Controller
             mkdir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/', 0755, true);
         }
         $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-        $imageName = sha1(uniqid(mt_rand(), true)).'.'.$ext;
+        //set uniq filename if defined inside the configuration
+        if($config['uploadConfig']['generateFilename']) $imageName = sha1(uniqid(mt_rand(), true)).'.'.$ext;
         $destSrc = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName;
         //$writeFunc($dstR,$src,$imageQuality);
 
