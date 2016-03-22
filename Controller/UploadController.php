@@ -25,6 +25,8 @@ class UploadController extends Controller
     ){
         $config = json_decode($request->request->get('config'),true);
 
+        $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
+        $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
         $uploadUrl = $config['uploadConfig']['uploadUrl'];
         $uploadUrl = substr($uploadUrl, -strlen('/')) === '/' ? $uploadUrl : $uploadUrl . '/';
         
@@ -39,11 +41,9 @@ class UploadController extends Controller
             $filename = $request->files->get('image_upload_file')->getClientOriginalName();
             if(file_exists($uploadUrl.$thumbsDir.'/'.$filename))
             {
-                $filename = date('U').$filename;
+                $filename = time().'-'.$filename;
             }   
         }
-        $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
-        $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
 
         $galleryDir = $this->container->getParameter('comur_image.gallery_dir');
         $gThumbSize = $this->container->getParameter('comur_image.gallery_thumb_size');
@@ -156,7 +156,9 @@ class UploadController extends Controller
         }
         $ext = pathinfo($imageName, PATHINFO_EXTENSION);
         //set uniq filename if defined inside the configuration
-        if($config['uploadConfig']['generateFilename']) $imageName = sha1(uniqid(mt_rand(), true)).'.'.$ext;
+        if($config['uploadConfig']['generateFilename']){
+            $imageName = sha1(uniqid(mt_rand(), true)).'.'.$ext;
+        }
         $destSrc = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName;
         //$writeFunc($dstR,$src,$imageQuality);
 
@@ -275,7 +277,7 @@ class UploadController extends Controller
         }
         else{
             $h = $srcH;
-            $w = $srcW * ($maxtH / $maxW);
+            $w = $srcW * ($maxH / $maxW);
             $x = round($srcW - $w / 2, 0);
         }
         return array($w, $h, $x, $y);
