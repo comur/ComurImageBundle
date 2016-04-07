@@ -1,3 +1,6 @@
+Use 1.3 branch for Symfony 3 compatibility, thanks goes to @anthonyherve
+------------
+
 Use 0.X releases for compatibility with bootstrap 2.x.
 ------------
 Compatibility with bootstrap 2.X is no more maintained
