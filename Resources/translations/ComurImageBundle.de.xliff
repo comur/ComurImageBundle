@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="65f4b6c70faee1f98e2e20e783c985716f5d3ad9" resname="Drop your file here">
         <source>Drop your file here</source>
-        <target>Legen Sie Ihr Dateien hier ab</target>
+        <target>Legen Sie Ihre Dateien hier ab</target>
         <jms:reference-file line="53">views/Form/croppable_image_modal.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5301648dcf6b53cefc9ed52999aaa92d4603cae0" resname="Edit">
@@ -78,12 +78,12 @@
       </trans-unit>
       <trans-unit id="f76440548252f7ec5f8f71dab44abf6362c6c9f4" resname="Image requires a minimum height (%min%)">
         <source>Image requires a minimum height (%min%)</source>
-        <target state="new">Das Bild sollte mindestens (%min%) hoch sein</target>
+        <target state="new">Das Bild sollte mindestens %min% hoch sein</target>
         <jms:reference-file line="84">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="20f8dd578ff08ac1f5cc021de47e4955e51104b4" resname="Image requires a minimum width (%min%)">
         <source>Image requires a minimum width (%min%)</source>
-        <target state="new">Das Bild sollte mindestens (%min%) breit sein</target>
+        <target state="new">Das Bild sollte mindestens %min% breit sein</target>
         <jms:reference-file line="82">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="a2d43587989e2b5142295194edd0c74e3cf29cc8" resname="Insert Image">
@@ -128,17 +128,17 @@
       </trans-unit>
       <trans-unit id="6b6798bbf0327818f4b94b98377cba6c9dcd2e78" resname="The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form">
         <source>The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form</source>
-        <target state="new">Die hochgeladene Datei überschrietet die maximal Größe von MAX_FILE_SIZE, welche durch das HTML Formular festgelegt wurde</target>
+        <target state="new">Die hochgeladene Datei überschreitet die maximale Größe von MAX_FILE_SIZE, welche durch das HTML Formular festgelegt wurde</target>
         <jms:reference-file line="70">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b2462aa0c80f72abbe506243d1c98bae643249c9" resname="The uploaded file exceeds the post_max_size directive in php.ini">
         <source>The uploaded file exceeds the post_max_size directive in php.ini</source>
-        <target state="new">Die hochgeladene Datei überschrietet die maximal Größe der post_max_size Direktive in php.ini</target>
+        <target state="new">Die hochgeladene Datei überschreitet die maximal Größe der post_max_size Direktive in php.ini</target>
         <jms:reference-file line="76">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="d53598af157a5cdf862b3a52c47d843d673f5cf7" resname="The uploaded file exceeds the upload_max_filesize directive in php.ini">
         <source>The uploaded file exceeds the upload_max_filesize directive in php.ini</source>
-        <target state="new">Die hochgeladene Datei überschrietet die maximal Größe der upload_max_filesize Direktive in php.ini</target>
+        <target state="new">Die hochgeladene Datei überschreitet die maximale Größe der upload_max_filesize Direktive in php.ini</target>
         <jms:reference-file line="69">ImageBundle/Controller/UploadController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="886dd2ec0ae0c0544751384c3b1122620a960a23" resname="The uploaded file was only partially uploaded">
