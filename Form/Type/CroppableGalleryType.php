@@ -52,7 +52,7 @@ class CroppableGalleryType extends CroppableImageType
             // 'inherit_data' => true,
             'allow_add' => function(Options $options, $value){ return true; },
             'allow_delete' => function(Options $options, $value){ return true; },
-            'options' => array(
+            'entry_options' => array(
                 'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;padding: 0; position: absolute;'
                     )
                 )
@@ -73,7 +73,7 @@ class CroppableGalleryType extends CroppableImageType
     {
 
 
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $galleryDir = $this->galleryDir;
 
