@@ -71,7 +71,7 @@ class CroppableImageType extends AbstractType
         );
 
         $cropConfig = array(
-            // 'disableCrop' => false,
+            'disableCrop' => false,
             'minWidth' => 1,
             'minHeight' => 1,
             'aspectRatio' => true,
