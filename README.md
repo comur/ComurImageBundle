@@ -227,28 +227,29 @@ You need to create a field (named image in this example but you can choose whate
     
     …
     
-And create your functions in your entity to have directory paths, for ex :
+And create your functions in your entity to have directory paths, for ex:
 
-	public function getUploadRootDir()
-	{
-	    // absolute path to your directory where images must be saved
-	    return __DIR__.'/../../../../../web/'.$this->getUploadDir();
-	}
-	
-	public function getUploadDir()
-	{
-	    return 'uploads/myentity';
-	}
-	
-	public function getAbsolutePath()
-	{
-	    return null === $this->image ? null : $this->getUploadRootDir().'/'.$this->image;
-	}
-	
-	public function getWebPath()
-	{
-	    return null === $this->image ? null : '/'.$this->getUploadDir().'/'.$this->image;
-	}
+    public function getUploadRootDir()
+    {
+        // absolute path to your directory where images must be saved
+        // if your web server uses Windows, you should escape backslashes
+        return str_replace('\\', '\\\\', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . $this->getUploadDir());
+    }
+    
+    public function getUploadDir()
+    {
+        return str_replace('\\', '\\\\', 'uploads' . DIRECTORY_SEPARATOR . 'myentity');
+    }
+    
+    public function getAbsolutePath()
+    {
+        return null === $this->image ? null : $this->getUploadRootDir() . DIRECTORY_SEPARATOR . $this->image;
+    }
+    
+    public function getWebPath()
+    {
+        return null === $this->image ? null : DIRECTORY_SEPARATOR . $this->getUploadDir() . DIRECTORY_SEPARATOR . $this->image;
+    }
     
 That's all ! This will add an image preview with an edit button in your form and will let you upload / select from library and crop images without reloading the page.
 
