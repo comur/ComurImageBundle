@@ -22,7 +22,6 @@ class ThumbExtension extends \Twig_Extension implements \Twig_Extension_GlobalsI
     {
         return array(
             new \Twig_SimpleFilter('thumb', array($this, 'getThumb')),
-            new \Twig_SimpleFilter('gallery_thumb', array($this, 'getGalleryThumb')),
         );
     }
 
@@ -50,11 +49,6 @@ class ThumbExtension extends \Twig_Extension implements \Twig_Extension_GlobalsI
         }
 
         return $origFilePath;
-    }
-
-    public function getGalleryThumb($origFilePath, $width, $height)
-    {
-        return $this->getThumb($this->galleryDir.'/'.$origFilePath, $width, $height);
     }
 
     public function getName()

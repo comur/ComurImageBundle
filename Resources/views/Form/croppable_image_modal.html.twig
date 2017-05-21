@@ -80,17 +80,14 @@
                     </div>
                     <!-- CROP IMAGE -->
                     <div class="tab-pane" id="crop-and-use">
-                        <p>{% trans %}Please adjust selection to your image{% endtrans %}</p>
-                        <div class="image_preview" id="image_preview" style="z-index: 1050">
-                            <p>{% trans %}Please select or upload an image{% endtrans %}</p>
-                        </div>
+                        <div class="image_preview" id="image_preview" style="z-index: 1050"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Close{% endtrans %}</button>
                     <span class="btn btn-success hidden" id="image_crop_go_now">
                         <i class="icon-white icon icon-fullscreen"></i>
-                        {% trans %}Crop & Use !{% endtrans %}
+                        {% trans %}Crop & Use{% endtrans %}
                     </span>
                     <span class="btn btn-success hidden" id="image_crop_cancel">
                         <i class="icon-white icon icon-fullscreen"></i>

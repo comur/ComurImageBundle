@@ -15,7 +15,7 @@
         <target state="new">Bild hinzufügen</target>
       </trans-unit>
       <trans-unit id="cfdff1de9222ae8e71d10f589f1d6a5b42347477" resname="Crop &amp; Use !">
-        <source><![CDATA[Crop & Use !]]></source>
+        <source><![CDATA[Crop & Use]]></source>
         <target>Beschneiden &amp; Benutzen!</target>
       </trans-unit>
       <trans-unit id="5580c63bc4b0fc39c3db8d3d53b8c6c159a991d1" resname="Crop and Use">

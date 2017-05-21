@@ -8,6 +8,14 @@
     margin: 0;
 }
 
+#image_upload_file_container {
+    margin-bottom: 20px;
+}
+
+#image_upload_tabs {
+    display: none;
+}
+
 .gallery-image-container
 {
     vertical-align: middle;

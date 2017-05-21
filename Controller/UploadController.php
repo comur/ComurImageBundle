@@ -4,6 +4,7 @@ namespace Comur\ImageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Finder\Finder;
 
 use Comur\ImageBundle\Handler\UploadHandler;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UploadController extends Controller
 {
@@ -19,40 +21,28 @@ class UploadController extends Controller
      * Save uploaded image according to comur_image field configuration
      *
      * @param Request $request
+     *
+     * @return Response
      */
-    public function uploadImageAction(Request $request
-        /*, $uploadUrl, $paramName, $webDir, $minWidth=1, $minHeight=1*/
-    ){
-        $config = json_decode($request->request->get('config'),true);
+    public function uploadImageAction(Request $request)
+    {
+        $config = json_decode($request->request->get('config'), true);
 
         $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
         $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
         $uploadUrl = $config['uploadConfig']['uploadUrl'];
         $uploadUrl = substr($uploadUrl, -strlen('/')) === '/' ? $uploadUrl : $uploadUrl . '/';
 
-        // We must use a streamed response because the UploadHandler echoes directly
         $response = new StreamedResponse();
 
-        $webDir = $config['uploadConfig']['webDir'];
-        $webDir = substr($webDir, -strlen('/')) === '/' ? $webDir : $webDir . '/';
-        if($config['uploadConfig']['generateFilename']){
+        if ($config['uploadConfig']['generateFilename']) {
             $filename = sha1(uniqid(mt_rand(), true));
-        }
-        else
-        {
+        } else {
             $filename = $request->files->get('image_upload_file')->getClientOriginalName();
-            if(file_exists($uploadUrl.$thumbsDir.'/'.$filename))
-            {
-                $filename = time().'-'.$filename;
+            if (file_exists($uploadUrl . $thumbsDir . '/' . $filename)) {
+                $filename = time() . '-' . $filename;
             }
         }
-
-        $galleryDir = $this->container->getParameter('comur_image.gallery_dir');
-        $gThumbSize = $this->container->getParameter('comur_image.gallery_thumb_size');
-
-        $ext = $request->files->get('image_upload_file')->getClientOriginalExtension();//('image_upload_file');
-        $completeName = $filename.'.'.$ext;
-        $controller = $this;
 
         $handlerConfig = array(
             'upload_dir' => $uploadUrl,
@@ -64,8 +54,8 @@ class UploadController extends Controller
             'min_height' => $config['cropConfig']['minHeight'],
             'image_versions' => array(
                 'thumbnail' => array(
-                    'upload_dir' => $uploadUrl.$thumbsDir.'/',
-                    'upload_url' => $config['uploadConfig']['webDir'].'/'.$thumbsDir.'/',
+                    'upload_dir' => $uploadUrl . $thumbsDir . '/',
+                    'upload_url' => $config['uploadConfig']['webDir'] . '/' . $thumbsDir . '/',
                     'crop' => true,
                     'max_width' => $thumbSize,
                     'max_height' => $thumbSize
@@ -96,7 +86,7 @@ class UploadController extends Controller
             'image_resize' => $this->get('translator')->trans('Failed to resize image', array(), $transDomain),
         );
 
-        $response->setCallback(function () use($handlerConfig, $errorMessages) {
+        $response->setCallback(function () use ($handlerConfig, $errorMessages) {
             new UploadHandler($handlerConfig, true, $errorMessages);
         });
 
@@ -107,144 +97,121 @@ class UploadController extends Controller
      * Crop image using jCrop and upload config parameters and create thumbs if needed
      *
      * @param Request $request
+     *
+     * @return Response
      */
-    public function cropImageAction(Request $request
-        /*, $uploadUrl, $webDir, $imageName, $x, $y, $w, $h, $tarW, $tarH*/
-    ){
-        $config = json_decode($request->request->get('config'),true);
-        $params = $request->request->all();
-        // var_dump($params);exit;
-        $x = (int) round($params['x']);
-        $y = (int) round($params['y']);
-        $w = (int) round($params['w']);
-        $h = (int) round($params['h']);
-        $tarW = (int) round($config['cropConfig']['minWidth']);
-        $tarH = (int) round($config['cropConfig']['minHeight']);
+    public function cropImageAction(Request $request)
+    {
+        $config = json_decode($request->request->get('config'), true);
+        $croppedImageDir = $this->container->getParameter('comur_image.cropped_image_dir');
+        $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
+        $webDir = $config['uploadConfig']['webDir'];
 
-        //Issue 36
-        if($x < 0)
-        {
+        $params = $request->request->all();
+        $x = (int)round($params['x']);
+        $y = (int)round($params['y']);
+        $w = (int)round($params['w']);
+        $h = (int)round($params['h']);
+        $tarW = (int)round($config['cropConfig']['minWidth']);
+        $tarH = (int)round($config['cropConfig']['minHeight']);
+
+        if ($x < 0) {
             $w = $w + $x;
             $x = 0;
         }
 
-        if($y < 0)
-        {
+        if ($y < 0) {
             $h = $h + $y;
             $y = 0;
         }
-        //End issue 36
 
         $forceResize = $config['cropConfig']['forceResize'];
-        // $disableCrop = $config['cropConfig']['disableCrop'];
-
         $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
-        $webDir = urldecode($config['uploadConfig']['webDir']);
-
         $imageName = $params['imageName'];
+        $src = $uploadUrl . '/' . $imageName;
 
-        $src = $uploadUrl.'/'.$imageName;
-
-        // if($disableCrop){
-        //     list($w, $h) = getimagesize($src);
-        //     if($config['cropConfig']['aspectRatio'])
-        //     {
-        //         list($w, $h) = $this->getMaxCropValues($w, $h, $tarW, $tarH);
-        //     }
-        // }
-
-        if (!is_dir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/')) {
-            mkdir($uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/', 0755, true);
+        if (!is_dir($uploadUrl . '/' . $croppedImageDir . '/')) {
+            mkdir($uploadUrl . '/' . $croppedImageDir . '/', 0755, true);
         }
+
         $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-        //set uniq filename if defined inside the configuration
-        if($config['uploadConfig']['generateFilename']){
-            $imageName = sha1(uniqid(mt_rand(), true)).'.'.$ext;
+        if ($config['uploadConfig']['generateFilename']) {
+            $imageName = sha1(uniqid(mt_rand(), true)) . '.' . $ext;
         }
-        $destSrc = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName;
-        //$writeFunc($dstR,$src,$imageQuality);
 
+        $destSrc = $uploadUrl . '/' . $croppedImageDir . '/' . $imageName;
         $destW = $w;
         $destH = $h;
 
-        if($forceResize){
-
+        if ($forceResize) {
             $destW = $tarW;
             $destH = $tarH;
-
-            if(round($w/$h, 2) != round($tarW/$tarH, 2)){
-                // var_dump($destW, $destH, $w, $h, $this->getMaxResizeValues($w, $h, $tarW, $tarH));exit;
-                // $destW = $w;
-                // $destH = $h;
+            if (round($w / $h, 2) !== round($tarW / $tarH, 2)) {
                 list($destW, $destH) = $this->getMinResizeValues($w, $h, $tarW, $tarH);
             }
-
         }
 
-        $this->resizeCropImage($destSrc,$src,0,0,$x,$y,$destW,$destH,$w,$h);
+        $this->resizeCropImage($destSrc, $src, 0, 0, $x, $y, $destW, $destH, $w, $h);
 
         $galleryThumbOk = false;
         $isGallery = isset($config['uploadConfig']['isGallery']) ? $config['uploadConfig']['isGallery'] : false;
-        $galleryDir = $this->container->getParameter('comur_image.gallery_dir');
         $gThumbSize = $this->container->getParameter('comur_image.gallery_thumb_size');
 
-        if($isGallery)
-        {
-            if(!isset($config['cropConfig']['thumbs']) || !($thumbs = $config['cropConfig']['thumbs']) || !count($thumbs))
-            {
+        if ($isGallery) {
+            if (!isset($config['cropConfig']['thumbs']) || !($thumbs = $config['cropConfig']['thumbs']) || !count($thumbs)) {
                 $config['cropConfig']['thumbs'] = array();
             }
             $config['cropConfig']['thumbs'][] = array('maxWidth' => $gThumbSize, 'maxHeight' => $gThumbSize, 'forGallery' => true);
         }
 
-
-        //Create thumbs if asked
-        $previewSrc = '/'.$config['uploadConfig']['webDir'] . '/' . $this->container->getParameter('comur_image.cropped_image_dir') . '/'. $imageName;
-        if(isset($config['cropConfig']['thumbs']) && ($thumbs = $config['cropConfig']['thumbs']) && count($thumbs))
-        {
-            $thumbDir = $uploadUrl.'/'.$this->container->getParameter('comur_image.cropped_image_dir') . '/' . $this->container->getParameter('comur_image.thumbs_dir').'/';
-            if(!is_dir($thumbDir))
-            {
+        $previewSrc = '/' . $webDir . '/' . $croppedImageDir . '/' . $imageName;
+        if (isset($config['cropConfig']['thumbs']) && ($thumbs = $config['cropConfig']['thumbs']) && count($thumbs)) {
+            $thumbDir = $uploadUrl . '/' . $croppedImageDir . '/' . $thumbsDir . '/';
+            if (!is_dir($thumbDir)) {
                 mkdir($thumbDir);
             }
 
-
-
-            foreach($thumbs as $thumb){
+            foreach ($thumbs as $thumb) {
                 $maxW = $thumb['maxWidth'];
                 $maxH = $thumb['maxHeight'];
 
-                if(!isset($thumb['forGallery']) && $maxW == $gThumbSize && $maxH == $gThumbSize){
+                if (!isset($thumb['forGallery']) && $maxW == $gThumbSize && $maxH == $gThumbSize) {
                     $galleryThumbOk = true;
                 }
-                if(isset($thumb['forGallery']) && $galleryThumbOk) continue;
+
+                if (isset($thumb['forGallery']) && $galleryThumbOk) {
+                    continue;
+                }
 
                 list($w, $h) = $this->getMaxResizeValues($destW, $destH, $maxW, $maxH);
 
-                $thumbName = $maxW.'x'.$maxH.'-'.$imageName;
+                $thumbName = $maxW . 'x' . $maxH . '-' . $imageName;
                 $thumbSrc = $thumbDir . $thumbName;
                 $this->resizeCropImage($thumbSrc, $destSrc, 0, 0, 0, 0, $w, $h, $destW, $destH);
-                if(isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage']){
-                    $previewSrc = '/'.$config['uploadConfig']['webDir'] . '/' . $this->container->getParameter('comur_image.cropped_image_dir') . '/'. $this->container->getParameter('comur_image.thumbs_dir'). '/' . $thumbName;
+                if (isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage']) {
+                    $previewSrc = '/' . $webDir . '/' . $croppedImageDir . '/' . $thumbsDir . '/' . $thumbName;
                 }
             }
         }
 
-        return new Response(json_encode(array('success' => true,
-                                              'filename'=>$this->container->getParameter('comur_image.cropped_image_dir').'/'.$imageName,
-                                              'previewSrc' => $previewSrc,
-                                              'galleryThumb' => $this->container->getParameter('comur_image.cropped_image_dir') . '/' . $this->container->getParameter('comur_image.thumbs_dir').'/'.$gThumbSize.'x'.$gThumbSize.'-' .$imageName)));
+        $photoPath = $this->getParameter('kernel.root_dir') . '/../web/' . $previewSrc;
+        $photoName = $this->get('photo.service')->saveFromLocalPath($photoPath);
+
+        return new JsonResponse([
+            'success' => true,
+            'previewSrc' => $this->generateUrl('get_photo', ['key' => $photoName], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
     }
 
     /**
      * Calculates and returns maximum size to fit in maxW and maxH for resize
      */
-    private function getMaxResizeValues($srcW, $srcH, $maxW, $maxH){
-        if($srcH/$srcW < $maxH/$maxW){
+    private function getMaxResizeValues($srcW, $srcH, $maxW, $maxH)
+    {
+        if ($srcH / $srcW < $maxH / $maxW) {
             $w = $maxW;
             $h = $srcH * ($maxW / $srcW);
-        }
-        else{
+        } else {
             $h = $maxH;
             $w = $srcW * ($maxH / $srcH);
         }
@@ -254,12 +221,12 @@ class UploadController extends Controller
     /**
      * Calculates and returns min size to fit in minW and minH for resize
      */
-    private function getMinResizeValues($srcW, $srcH, $minW, $minH){
-        if($srcH/$srcW > $minH/$minW){
+    private function getMinResizeValues($srcW, $srcH, $minW, $minH)
+    {
+        if ($srcH / $srcW > $minH / $minW) {
             $w = $minW;
             $h = $srcH * ($minW / $srcW);
-        }
-        else{
+        } else {
             $h = $minH;
             $w = $srcW * ($minH / $srcH);
         }
@@ -267,54 +234,9 @@ class UploadController extends Controller
     }
 
     /**
-     * Calculates and returns maximum size to fit in maxW and maxH for crop
-     */
-    private function getMaxCropValues($srcW, $srcH, $maxW, $maxH)
-    {
-        $x = $y = 0;
-        if($srcH/$srcW > $maxH/$maxW){
-            $w = $srcW;
-            $h = $srcH * ($maxW / $maxH);
-            $y = round($srcH - $h / 2, 0);
-        }
-        else{
-            $h = $srcH;
-            $w = $srcW * ($maxH / $maxW);
-            $x = round($srcW - $w / 2, 0);
-        }
-        return array($w, $h, $x, $y);
-    }
-
-    /**
-     * Returns files from required directory
-     *
-     * @param Request $request
-     */
-    public function getLibraryImagesAction(Request $request){
-        $finder = new Finder();
-
-        $finder->sortByType();
-        $finder->depth('== 0');
-        $result = array();
-        $files = array();
-
-        $result['thumbsDir'] = $this->container->getParameter('comur_image.thumbs_dir');
-
-        if (!is_dir($request->request->get('dir'))) {
-            mkdir($request->request->get('dir').'/', 0755, true);
-        }
-
-        foreach ($finder->in($request->request->get('dir'))->files() as $file) {
-            $files[] = $file->getFilename();
-        }
-        $result['files'] = $files;
-        // var_dump(json_encode($result));exit;
-
-        return new Response(json_encode($result));
-    }
-
-    /**
      * Crops or resizes image and writes it on disk
+     *
+     * @return void
      */
     private function resizeCropImage($destSrc, $imgSrc, $destX, $destY, $srcX, $srcY, $destW, $destH, $srcW, $srcH)
     {
@@ -338,34 +260,33 @@ class UploadController extends Controller
                 $imageQuality = 9;
                 break;
             default:
-                return false;
+                return;
         }
 
         $imgR = $srcFunc($imgSrc);
 
-        if(round($srcW/$srcH, 2) != round($destW/$destH, 2)){
+        if (round($srcW / $srcH, 2) != round($destW / $destH, 2)) {
             $destW = $srcW;
             $destH = $srcH;
         }
-        $dstR = imagecreatetruecolor( $destW, $destH );
+        $dstR = imagecreatetruecolor($destW, $destH);
 
-        if($type == 'png'){
-            imagealphablending( $dstR, false );
-            imagesavealpha( $dstR, true );
+        if ($type == 'png') {
+            imagealphablending($dstR, false);
+            imagesavealpha($dstR, true);
         }
 
-        imagecopyresampled($dstR,$imgR,$destX,$destY,$srcX,$srcY,$destW,$destH,$srcW,$srcH);
+        imagecopyresampled($dstR, $imgR, $destX, $destY, $srcX, $srcY, $destW, $destH, $srcW, $srcH);
 
         switch ($type) {
             case 'gif':
             case 'png':
                 imagecolortransparent($dstR, imagecolorallocate($dstR, 0, 0, 0));
-            case 'png':
                 imagealphablending($dstR, false);
                 imagesavealpha($dstR, true);
                 break;
         }
 
-        $writeFunc($dstR,$destSrc,$imageQuality);
+        $writeFunc($dstR, $destSrc, $imageQuality);
     }
 }
