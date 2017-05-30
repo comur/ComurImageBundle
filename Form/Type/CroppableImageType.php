@@ -152,6 +152,6 @@ class CroppableImageType extends AbstractType
         }
 
         $view->vars['options'] = array('uploadConfig' => $uploadConfig, 'cropConfig' => $cropConfig, 'fieldImage' => $fieldImage);
-        $view->vars['attr'] = array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;');
+        $view->vars['attr']['style'] = 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;';
     }
 }
