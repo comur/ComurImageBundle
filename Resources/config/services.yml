@@ -3,7 +3,7 @@ parameters:
     comur_gallery_type_class: Comur\ImageBundle\Form\Type\CroppableGalleryType
 services:
     comur_image_bundle.image_type:
-        class: %comur_image_type_class%
+        class: "%comur_image_type_class%"
         tags:
             - { name: form.type, alias: comur_image }
         # arguments: [%comur_image.translation_domain%]
