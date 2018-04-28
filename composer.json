@@ -24,8 +24,8 @@
         "symfony/class-loader":"~2.2|3.*",
         "twig/twig": "~1.12",
         "twig/extensions": "~1.0",
-        "friendsofsymfony/jsrouting-bundle": "@stable",
-	"jms/translation-bundle": "^1.2.2"
+        "friendsofsymfony/jsrouting-bundle": "~2.2.0",
+	    "jms/translation-bundle": "^1.2.2"
     },
     "target-dir": "Comur/ImageBundle",
     "autoload": {
