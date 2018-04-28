@@ -7,15 +7,15 @@
         {% if options.uploadConfig.saveOriginal %}
             {{ form_widget(form[options.uploadConfig.saveOriginal])}}
         {% endif %}
-        
+
         <div class="field-error clearfix hidden">
             <div id="{{form[name].vars.id}}_widget_error" class="alert alert-danger span6">
             </div>
         </div>
         <div class="image_preview select-image-button" id="image_preview_{{ form[name].vars.id }}" style="z-index: 1050">
             <div class="image_edit_button">
-                <span class="btn btn-success {% if options.fieldImage and options.cropConfig.minWidth < 100 %}btn-sm{% endif %} select-image-button">
-                    <i class="icon-edit icon-white"></i> {% trans %}Edit{% endtrans %}
+                <span class="btn btn-success select-image-button">
+                    <i class="glyphicon glyphicon-edit glyphicon-white"></i> {% trans %}Edit{% endtrans %}
                 </span>
             </div>
             <div id="image_preview_image_{{form[name].vars.id}}">
@@ -23,22 +23,23 @@
                     {% if form[name].vars.value %}
                         <img src="/{{ options.uploadConfig.webDir ~ '/' ~ form[name].vars.value }}?{{ 'now'  | date('U') }}" id="{{ form[name].vars.id }}_preview" style="{{ options.uploadConfig.saveOriginal ? 'cursor:hand; cursor: pointer' : ''}}"/>
                     {% else %}
-                        <img src="holder.js/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ form[name].vars.id }}_preview"/>
+                        <img data-src="holder.js/{{ options.cropConfig.minWidth }}x{{ options.cropConfig.minHeight}}" id="{{ form[name].vars.id }}_preview"/>
                     {% endif %}
                 {% else %}
                     {% if form[name].vars.value %}
                         <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ form[name].vars.value)|thumb(options.fieldImage.maxWidth, options.fieldImage.maxHeight) }}?{{ 'now'  | date('U') }}" id="{{ form[name].vars.id }}_preview" style="{{ options.uploadConfig.saveOriginal ? 'cursor:hand; cursor: pointer' : ''}}"/>
                     {% else %}
-                        <img src="holder.js/{{ options.fieldImage.maxWidth }}x{{ options.fieldImage.maxHeight}}" id="{{ form[name].vars.id }}_preview"/>
+                        <img data-src="holder.js/{{ options.fieldImage.maxWidth }}x{{ options.fieldImage.maxHeight}}" id="{{ form[name].vars.id }}_preview"/>
                     {% endif %}
                 {% endif %}
-                
+
             </div>
         </div>
     {% endspaceless %}
 
     <script>
         $(document).ready(function(){
+            Holder.run();
             {% if options.uploadConfig.saveOriginal %}
                 if($('#{{ form[options.uploadConfig.saveOriginal].vars.id }}').val()){
                     $('#{{ form[name].vars.id }}_preview').click(function(e){
@@ -50,7 +51,7 @@
                     });
                 }
             {% endif %}
-            $('#image_preview_{{ form[name].vars.id }}.select-image-button .image_edit_button').click(function(event){ 
+            $('#image_preview_{{ form[name].vars.id }}.select-image-button .image_edit_button').click(function(event){
                 var options = $.parseJSON('{{ options | json_encode() | raw }}');
                 {% if options.uploadConfig.saveOriginal %}
                     options['originalImageFieldId'] = '{{ form[options.uploadConfig.saveOriginal].vars.id }}';
@@ -77,7 +78,7 @@
     {# trans_default_domain 'ComurImageBundle' #}
 
     {% spaceless %}
-        
+
         <div class="field-error clearfix hidden">
             <div id="{{form[name].vars.id}}_widget_error" class="alert alert-danger span6">
             </div>
@@ -88,14 +89,14 @@
                 <div class="gallery-image-container" data-image="{{ image.vars.value }}">
                     <span class="gallery-image-helper"></span>
                     {{ form_widget(image) }}
-                    <span class="remove-image"><i class="icon icon icon-remove" data-delete="image"></i></span>
+                    <span class="remove-image"><i class="glyphicon glyphicon-remove" data-delete="image"></i></span>
                     <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ image.vars.value)|thumb(options.galleryThumbSize, options.galleryThumbSize) }}?{{ 'now'  | date('U') }}"/>
                 </div>
             {% endfor %}
         </div>
-        <div class="image_add_button">
+        <div class="image_add_button" id="image_add_button_{{form[name].vars.id}}">
             <span class="btn btn-success add-image-button">
-                <i class="icon-picture icon-white"></i> {% trans %}Add image{% endtrans %}
+                <i class="glyphicon glyphicon-picture glyphicon-white"></i> {% trans %}Add image{% endtrans %}
             </span>
         </div>
 
@@ -106,7 +107,7 @@
         $(document).ready(function(){
             rebindGalleryRemove();
             galleries['{{form[name].vars.id}}'] = true;
-            $('.image_add_button').click(function(event){ 
+            $('#image_add_button_{{form[name].vars.id}}').click(function(event){
                 initializeImageManager('{{ form[name].vars.id }}', $.parseJSON('{{ options | json_encode() | raw }}'));
                 $('#image_upload_modal').modal('show');
             });

@@ -1,3 +1,6 @@
+.jcrop-keymgr {
+    left: -12000px !important;
+}
 .gallery-image-helper {
     display: inline-block;
     height: 100%;
@@ -15,7 +18,7 @@
     min-height: 150px;
     min-width: 150px;
     height: 150px;
-    width: 150px;
+    /*width: 150px;*/
     cursor: move;
     text-align: center;
     background-color: #fff;
@@ -38,11 +41,20 @@
 {
     position: absolute;
     line-height: normal;
-    margin-left: -5px;
+    margin-left: -10px;
     margin-top: -10px;
     cursor: hand;
     cursor: pointer;
     text-align: left;
+}
+
+.gallery-image-container span.remove-image i
+{
+    color: red;
+    background-color: white;
+    padding: 2px;
+    border: solid 1px #aaa;
+    border-radius: 15px;
 }
 
 .image_edit_button
@@ -101,10 +113,9 @@
     box-shadow: 0px 0px 15px #000;
 }
 
-#image_upload_modal
+#image_upload_modal .modal-dialog
 {
     width: 850px;
-    margin-left: -425px;
 }
 
 #image_upload_modal .tab-content
@@ -121,8 +132,8 @@
 
 #existing-images div.image-container
 {
-    width: 150px;
-    height: 150px;
+    /*width: 150px;
+    height: 150px;*/
     border: solid 1px #888;
     display: inline-block;
     margin: 5px;

@@ -1,4 +1,11 @@
-Use master branch for Bootstrap 2.x compatibility and 1.0 for Bootstrap 3.x
+Use branch master for compatibility with Syfony 2
+------------
+Use branch 1.3 for compatibility with Symfony 3
+------------
+Use 0.X releases for compatibility with bootstrap 2.x.
+------------
+Compatibility with bootstrap 2.X is no more maintained
+------------
 
 ComurImageBundle
 ============
@@ -51,7 +58,7 @@ Installation
 	```
     {
         "require": {
-            "comur/image-bundle": "dev-master",
+            "comur/image-bundle": "1.0.*@dev",
         }
     }
     ```
@@ -180,7 +187,7 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
 	    // get your entity related with your form type
 	    $myEntity = $builder->getForm()->getData();
 	    ...
-	    ->add('image', 'comur_image', array(
+	    ->add('image', CroppableImageType::class, array(
 	        'uploadConfig' => array(
 	            'uploadRoute' => 'comur_api_upload', 		//optional
 	            'uploadUrl' => $myEntity->getUploadRootDir(),       // required - see explanation below (you can also put just a dir path)
@@ -189,7 +196,8 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
 	            'libraryDir' => null, 						//optional
 	            'libraryRoute' => 'comur_api_image_library', //optional
 	            'showLibrary' => true, 						//optional
-	            'saveOriginal' => 'originalImage'			//optional
+	            'saveOriginal' => 'originalImage',			//optional
+	            'generateFilename' => true			//optional
 	        ),
 	        'cropConfig' => array(
 	            'minWidth' => 588,
@@ -267,7 +275,7 @@ Gallery widget
 
 Use widget in your forms (works with SonataAdmin too) to create a **sortable** list of images (so a gallery :)) stored in an array typed field :
 
-	->add('gallery', 'comur_gallery', array(
+	->add('gallery', CroppableGalleryType::class, array(
 		//same parameters as comur_image
 	))
 	
@@ -380,6 +388,12 @@ Use this parameter if you want to save original file's path (for eg. to show big
 **Attention:** This parameter is disabled for gallery for instance. It will be implemented soon.
 
 **Default value:** false
+
+###generateFilename (optional)###
+
+This parameter is used to generate an uniq file name. Setted to false, it will keep the original filename.
+
+**Default value:** true
 
 ##cropConfig##
 

@@ -5,12 +5,12 @@ namespace Comur\ImageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 // use Symfony\Component\Form\FormBuilder;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CroppableGalleryType extends CroppableImageType
@@ -25,7 +25,7 @@ class CroppableGalleryType extends CroppableImageType
     //     return 'collection';
     // }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'comur_gallery';
     }
@@ -47,12 +47,12 @@ class CroppableGalleryType extends CroppableImageType
         //         'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;')));
         // }
 
-        $builder->add($builder->getName(), 'collection', array(
+        $builder->add($builder->getName(), CollectionType::class, array(
             // 'property_path' => $builder->getName(),
             // 'inherit_data' => true,
             'allow_add' => function(Options $options, $value){ return true; },
             'allow_delete' => function(Options $options, $value){ return true; },
-            'options' => array(
+            'entry_options' => array(
                 'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;padding: 0; position: absolute;'
                     )
                 )
@@ -69,17 +69,17 @@ class CroppableGalleryType extends CroppableImageType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 
 
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $galleryDir = $this->galleryDir;
 
         // $resolver->setNormalizers(array(
-            
-            
+
+
         // ));
     //     $uploadConfig = array(
     //         'uploadRoute' => 'comur_api_upload',
@@ -104,7 +104,7 @@ class CroppableGalleryType extends CroppableImageType
     //         'uploadConfig' => $uploadConfig,
     //         'cropConfig' => $cropConfig,
     //     ));
-        
+
     //     $resolver->setNormalizers(array(
     //         'uploadConfig' => function(Options $options, $value) use ($uploadConfig){
     //             $config = array_merge($uploadConfig, $value);
@@ -117,7 +117,7 @@ class CroppableGalleryType extends CroppableImageType
     //             return array_merge($cropConfig, $value);
     //         }
     //     ));
-        
+
     }
 
     /**

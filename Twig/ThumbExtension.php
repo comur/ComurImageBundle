@@ -1,7 +1,7 @@
 <?php
 namespace Comur\ImageBundle\Twig;
 
-class ThumbExtension extends \Twig_Extension
+class ThumbExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     protected $croppedDir;
     protected $thumbsDir;

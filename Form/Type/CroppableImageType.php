@@ -5,11 +5,11 @@ namespace Comur\ImageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 // use Symfony\Component\Form\FormBuilder;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +25,7 @@ class CroppableImageType extends AbstractType
     //     return 'text';
     // }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'comur_image';
     }
@@ -41,12 +41,12 @@ class CroppableImageType extends AbstractType
         // }
         // var_dump($builder->getDataMapper());exit;
         if($options['uploadConfig']['saveOriginal']){
-            $builder->add($options['uploadConfig']['saveOriginal'], 'text', array(
+            $builder->add($options['uploadConfig']['saveOriginal'], TextType::class, array(
                 // 'inherit_data' => true,
                 // 'property_path' => $options['uploadConfig']['saveOriginal'],
                 'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;')));
         }
-        $builder->add($builder->getName(), 'text', array(
+        $builder->add($builder->getName(), TextType::class, array(
             // 'property_path' => $builder->getName(),
             // 'inherit_data' => true,
             'attr' => array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;')));
@@ -55,7 +55,7 @@ class CroppableImageType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 
         $uploadConfig = array(
@@ -67,6 +67,7 @@ class CroppableImageType extends AbstractType
             'libraryRoute' => 'comur_api_image_library',
             'showLibrary' => true,
             'saveOriginal' => false, //save original file name
+            'generateFilename' => true //generate an uniq filename
         );
 
         $cropConfig = array(
@@ -89,12 +90,12 @@ class CroppableImageType extends AbstractType
             // 'property_path' => null,
             // 'data_class' => 'MVB\Bundle\MemberBundle\Entity\Member'
         ));
-        
+
         $isGallery = $this->isGallery;
         $galleryDir = $this->galleryDir;
 
-        $resolver->setNormalizers(array(
-            'uploadConfig' => function(Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir){
+        $resolver->setNormalizer(
+            'uploadConfig', function(Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir){
                 $config = array_merge($uploadConfig, $value);
 
                 if($isGallery){
@@ -110,15 +111,14 @@ class CroppableImageType extends AbstractType
                 //     $options['compound']=true;
                 // }
                 return $config;
-            },
-            'cropConfig' => function(Options $options, $value) use($cropConfig){
+            }
+        );
+        $resolver->setNormalizer(
+            'cropConfig', function(Options $options, $value) use($cropConfig){
                 return array_merge($cropConfig, $value);
-            },
-            // 'compound' => function(Options $options, $value) use($cropConfig){
-            //     return $options['uploadConfig']['saveOriginal'] ? true : false;
-            // }
-        ));
-        
+            }
+        );
+
     }
 
     /**

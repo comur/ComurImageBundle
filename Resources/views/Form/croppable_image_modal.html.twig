@@ -13,14 +13,14 @@
 <script src="{{ asset('bundles/comurimage/js/jquery.fileupload.js') }}"></script>
 <script src="{{ asset('bundles/comurimage/js/jquery.Jcrop.min.js') }}"></script>
 <script src="{{ asset('bundles/comurimage/js/jquery.color.js') }}"></script>
+{% if include_holder is not defined or include_holder %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script>
+{% endif %}
 {% if include_bootstrap is not defined or include_bootstrap %}
     <script src="{{ asset('bundles/comurimage/js/bootstrap.min.js') }}"></script>
 {% endif %}
 <!-- ComurImageBundle script. Do not remove this -->
 <script src="{{ asset('bundles/comurimage/js/comur.imagelibrary.js') }}"></script>
-{% if include_holder is not defined or include_holder %}
-    <script src="{{ asset('bundles/comurimage/js/holder.js') }}"></script>
-{% endif %}
 {% endblock %}
 
 {% block comur_image_stylesheets %}
@@ -59,13 +59,11 @@
                             <p>{% trans %}or{% endtrans %}</p>
                         </div>
                         <div id="image_upload_file_container">
-                            <p>
-                                <span class="btn btn-info fileinput-button">
-                                    <i class="icon-white icon-download-alt"></i>
-                                    <span> {% trans %}Select a file...{% endtrans %}</span>
-                                </span>
-                                <input id="image_upload_file" type="file" name="image_upload_file" style="opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;">
-                            </p>
+                            <span class="btn btn-info fileinput-button">
+                                <i class="icon-white icon-download-alt"></i>
+                                <span> {% trans %}Select a file...{% endtrans %}</span>
+                                <input id="image_upload_file" type="file" name="image_upload_file">
+                            </span>
                         </div>
                         <div id="image_file_upload_progress" class="progress">
                             <div class="progress-bar progress-bar-success"></div>
@@ -83,16 +81,20 @@
                     <!-- CROP IMAGE -->
                     <div class="tab-pane" id="crop-and-use">
                         <p>{% trans %}Please adjust selection to your image{% endtrans %}</p>
-                        <div class="image_preview" id="image_preview" style="z-index: 1050; margin-bottom: 20px;">
+                        <div class="image_preview" id="image_preview" style="z-index: 1050">
                             <p>{% trans %}Please select or upload an image{% endtrans %}</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Close{% endtrans %}</button>
                     <span class="btn btn-success hidden" id="image_crop_go_now">
                         <i class="icon-white icon icon-fullscreen"></i>
                         {% trans %}Crop & Use !{% endtrans %}
+                    </span>
+                    <span class="btn btn-success hidden" id="image_crop_cancel">
+                        <i class="icon-white icon icon-fullscreen"></i>
+                        {% trans %}Cancel{% endtrans %}
                     </span>
                 </div>
             </div>
@@ -101,6 +103,6 @@
 </div>
 <script>
     $('#image_upload_modal').on({
-        'hide': destroyImageManager
+        'hidden.bs.modal': destroyImageManager
     });
 </script>
