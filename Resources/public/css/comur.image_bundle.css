@@ -68,6 +68,10 @@
     position: relative;
     margin: 0;
 }
+.fileinput-button {
+    margin-bottom: 20px;
+}
+
 .fileinput-button input {
     /*position: absolute;
     top: 0;
@@ -81,6 +85,7 @@
     -ms-filter: 'alpha(opacity=0)';
     max-width: 0;
     width: 0;
+    display: none;
 }
 
 .image_upload_drop_zone
