@@ -118,6 +118,11 @@
     box-shadow: 0px 0px 15px #000;
 }
 
+#image_upload_modal
+{
+    overflow-x: auto;
+}
+
 #image_upload_modal .modal-dialog
 {
     width: 850px;
