@@ -13,11 +13,13 @@
             </div>
         </div>
         <div class="image_preview select-image-button" id="image_preview_{{ form[name].vars.id }}" style="z-index: 1050">
-            <div class="image_edit_button">
-                <span class="btn btn-success select-image-button">
-                    <i class="glyphicon glyphicon-edit glyphicon-white"></i> {% trans %}Edit{% endtrans %}
-                </span>
-            </div>
+            {% if not disabled %}
+                <div class="image_edit_button">
+                    <span class="btn btn-success select-image-button">
+                        <i class="glyphicon glyphicon-edit glyphicon-white"></i> {% trans %}Edit{% endtrans %}
+                    </span>
+                </div>
+            {% endif %}
             <div id="image_preview_image_{{form[name].vars.id}}">
                 {% if not options.fieldImage %}
                     {% if form[name].vars.value %}
