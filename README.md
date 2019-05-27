@@ -1,14 +1,7 @@
-Use branch master for compatibility with Syfony 2
-------------
-Use branch 1.3 for compatibility with Symfony 3
-------------
-Use 0.X releases for compatibility with bootstrap 2.x.
-------------
-Compatibility with bootstrap 2.X is no more maintained
-------------
-
 ComurImageBundle
-============
+================
+
+## Introduction
 
 Image upload / crop bundle for Symfony2
 
@@ -21,32 +14,51 @@ It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Uplo
 
 **New Since Version 0.2.0 !! you can also create sortable & croppable gallery widgets** without any specific configuration. It only needs an array typed property in your entity (and a text column in your database). See below for examples, screenshots and how to use it.
 
+
+## Which version use
+
+|v SF|v Bundle|
+|---|---|
+|2.x|1.x|
+|3.x|2.x|
+|4.x|2.x|
+
+
+Use 0.X releases for compatibility with bootstrap 2.x.
+------------
+
+Compatibility with bootstrap 2.X is no more maintained
+------------
+
+I won't maintain Symfony 2 anymore, I will only merge PR on 1.2 branch for compatibility with SF2. If you need something you can always create a PR and I will merge it.
+--------
+
 Screen shots
 ------------
 
 Here are some screen shots since i didn't have time to put a demo yet:
 
-###Simple Image widget###
+### Simple Image widget ###
 
 ![alt tag](http://canomur.com/comur-image/images/image_widget_ss1.png)
 
-###Gallery widget###
+### Gallery widget ###
 
 ![alt tag](http://canomur.com/comur-image/images/gallery_widget_ss1.png)
 
-###Upload image screen###
+### Upload image screen ###
 
 ![alt tag](http://canomur.com/comur-image/images/upload_image_ss1.png)
 
-###Select image from library screen###
+### Select image from library screen ###
 
 ![alt tag](http://canomur.com/comur-image/images/select_image_ss1.png)
 
-###Crop image screen###
+### Crop image screen ###
 
 ![alt tag](http://canomur.com/comur-image/images/crop_image_ss1.png)
 
-###Change gallery image order screen###
+### Change gallery image order screen ###
 
 ![alt tag](http://canomur.com/comur-image/images/order_image_ss1.png)
 
@@ -130,49 +142,49 @@ Configuration
 			gallery_thumb_size: 150
 			gallery_dir: 'gallery'
 
-###cropped_image_dir###
+### cropped_image_dir ###
 
 It's used to determine relative directory name to put cropped images (see above).
 
 **Default value:** 'cropped'
 
-###thumbs_dir###
+### thumbs_dir ###
 
 It's used to determine relative directory name to put thumbnails (see above).
 
 **Default value:** 'thumbnails'
 
-###media_lib_thumb_size###
+### media_lib_thumb_size ###
 
 It's used to determine thumbnails size in pixels (squares) used in media library.
 
 **Default value:** 150
 
-###upload_dir###
+### upload_dir ###
 
 Dirname of your public directory. It's used to check thumb existence in thumb twig helper.
 
 **Default value:** 'web'
 
-###translation_domain###
+### translation_domain ###
 
 Domain name for translations. For instance two languages are provided (en & fr). To override the domain name, change this parameter to whatever you want.
 
 **Default value:** 'ComurImageBundle'
 
-###gallery_thumb_size###
+### gallery_thumb_size ###
 
 That's the image size in pixels that you want to show in gallery widget. Gallery widget will automaticaly create square thums having this size and show them in the gallery widget.
 
 **Default value:** 150
 
-###gallery_dir###
+### gallery_dir ###
 
 That's the gallery directory name. The widget will store all gallery images in a specific directory inside the root directory that you will give when you will add the widget to your forms.
 
 **For eg.** if you put 'uploads/images' as webDir when you add the widget, gallery images will be stored in 'uploads/images/*[gallery_dir]*'. This is added to make gallery use easier so you don't have to add new functions to your entities to get gallery dirs.
 
-#Usage#
+# Usage #
 
 
 There are two widgets provided with this bundle. They both have exacly same config parameters.
@@ -319,15 +331,15 @@ That's all ! This will create a widget like on the following image when you will
 
 Gallery images will be stored in uploadUrl / gallery_dir (default is gallery). Cropped images will be stored in uploadUrl / gallery_dir / cropped_dir (same as image widget) and thumbs in uploadUrl / gallery_dir / cropped_dir / thumb_dir with specified width. So if you pu
 
-##uploadConfig##
+## uploadConfig ##
 
-###uploadRoute (optional)###
+### uploadRoute (optional) ###
 
 Route called to send uploaded file. It's recommended to not change this parameter except if you know exactly what you do.
 
 **Default value:** comur_api_upload
 
-###uploadUrl (required)###
+### uploadUrl (required) ###
 
 Absolute url to directory where put uploaded image. I recommend you to create a function in your entity and call it like it's showen in the example:
     
@@ -353,35 +365,35 @@ Absolute url to directory where put uploaded image. I recommend you to create a 
     }
 
 
-###webDir (required)###
+### webDir (required) ###
 
 Url used to show your image in templates, must be relative url. If you created related functions as explained in uploadUrl section, then you can user getWebPath() function for webDir parameter.
 
-###fileExt (optional)###
+### fileExt (optional) ###
 
 Permitted image extensions.
 
 **Default value:** '*.jpg;*.gif;*.png;*.jpeg'
 
-###libraryDir (optional)###
+### libraryDir (optional) ###
 
 Directory to look into for images to show in image library.
 
 **Default value:** uploadUrl
 
-###libraryRoute (optional)###
+### libraryRoute (optional) ###
 
 Route called to get images to show in library. I recommend you to not change this parameter if you don't know exactly what it does.
 
 **Default value:** comur_api_image_library
 
-###showLibrary (optional)###
+### showLibrary (optional) ###
 
 Set this to false if you don't want the user see existing images in libraryDir.
 
 **Default value:** true
 
-###saveOriginal (optional)###
+### saveOriginal (optional) ###
 
 Use this parameter if you want to save original file's path (for eg. to show big image in a lightbox). You have to put property name of your entity and the bundle will use it to save original file path in it.
 
@@ -389,43 +401,43 @@ Use this parameter if you want to save original file's path (for eg. to show big
 
 **Default value:** false
 
-###generateFilename (optional)###
+### generateFilename (optional) ###
 
 This parameter is used to generate an uniq file name. Setted to false, it will keep the original filename.
 
 **Default value:** true
 
-##cropConfig##
+## cropConfig ##
 
-###minWidth (optional)###
+### minWidth (optional) ###
 
 Minimum with of desired image.
 
 **Default value:** 1
 
-###minHeight (optional)###
+### minHeight (optional) ###
 
 Minimum height of desired image.
 
 **Default value:** 1
-###aspectRatio (optional)###
+### aspectRatio (optional) ###
 
 True to aspect ratio of crop screen.
 
 **Default value:** true
 
-###cropRoute (optional)###
+### cropRoute (optional) ###
 
 Route to crop action. I recommend you to not change this parameter if you don't know exactly what it does.
 
 **Default value:** comur_api_crop
 
 
-###forceResize (optional)###
+### forceResize (optional) ###
 
 If true, system will resize image to fit minWidth and minHeight.
 
-###thumbs (optional)###
+### thumbs (optional) ###
 
 Array of thums to create automaticly. System will resize images to fit maxWidth and maxHeight. It will put them in "uploadDir/cropped_images_dir/thumbs_dir/widthxheight-originalfilename.extension" so you can use included Thumb Twig extension to get them, ex:
 
@@ -437,10 +449,11 @@ Array of thums to create automaticly. System will resize images to fit maxWidth 
 
 **New in 0.2.2:** You can use 'useAsFieldImage' option to use this thumb as image field's preview (in your form you will see this thumb instead of original cropped image). Usefull when you have big cropped images.
 
-#TODO LIST#
+# TODO LIST #
 
 * Create tests
 * Add more comments in the code
 * Think about removed image deletion (for now images are not deleted, you have to care about it by yourself…)
 * Update existing images list dynamicly after an image upload
+
 

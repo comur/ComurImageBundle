@@ -343,7 +343,7 @@ class UploadHandler
             case 'm':
                 $val = (int)$val*1024;
             case 'k':
-                $val= (int)$val*1024;
+                $val = (int)$val*1024;
         }
         return $this->fix_integer_overflow($val);
     }

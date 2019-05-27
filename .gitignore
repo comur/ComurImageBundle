@@ -1,3 +1,4 @@
 /Tests/*
 !Tests/.gitkeep
 .DS_Store
+.idea

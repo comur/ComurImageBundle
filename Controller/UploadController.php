@@ -35,11 +35,10 @@ class UploadController extends Controller
 
         $webDir = $config['uploadConfig']['webDir'];
         $webDir = substr($webDir, -strlen('/')) === '/' ? $webDir : $webDir . '/';
-        if($config['uploadConfig']['generateFilename']){
+        if($config['uploadConfig']['generateFilename']) {
             $filename = sha1(uniqid(mt_rand(), true));
         }
-        else
-        {
+        else {
             $filename = $request->files->get('image_upload_file')->getClientOriginalName();
             if(file_exists($uploadUrl.$thumbsDir.'/'.$filename))
             {
