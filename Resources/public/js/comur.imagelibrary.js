@@ -91,12 +91,12 @@ function initializeImageManager(id, options){
     // $('#image_upload_file').bind('fileuploadadd', function (e, data) {console.log('add')});
     $('#image_crop_go_now').unbind('click');
     $('#image_crop_go_now').click(function(){ cropImage(id, options)});
-    $('#image_crop_cancel').click(function () {
-        $('#selected_image').val('');
-        $('#image_crop_go_now').addClass('hidden');
-        $('#image_crop_cancel').addClass('hidden');
-        $('#image_upload_tabs a:first').tab('show');
-    });
+    // $('#image_crop_cancel').click(function () {
+    //     $('#selected_image').val('');
+    //     $('#image_crop_go_now').addClass('hidden');
+    //     $('#image_crop_cancel').addClass('hidden');
+    //     $('#image_upload_tabs a:first').tab('show');
+    // });
     // $('#'+id+'_image_crop span').click(initJCrop_{{id}});
     // $('#'+id+'_image_crop_go_cancel').click(destroyJCrop);
 }
@@ -106,7 +106,8 @@ function destroyImageManager(){
     destroyJCrop();
     $('#image_crop_go_now').unbind('click');
     $('#image_preview').html('<p>Please select or upload an image</p>');
-    $('#image_crop_cancel').addClass('hidden');
+    // $('#image_crop_cancel').addClass('hidden');
+    reinitModal();
 }
 
 var api;
@@ -150,10 +151,6 @@ function initJCrop(id, options){
                 var selectionWidth = $('#image_preview_image').width();
                 var selectionHeight = parseInt($('#image_preview_image').width() / (options.cropConfig.minWidth / options.cropConfig.minHeight));
             }
-            console.log(parseInt(($('#image_preview_image').width() - selectionWidth)/2),
-                parseInt(($('#image_preview_image').height() - selectionHeight)/2),
-                selectionWidth, 
-                selectionHeight);
 
             api.setSelect([
                 parseInt(($('#image_preview_image').width() - selectionWidth)/2),
@@ -163,7 +160,7 @@ function initJCrop(id, options){
             ]);
             //$('#image_crop').addClass('hidden');
             $('#image_crop_go_now').removeClass('hidden');
-            $('#image_crop_cancel').removeClass('hidden');
+            // $('#image_crop_cancel').removeClass('hidden');
             $('#image_upload_tabs a:last').tab('show');
         });
         //$('#image_backdrop').removeClass('hidden');
@@ -176,6 +173,7 @@ function initJCrop(id, options){
 }
 
 function cropImage(id, options){
+    $('#cropping-loader').show();
     $.ajax({
         url: Routing.generate(options.cropConfig.cropRoute),
         type: 'POST',
@@ -220,14 +218,21 @@ function cropImage(id, options){
             }
             
             destroyJCrop(id);
-            $('#selected_image').val('');
-            $('#image_preview').html('<p>Please select or upload an image</p>');
-            $('#image_crop_go_now').addClass('hidden');
-            $('#image_crop_cancel').addClass('hidden');
-            $('#image_upload_tabs a:first').tab('show');
-            $('#image_upload_modal').modal('hide');
+            reinitModal();
+        },
+        complete: function() {
+            $('#cropping-loader').hide();
         }
     });
+}
+
+function reinitModal() {
+    $('#selected_image').val('');
+    $('#image_preview').html('<p>Please select or upload an image</p>');
+    $('#image_crop_go_now').addClass('hidden');
+    // $('#image_crop_cancel').addClass('hidden');
+    $('#image_upload_tabs a:first').tab('show');
+    $('#image_upload_modal').modal('hide');
 }
 
 function addImageToGallery(filename, id, thumb, options)

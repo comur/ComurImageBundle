@@ -40,7 +40,8 @@
                 <h3>{% trans %}Insert Image{% endtrans %}</h3>
             </div>
             <div class="modal-body">
-                <ul class="nav nav-pills" id="image_upload_tabs">
+                <div id="cropping-loader" class="text-center loader" style="display: none"><i class="fa fa-spinner fa-pulse fa-5x"></i></div>
+                <ul class="nav nav-tabs" id="image_upload_tabs">
                     <li class="active">
                         <a href="#upload-image" data-toggle="tab">{% trans %}Upload Image{% endtrans %}</a>
                     </li>
@@ -55,12 +56,13 @@
                             </div>
                         </div>
                         <div id="image_upload_drop_zone" class="image_upload_drop_zone">
+                            <p><i class="fa fa-image fa-3x"></i></p>
                             <p>{% trans %}Drop your file here{% endtrans %}</p>
-                            <p>{% trans %}or{% endtrans %}</p>
                         </div>
+                        <p>{% trans %}or{% endtrans %}</p>
                         <div id="image_upload_file_container">
                             <span class="btn btn-info fileinput-button">
-                                <i class="icon-white icon-download-alt"></i>
+                                <i class="fa fa-upload"></i>&nbsp;
                                 <span> {% trans %}Select a file...{% endtrans %}</span>
                                 <input id="image_upload_file" type="file" name="image_upload_file">
                             </span>
@@ -80,22 +82,25 @@
                     </div>
                     <!-- CROP IMAGE -->
                     <div class="tab-pane" id="crop-and-use">
-                        <p>{% trans %}Please adjust selection to your image{% endtrans %}</p>
+                        <h4 class="text-info text-center"><i class="fa fa-info-circle"></i>&nbsp;{% trans %}Please adjust selection to your image{% endtrans %}</h4>
                         <div class="image_preview" id="image_preview" style="z-index: 1050">
-                            <p>{% trans %}Please select or upload an image{% endtrans %}</p>
+                            <p class="text-danger text-center">{% trans %}Please select or upload an image{% endtrans %}</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Close{% endtrans %}</button>
+                    <button class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-ban"></i>&nbsp;
+                        {% trans %}Close{% endtrans %}
+                    </button>
                     <span class="btn btn-success hidden" id="image_crop_go_now">
-                        <i class="icon-white icon icon-fullscreen"></i>
+                        <i class="fa fa-cut"></i>&nbsp;
                         {% trans %}Crop & Use !{% endtrans %}
                     </span>
-                    <span class="btn btn-success hidden" id="image_crop_cancel">
-                        <i class="icon-white icon icon-fullscreen"></i>
-                        {% trans %}Cancel{% endtrans %}
-                    </span>
+{#                    <span class="btn btn-danger hidden" id="image_crop_cancel">#}
+{#                        <i class="fa fa-ban"></i>&nbsp;#}
+{#                        {% trans %}Cancel{% endtrans %}#}
+{#                    </span>#}
                 </div>
             </div>
         </div>

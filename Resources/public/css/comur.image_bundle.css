@@ -81,6 +81,11 @@
     -ms-filter: 'alpha(opacity=0)';
     max-width: 0;
     width: 0;
+    height: 0;
+}
+
+.fileinput-button {
+    margin-bottom: 10px;
 }
 
 .image_upload_drop_zone
@@ -101,6 +106,11 @@
 #upload-image
 {
     text-align: center;
+}
+
+.jcrop-holder {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .jcrop-holder img{
@@ -134,7 +144,7 @@
 {
     /*width: 150px;
     height: 150px;*/
-    border: solid 1px #888;
+    border: solid 1px #aaaaaa;
     display: inline-block;
     margin: 5px;
     text-align: center;
@@ -153,6 +163,11 @@
 #existing-images
 {
     text-align: center;
+    padding: 10px;
+}
+
+#image_preview {
+    margin-top: 20px;
 }
 
 #image_preview img
@@ -170,4 +185,17 @@
 .hidden
 {
     display: none;
+}
+
+.loader
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: 100%;
+    padding-top: 30%;
+    z-index: 1000;
+    color: #555;
 }
