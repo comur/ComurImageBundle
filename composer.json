@@ -1,6 +1,7 @@
 {
     "name": "comur/image-bundle",
     "type": "symfony-bundle",
+    "version": "2.0.1",
     "description": "A bundle providing fields for image upload with jquery upload and image cropping with jcrop for symfony2",
     "keywords": ["Form Type", "image", "upload", "crop", "jcrop", "jquery upload"],
     "homepage": "https://github.com/comur/ComurImageBundle",
@@ -8,31 +9,26 @@
     "authors": [
         {
             "name": "Can OMUR",
-            "email": "omur.can@gmail.com",
-            "homepage": "http://canomur.com"
+            "email": "omur.can@gmail.com"
         }
     ],
     "require": {
         "php": ">=7.1.3",
         "ext-gd": "*",
-        "symfony/http-foundation": "~3.4 || ~4.0",
-        "symfony/form": "~3.4 || ~4.0",
-        "symfony/validator": "~3.4 || ~4.0",
-        "symfony/routing": "~3.4 || ~4.0",
-        "symfony/config": "~3.4 || ~4.0",
-        "symfony/twig-bridge": "~3.4 || ~4.0",
+        "symfony/http-foundation": "~3.4 || ~4.2",
+        "symfony/form": "~3.4 || ~4.2",
+        "symfony/validator": "~3.4 || ~4.2",
+        "symfony/routing": "~3.4 || ~4.2",
+        "symfony/config": "~3.4 || ~4.2",
+        "symfony/twig-bridge": "~3.4 || ~4.2",
         "twig/twig": "~1.35 || ~2.5",
         "twig/extensions": "~1.0",
         "friendsofsymfony/jsrouting-bundle": "@stable",
-	"jms/translation-bundle": "^1.2.2"
+	    "jms/translation-bundle": "^1.2.2"
     },
-    "target-dir": "Comur/ImageBundle",
     "autoload": {
-        "psr-0": { "Comur\\ImageBundle": "" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
+        "psr-4": {
+            "Comur\\ImageBundle\\": ""
         }
     }
 }
