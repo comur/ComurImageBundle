@@ -10,10 +10,13 @@ It uses bootstrap to make it look well but you can use any other css to customiz
 
 It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Upload/) to upload files (original UploadHandler has been modified to add namespace and a new config parameter to generate random filenames) and [JCrop](http://deepliquid.com/content/Jcrop.html) to let you crop uploaded images.
 
-**New Since Version 0.2.3 !! you can also save original file in a separate field** See saveOriginal parameter below.
+Works perfectly with [ComurContentAdminBundle](https://github.com/comur/ContentAdminBundle). If you don't know what it is, take a look and you will be surprised ! This bundle helps you create beautiful admins with inline editing capabilities with ease !!
 
-**New Since Version 0.2.0 !! you can also create sortable & croppable gallery widgets** without any specific configuration. It only needs an array typed property in your entity (and a text column in your database). See below for examples, screenshots and how to use it.
+If this bundle helps you reduce time to develop, you can pay me a cup of coffee ;)
 
+[![coffee](Resources/docs/coffee.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2RWFAL3ZNTGN6&source=url)
+
+[![coffee](https://www.paypalobjects.com/en_US/FR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2RWFAL3ZNTGN6&source=url)
 
 ## Which version use
 
@@ -24,14 +27,11 @@ It uses beautiful [Jquery File Upload](http://blueimp.github.io/jQuery-File-Uplo
 |4.x|2.x|
 
 
-Use 0.X releases for compatibility with bootstrap 2.x.
-------------
+:warning: **Use 1.X releases for compatibility with bootstrap 2.x.**
 
-Compatibility with bootstrap 2.X is no more maintained
-------------
+:warning: **Compatibility with bootstrap 2.X is no more maintained**
 
-I won't maintain Symfony 2 anymore, I will only merge PR on 1.2 branch for compatibility with SF2. If you need something you can always create a PR and I will merge it.
---------
+:warning: **I won't maintain Symfony 2 anymore, I will only merge PR on 1.2 branch for compatibility with SF2. If you need something you can always create a PR and I will merge it.**
 
 Screen shots
 ------------
@@ -40,57 +40,103 @@ Here are some screen shots since i didn't have time to put a demo yet:
 
 ### Simple Image widget ###
 
-![alt tag](http://canomur.com/comur-image/images/image_widget_ss1.png)
+![alt tag](Resources/docs/image-widget.png)
 
 ### Gallery widget ###
 
-![alt tag](http://canomur.com/comur-image/images/gallery_widget_ss1.png)
+![alt tag](Resources/docs/gallery-widget.png)
 
 ### Upload image screen ###
 
-![alt tag](http://canomur.com/comur-image/images/upload_image_ss1.png)
+![alt tag](Resources/docs/upload.png)
 
 ### Select image from library screen ###
 
-![alt tag](http://canomur.com/comur-image/images/select_image_ss1.png)
+![alt tag](Resources/docs/library.png)
 
 ### Crop image screen ###
 
-![alt tag](http://canomur.com/comur-image/images/crop_image_ss1.png)
+![alt tag](Resources/docs/crop-screen.png)
 
 ### Change gallery image order screen ###
 
-![alt tag](http://canomur.com/comur-image/images/order_image_ss1.png)
+![alt tag](Resources/docs/gallery-order.png)
 
 Installation
-------------
+============
 
-1. Add this bundle to your project in composer.json:
+Applications that use Symfony Flex
+----------------------------------
 
-	```
-    {
-        "require": {
-            "comur/image-bundle": "1.0.*@dev",
-        }
-    }
-    ```
+### Step 1: Download the Bundle
 
-2. Register FOSJsRouting and this bundle to your app/AppKernel.php:
+Open a command console, enter your project directory and execute:
 
-    ```
-    // app/AppKernel.php
+```console
+$ composer require comur/content-admin-bundle
+```
+
+### Step 2: Enable other bundles
+
+Then, enable the bundle by adding it to the list of registered bundles
+in the `config/bundles.php` file of your project:
+
+```php
+// config/bundles.php
+
+return [
+            // ...
+            Comur\ImageBundle\ComurImageBundle::class => ['all' => true],
+            FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+            JMS\TranslationBundle\JMSTranslationBundle::class => ['all' => true],
+        ];
+```
+
+
+Applications that don't use Symfony Flex
+----------------------------------------
+
+### Step 1: Download the Bundle
+
+Open a command console, enter your project directory and execute the
+following command to download the latest stable version of this bundle:
+
+```console
+$ composer require comur/content-admin-bundle
+```
+
+This command requires you to have Composer installed globally, as explained
+in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
+of the Composer documentation.
+
+### Step 2: Enable the Bundle and dependency bundles
+
+Then, enable the bundle by adding it to the list of registered bundles
+in the `app/AppKernel.php` file of your project:
+
+```php
+// app/AppKernel.php
+
+// ...
+class AppKernel extends Kernel
+{
     public function registerBundles()
     {
-        return array(
+        $bundles = [
             // ...
+            new Comur\ImageBundle\ComurImageBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
-            new Comur\ImageBundle\ComurImageBundle(),
-            // ...
-        );
+        ];
+
+        // ...
     }
-    ```
-3. Add this route to your routing.yml:
+
+    // ...
+}
+```
+
+### Step 3: Add this route to your routing.yml:
 
     ```
     # app/config/routing.yml
@@ -102,7 +148,7 @@ Installation
         prefix:   /
     ```
  
-4. Add Modal template after body tag of your layout:
+### Step 4: Add Modal template after body tag of your layout:
 	
 	```
 	<body>
@@ -118,14 +164,14 @@ Installation
 {% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_jquery': false, 'include_bootstrap': false} %}
 ```
 	
-5. Do not forget to put [FOSJSRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle) script in your <head>:
+### Step 5: Do not forget to put [FOSJSRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle) script in your <head>:
 
 ```
 	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 ```
 
-That's it !
+:boom: That's it !
 
 Configuration
 -------------
@@ -297,7 +343,7 @@ And create your array typed field for storing images in it. Doctrine (or other O
 	
 	…
 	
-	/**
+	  /**
      * @ORM\Column(type="array", nullable=true)
      */
     protected $gallery;
@@ -436,6 +482,7 @@ Route to crop action. I recommend you to not change this parameter if you don't 
 ### forceResize (optional) ###
 
 If true, system will resize image to fit minWidth and minHeight.
+**Default value:** false
 
 ### thumbs (optional) ###
 
@@ -455,5 +502,6 @@ Array of thums to create automaticly. System will resize images to fit maxWidth 
 * Add more comments in the code
 * Think about removed image deletion (for now images are not deleted, you have to care about it by yourself…)
 * Update existing images list dynamicly after an image upload
+* Add javascript events (in progress) 
 
 

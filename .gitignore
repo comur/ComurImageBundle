@@ -1,4 +1,6 @@
 /Tests/*
 !Tests/.gitkeep
 .DS_Store
+._.DS_Store
+.unison*
 .idea

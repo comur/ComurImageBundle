@@ -13,8 +13,10 @@ $(function(){
 
 });
 
-function initializeImageManager(id, options){
-    
+function initializeImageManager(id, options, cb){
+    if (typeof cb === 'function') {
+        options.callback = cb;
+    }
     if((typeof options.uploadConfig.library == 'undefined' || options.uploadConfig.library) 
         && typeof options.uploadConfig.libraryDir != 'undefined' 
         && options.uploadConfig.libraryRoute != 'undefined'
@@ -191,31 +193,35 @@ function cropImage(id, options){
             var previewSrc = data.previewSrc;
             
             // console.log('crop success');
-
-            if(typeof galleries[id] != 'undefined'){
-                // console.log('isGallery');
-                // console.log(galleries[id]);
-                addImageToGallery(filename, id, data.galleryThumb, options);
-            }
-            else{
-                // console.log('simple image');
-                $('#'+id).val(filename);
-                $('#image_preview_image_'+id).html('<img src="'+previewSrc+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
-                // console.log(options.uploadConfig.saveOriginal, $('#'+options.originalImageFieldId), options.originalImageFieldId);
-                if(options.uploadConfig.saveOriginal){
-                    // console.log('set '+$('#selected_image').val());
-                    $('#'+options.originalImageFieldId).val($('#selected_image').val());                    
-                    $('#image_preview_image_'+id+' img').css('cursor: hand; cursor: pointer;');
-                    $('#image_preview_image_'+id+' img').click(function(e){
-                        if($( event.target ).is( "img" )){
-                            $('<div class="modal hide fade"><img src="'+options.uploadConfig.webDir+'/'+$('#selected_image').val()+'"/></div>').modal();
-                            return false;
-                        }
-                    });
+            if (options.callback) {
+                options.callback(data);
+            } else {
+                if(typeof galleries[id] != 'undefined'){
+                    // console.log('isGallery');
+                    // console.log(galleries[id]);
+                    addImageToGallery(filename, id, data.galleryThumb, options);
                 }
-                //$('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
-                $('#image_preview_'+id).removeClass('hide-disabled');
+                else{
+                    // console.log('simple image');
+                    $('#'+id).val(filename);
+                    $('#image_preview_image_'+id).html('<img src="'+previewSrc+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                    // console.log(options.uploadConfig.saveOriginal, $('#'+options.originalImageFieldId), options.originalImageFieldId);
+                    if(options.uploadConfig.saveOriginal){
+                        // console.log('set '+$('#selected_image').val());
+                        $('#'+options.originalImageFieldId).val($('#selected_image').val());
+                        $('#image_preview_image_'+id+' img').css('cursor: hand; cursor: pointer;');
+                        $('#image_preview_image_'+id+' img').click(function(e){
+                            if($( event.target ).is( "img" )){
+                                $('<div class="modal hide fade"><img src="'+options.uploadConfig.webDir+'/'+$('#selected_image').val()+'"/></div>').modal();
+                                return false;
+                            }
+                        });
+                    }
+                    //$('#image_preview_image_'+id).html('<img src="/'+options.uploadConfig.webDir + '/' + $('#selected_image').val()+'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                    $('#image_preview_'+id).removeClass('hide-disabled');
+                }
             }
+
             
             destroyJCrop(id);
             reinitModal();

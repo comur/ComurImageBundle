@@ -20,6 +20,28 @@ class CroppableImageType extends AbstractType
     protected $galleryDir = null;
     protected $thumbsDir = null;
 
+    static $uploadConfig = array(
+        'uploadRoute' => 'comur_api_upload',
+        'uploadUrl' => null,
+        'webDir' => null,
+        'fileExt' => '*.jpg;*.gif;*.png;*.jpeg',
+        'libraryDir' => null,
+        'libraryRoute' => 'comur_api_image_library',
+        'showLibrary' => true,
+        'saveOriginal' => false, //save original file name
+        'generateFilename' => true //generate an uniq filename
+    );
+
+    static $cropConfig = array(
+        // 'disableCrop' => false,
+        'minWidth' => 1,
+        'minHeight' => 1,
+        'aspectRatio' => true,
+        'cropRoute' => 'comur_api_crop',
+        'forceResize' => false,
+        'thumbs' => null
+    );
+
     // public function getParent()
     // {
     //     return 'text';
@@ -40,7 +62,7 @@ class CroppableImageType extends AbstractType
         //     $form->getParent()->add($options['uploadConfig']['saveOriginal'], 'hidden');
         // }
         // var_dump($builder->getDataMapper());exit;
-        if($options['uploadConfig']['saveOriginal']){
+        if ($options['uploadConfig']['saveOriginal']) {
             $builder->add($options['uploadConfig']['saveOriginal'], TextType::class, array(
                 // 'inherit_data' => true,
                 // 'property_path' => $options['uploadConfig']['saveOriginal'],
@@ -53,32 +75,50 @@ class CroppableImageType extends AbstractType
     }
 
     /**
+     * Returns upload config normalizer. It can be used by compatible bundles to normalize parameters
+     * @param $uploadConfig
+     * @param $isGallery
+     * @param $galleryDir
+     * @return \Closure
+     */
+    public static function getUploadConfigNormalizer($uploadConfig, $isGallery = false, $galleryDir = null) {
+        return function (Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir) {
+            $config = array_merge($uploadConfig, $value);
+
+            if ($isGallery) {
+                $config['uploadUrl'] = $config['uploadUrl'] . '/' . $galleryDir;
+                $config['webDir'] = $config['webDir'] . '/' . $galleryDir;
+                $config['saveOriginal'] = false;
+            }
+
+            if (!isset($config['libraryDir'])) {
+                $config['libraryDir'] = $config['uploadUrl'];
+            }
+            // if($config['saveOriginal']){
+            //     $options['compound']=true;
+            // }
+            return $config;
+        };
+    }
+
+    /**
+     * Returns crop config normalizer. It can be used by compatible bundles to normalize parameters
+     * @param $cropConfig
+     * @return \Closure
+     */
+    public static function getCropConfigNormalizer($cropConfig) {
+        return function (Options $options, $value) use ($cropConfig) {
+            return array_merge($cropConfig, $value);
+        };
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-
-        $uploadConfig = array(
-            'uploadRoute' => 'comur_api_upload',
-            'uploadUrl' => null,
-            'webDir' => null,
-            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg',
-            'libraryDir' => null,
-            'libraryRoute' => 'comur_api_image_library',
-            'showLibrary' => true,
-            'saveOriginal' => false, //save original file name
-            'generateFilename' => true //generate an uniq filename
-        );
-
-        $cropConfig = array(
-            // 'disableCrop' => false,
-            'minWidth' => 1,
-            'minHeight' => 1,
-            'aspectRatio' => true,
-            'cropRoute' => 'comur_api_crop',
-            'forceResize' => true,
-            'thumbs' => null
-        );
+        $uploadConfig = self::$uploadConfig;
+        $cropConfig = self::$cropConfig;
 
         $resolver->setDefaults(array(
             'uploadConfig' => $uploadConfig,
@@ -95,28 +135,10 @@ class CroppableImageType extends AbstractType
         $galleryDir = $this->galleryDir;
 
         $resolver->setNormalizer(
-            'uploadConfig', function(Options $options, $value) use ($uploadConfig, $isGallery, $galleryDir){
-                $config = array_merge($uploadConfig, $value);
-
-                if($isGallery){
-                    $config['uploadUrl'] = $config['uploadUrl'].'/'.$galleryDir;
-                    $config['webDir'] = $config['webDir'].'/'.$galleryDir;
-                    $config['saveOriginal'] = false;
-                }
-
-                if(!isset($config['libraryDir'])){
-                    $config['libraryDir'] = $config['uploadUrl'];
-                }
-                // if($config['saveOriginal']){
-                //     $options['compound']=true;
-                // }
-                return $config;
-            }
+            'uploadConfig', self::getUploadConfigNormalizer($uploadConfig, $isGallery, $galleryDir)
         );
         $resolver->setNormalizer(
-            'cropConfig', function(Options $options, $value) use($cropConfig){
-                return array_merge($cropConfig, $value);
-            }
+            'cropConfig', self::getCropConfigNormalizer($cropConfig)
         );
 
     }
@@ -140,11 +162,9 @@ class CroppableImageType extends AbstractType
         $cropConfig = $options['cropConfig'];
 
         $fieldImage = null;
-        if(isset($cropConfig['thumbs']) && count($thumbs = $cropConfig['thumbs']) > 0)
-        {
+        if (isset($cropConfig['thumbs']) && count($thumbs = $cropConfig['thumbs']) > 0) {
             foreach ($thumbs as $thumb) {
-                if(isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage'])
-                {
+                if (isset($thumb['useAsFieldImage']) && $thumb['useAsFieldImage']) {
                     $fieldImage = $thumb;
                 }
             }
