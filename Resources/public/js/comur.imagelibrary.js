@@ -64,8 +64,23 @@ function initializeImageManager(id, options, cb){
         dataType: 'json',
         formData: {'config': JSON.stringify(options) },
         dropZone: $('#image_upload_drop_zone'),
-        maxFileSize: 1024,
-        // acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        // maxFileSize: options.uploadConfig.maxFileSize,
+        // acceptFileTypes: new RegExp(`(\.|\/)(${options.uploadConfig.fileExt.replace(/\*\./g, '').split(';').join('|')})$`, 'i'),
+        add: function(e, data) {
+            var uploadErrors = [];
+            var acceptFileTypes = new RegExp(`(\.|\/)(${options.uploadConfig.fileExt.replace(/\*\./g, '').split(';').join('|')})$`, 'i');
+            if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                uploadErrors.push(comurImageTranslations['Filetype not allowed']);
+            }
+            if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > options.uploadConfig.maxFileSize * 1024 * 1024 ) {
+                uploadErrors.push(comurImageTranslations['File is too big']);
+            }
+            if(uploadErrors.length > 0) {
+                $('#image_upload_widget_error').html(uploadErrors.join("<br/>"));
+            } else {
+                data.submit();
+            }
+        },
         done: function (e, data) {
             // console.log('uploaded');
             if(data.result['image_upload_file'][0].error){
@@ -115,7 +130,7 @@ function destroyImageManager(){
     $('#image_upload_file').fileupload('destroy');
     destroyJCrop();
     $('#image_crop_go_now').unbind('click');
-    $('#image_preview').html('<p>Please select or upload an image</p>');
+    $('#image_preview').html('<p>'+comurImageTranslations['Please select or upload an image']+'</p>');
     // $('#image_crop_cancel').addClass('hidden');
     reinitModal();
 }

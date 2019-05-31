@@ -367,4 +367,20 @@ class UploadController extends Controller
 
         $writeFunc($dstR,$destSrc,$imageQuality);
     }
+
+    /**
+     * returns translation catalogue to add it for javascript translation support
+     * @param Request $request
+     * @return Response
+     */
+    public function getTranslationCatalogue(Request $request) {
+        $transDomain = $this->container->getParameter('comur_image.translation_domain');
+        $translator = $this->container->get('translator');
+        $catalogue = $translator->getCatalogue($request->getLocale());
+        $messages = $catalogue->all();
+
+        return $this->render('@ComurImage/translations.html.twig', array(
+            'messages' => $messages[$transDomain]
+        ));
+    }
 }

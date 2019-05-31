@@ -25,6 +25,7 @@ class CroppableImageType extends AbstractType
         'uploadUrl' => null,
         'webDir' => null,
         'fileExt' => '*.jpg;*.gif;*.png;*.jpeg',
+        'maxFileSize' => 10,
         'libraryDir' => null,
         'libraryRoute' => 'comur_api_image_library',
         'showLibrary' => true,
@@ -171,6 +172,11 @@ class CroppableImageType extends AbstractType
         }
 
         $view->vars['options'] = array('uploadConfig' => $uploadConfig, 'cropConfig' => $cropConfig, 'fieldImage' => $fieldImage);
-        $view->vars['attr'] = array('style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;');
+        $view->vars['attr'] = array_merge(
+            array(
+                'style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;' . (isset($options['attr']) && isset($options['attr']['style']) ? $options['attr']['style'] : '')
+            ),
+            isset($options['attr']) ? $options['attr'] : array()
+        );
     }
 }
