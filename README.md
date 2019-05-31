@@ -62,6 +62,22 @@ Here are some screen shots since i didn't have time to put a demo yet:
 
 ![alt tag](Resources/docs/gallery-order.png)
 
+Dependencies
+============
+
+Bundle uses following packages in assets (see in bower.json) :
+
+|Package|version|optional|
+|---|---|---|
+|blueimp-file-upload|^9.31.0|false|
+|Jcrop|jcrop#0.9.15|false|
+|jquery|^3.4.1|true|
+|holderjs|^2.9.6|true|
+|bootstrap|^4.3.1|true|
+|Font-Awesome|FortAwesome/Font-Awesome#^5.8.2|true|
+
+You can disable auto including of these assets by using modal template inclusion parameters (see step4)
+
 Installation
 ============
 
@@ -161,8 +177,10 @@ class AppKernel extends Kernel
 **Note:** This template includes many script and styles including jquery and bootstrap. You can use following parameters to avoid jquery and/or bootstrap being included:
 
 ```
-{% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_jquery': false, 'include_bootstrap': false} %}
+{% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_fontawesome': false, 'include_jquery': false, 'include_bootstrap': false, 'bootstrap_version': 4} %}
 ```
+	
+:warning: **bootstrap_version** is used for bootstrap 4 compatibility issues. If you include bootstrap using bundle, it will use bootstrap 4 and set it to 4 automatically. If you need to use bootstrap 3, remove bootstrap_version parameter or put 3. 
 	
 ### Step 5: Do not forget to put [FOSJSRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle) script in your <head>:
 
@@ -495,6 +513,11 @@ Array of thums to create automaticly. System will resize images to fit maxWidth 
 ```
 
 **New in 0.2.2:** You can use 'useAsFieldImage' option to use this thumb as image field's preview (in your form you will see this thumb instead of original cropped image). Usefull when you have big cropped images.
+
+SECURITY
+========
+
+Please read following documentation about upload best practices: https://github.com/blueimp/jQuery-File-Upload/blob/master/SECURITY.md
 
 # TODO LIST #
 

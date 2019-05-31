@@ -81,27 +81,31 @@
     {# trans_default_domain 'ComurImageBundle' #}
 
     {% spaceless %}
-
         <div class="field-error clearfix hidden">
             <div id="{{form[name].vars.id}}_widget_error" class="alert alert-danger span6">
             </div>
         </div>
-        <div id="gallery_preview_{{form[name].vars.id}}" class="well" data-name="{{form[name].vars.full_name}}">
+        <div class="card">
+            <div id="gallery_preview_{{form[name].vars.id}}" class="card-body well" data-name="{{form[name].vars.full_name}}">
 
-            {% for image in form[name] %}
-                <div class="gallery-image-container" data-image="{{ image.vars.value }}">
-                    <span class="gallery-image-helper"></span>
-                    {{ form_widget(image) }}
-                    <span class="remove-image"><i class="fa fa-times" data-delete="image"></i></span>
-                    <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ image.vars.value)|thumb(options.galleryThumbSize, options.galleryThumbSize) }}?{{ 'now'  | date('U') }}"/>
+                {% for image in form[name] %}
+                    <div class="gallery-image-container" data-image="{{ image.vars.value }}">
+                        <span class="gallery-image-helper"></span>
+                        {{ form_widget(image) }}
+                        <span class="remove-image"><i class="fa fa-times" data-delete="image"></i></span>
+                        <img src="/{{ (options.uploadConfig.webDir ~ '/' ~ image.vars.value)|thumb(options.galleryThumbSize, options.galleryThumbSize) }}?{{ 'now'  | date('U') }}"/>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <div class="image_add_button" id="image_add_button_{{form[name].vars.id}}">
+                    <span class="btn btn-sm btn-success add-image-button">
+                        <i class="fa fa-image"></i> {% trans %}Add image{% endtrans %}
+                    </span>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-        <div class="image_add_button" id="image_add_button_{{form[name].vars.id}}">
-            <span class="btn btn-success add-image-button">
-                <i class="fa fa-picture"></i> {% trans %}Add image{% endtrans %}
-            </span>
-        </div>
+
 
     {% endspaceless %}
 

@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+<head>
+<title>Holder Testing</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" class="holderjs">
+<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' class="holderjs">
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+<style>
+	body {background: #fff; font-family:Arial,sans-serif;margin:0 auto;min-width:1080px}
+	.thumb {width:300px;height:250px;margin:25px;float:left}
+	.thumb img, .thumb .holderjs, .thumb object {display:block;margin:0 auto}
+	.thumb .caption {padding:10px;text-align:center;margin-top:10px}
+	.thumb.fullpage {float:none;clear:both;width:auto;height:100px;margin:25px}
+	.autosize img {width:100%}
+	.float-holder { overflow:hidden; }
+	.float-holder img { float: left; }
+	.no-bg-size {
+		background-image: url('?no-bg-size/300x200');
+	}
+	#holder1 {background:url('?holder.js/300x200?text=Background%20placeholder&bg=000&fg=fff');width:300px;height:200px}
+</style>
+</head>
+<body>
+<div class="thumb">
+	<img data-src="holder.js/300x200">
+	<div class="caption">
+		 Plain placeholder
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=social">
+	<div class="caption">
+		 Themed placeholder
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?random=yes">
+	<div class="caption">
+		Placeholder with random theme
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?fg=rgb(230, 126, 34)&bg=rgb(44, 62, 80)">
+	<div class="caption">
+		Placeholder with rgb color values
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?bg=rgb(127, 140, 141)&fg=rgba(255, 255, 255, 0.7)">
+	<div class="caption">
+		Placeholder with rgba color values
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?text=заполнитель">
+	<div class="caption">
+		 Placeholder with text
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?bg=EE403D&fg=FFFFFF&text=Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
+	<div class="caption">
+		 Placeholder with lengthy text
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.canvas/300x200?bg=EE403D&fg=FFFFFF&text=Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
+	<div class="caption">
+		Canvas placeholder with lengthy text
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=social&text=Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor, libero quis accumsan fringilla, augue est laoreet orci, consectetur euismod augue nisl sit amet arcu. Fusce ultrices ornare metus in porta. Aenean ac nisl ut tellus dignissim auctor quis id arcu. Vivamus lorem neque, pulvinar non dictum vel, sagittis lobortis odio.">
+	<div class="caption">
+		 Placeholder with very lengthy text
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=social&text=Lorem ipsum   \n   dolor sit amet, consectetur adipiscing elit.">
+	<div class="caption">
+		 Placeholder with custom newline
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=social&text=Lorem ipsum   \n   dolor sit amet, consectetur adipiscing elit.&nowrap=true">
+	<div class="caption">
+		 Placeholder with disabled line wrap
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=industrial&text=The five boxing wizards jump quickly.&align=left">
+	<div class="caption">
+		 Placeholder with left-aligned text
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=lava&text=The five boxing wizards jump quickly.&align=right">
+	<div class="caption">
+		 Placeholder with right-aligned text
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?theme=lava&text=The five boxing wizards jump quickly.&align=right&lineWrap=0.5">
+	<div class="caption">
+		 Placeholder with right-aligned text and custom margin
+	</div>
+</div>
+<div class="thumb">
+	<script>
+	var r = Math.random();
+	if(r > 0.5){
+	document.write('<img data-src="holder.js/200x150" src="missing.jpg" style="width:200px;height:150px;outline:solid 3px red">');
+	}
+	else{
+	document.write('<img data-src="holder.js/200x150" src="image.jpg" style="width:200px;height:150px;outline:solid 3px green" data-exclude>');
+	}
+	</script>
+	<div class="caption">
+		Placeholder with (randomly) missing image source
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/3x2?ratio=yes">
+	<div class="caption">
+		 Placeholder using a ratio
+	</div>
+</div>
+<div class="thumb">
+	<div class="autosize">
+		<img data-src="holder.js/200x133?bg=111&fg=ffff00&auto=yes" onclick="this.src='image.jpg'">
+	</div>
+	<div class="caption">
+		 Auto-sized placeholder
+	</div>
+</div>
+<div class="thumb">
+	<div class="autosize">
+		<img data-src="holder.js/200x133?bg=111&fg=ffff00&auto=yes&textmode=exact">
+	</div>
+	<div class="caption">
+		 Auto-sized placeholder in exact mode
+	</div>
+</div>
+<div class="thumb">
+	<div class="holderjs" id="holder1"></div>
+	<div class="caption">
+		<code>&lt;div&gt;</code> with background placeholder
+	</div>
+</div>
+
+<div class="thumb">
+	<div class="holderjs" data-background-src="?no-bg-size/300x200" style="width:300px;height:200px"></div>
+	<div class="caption">
+		<code>&lt;div&gt;</code> with manually-sized background placeholder
+	</div>
+</div>
+
+<div class="thumb">
+	<div class="holderjs no-bg-size" style="width:300px;height:200px"></div>
+	<div class="caption">
+		<code>&lt;div&gt;</code> with manually-sized background placeholder with CSS
+	</div>
+</div>
+
+<div class="thumb">
+	<div class="holderjs" style="width:300px;height:200px" data-background-src="?holder.js/300x200?bg=ff8362&fg=5e422e"></div>
+	<div class="caption">
+		<code>&lt;div&gt;</code> with <code>data-background-src</code> placeholder
+	</div>
+</div>
+
+<div class="thumb">
+	<div id="thumb1"></div>
+	<div class="caption">
+		 Placeholder added using <code>addImage</code> with a selector
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="custom.holder/150x100?theme=custom&auto=yes" style="width:300px;height:200px">
+	<div class="caption">
+		Auto-sized <code>canvas</code> placeholder with custom domain and theme
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?font=Pacifico&bg=4466ff&fg=fff&text=Pacifico">
+	<div class="caption">
+		 Placeholder using <span style="font-family:Pacifico">Pacifico</span> font
+	</div>
+</div>
+<div class="thumb">
+	<object data-src="holder.js/300x200?font=Pacifico&bg=4466ff&fg=fff&text=Pacifico"></object>
+	<div class="caption">
+		<code>object</code> placeholder using <span style="font-family:Pacifico">Pacifico</span> font
+	</div>
+</div>
+<div class="thumb">
+	<div class="float-holder">
+	<img data-src="holder.js/50x75?theme=sky">
+	<img data-src="holder.js/100x75?theme=vine">
+	<img data-src="holder.js/150x75?theme=lava">
+	</div>
+	<div style="overflow:hidden">
+	<img data-src="holder.js/300x125?theme=industrial" style="float:left">
+	</div>
+<div class="caption">
+		 Placeholders demonstrating adaptive text size
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?font='Font Awesome 5 Free'&text=">
+	<div class="caption">
+		Placeholder using Font Awesome 5 font
+	</div>
+</div>
+<div class="thumb">
+	<object data-src="holder.js/300x200?font='Font Awesome 5 Free'&text="></object>
+	<div class="caption">
+		<code>object</code> placeholder using Font Awesome 5 font
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?size=40">
+	<div class="caption">
+		Placeholder with custom font size
+	</div>
+</div>
+<div class="thumb">
+	<img data-src="holder.js/300x200?size=40pt">
+	<div class="caption">
+		Placeholder with custom font size specified with units
+	</div>
+</div>
+<div class="thumb">
+	<div>
+	<img data-src="holder.js/100px100?outline=yes">
+	<img data-src="holder.canvas/100px100?outline=yes">
+	</div>
+	<div class="caption">
+		SVG and canvas placeholders with outline enabled
+	</div>
+</div>
+<div class="thumb">
+	<div>
+		<img data-src="holder.js/100px100?bg=34495e">
+		<img data-src="holder.js/100px100?bg=f1c40f">
+	</div>
+	<div class="caption">
+		Placeholders with automatic foreground color
+	</div>
+</div>
+<div class="thumb">
+	<div>
+		<img data-src="holder.js/100px100?bg=eeeeee">
+		<img data-src="holder.js/100px100">
+	</div>
+	<div class="caption">
+		Placeholders with automatic and default color
+	</div>
+</div>
+<div class="thumb">
+	<div class="float-holder">
+		<img data-src="holder.js/25px100?bg=000000">
+		<img data-src="holder.js/25px100?bg=222222">
+		<img data-src="holder.js/25px100?bg=444444">
+		<img data-src="holder.js/25px100?bg=666666">
+		<img data-src="holder.js/25px100?bg=888888">
+		<img data-src="holder.js/25px100?bg=aaaaaa">
+		<img data-src="holder.js/25px100?bg=cccccc">
+		<img data-src="holder.js/25px100?bg=ffffff">
+	</div>
+	<div class="caption">
+		Placeholders with automatic foreground color, grayscale
+	</div>
+</div>
+<div class="thumb">
+	<div id="holderAddImageDomTest"></div>
+	<div class="caption">
+		Placeholder added using <code>addImage</code> with a DOM node
+	</div>
+</div>
+<div class="thumb">
+	<img src="holder.js/300x200?auto=yes&bg=00AEEF&text=Add image">
+	<div class="caption">
+		Placeholder that triggers an error due to an invalid bg color
+	</div>
+</div>
+<div class="thumb">
+	<img src="holder.js/300x200?text=Holder?">
+	<div class="caption">
+		Placeholder that has a ? in text
+	</div>
+</div>
+<div class="fullpage thumb">
+	<img data-src="holder.js/90px80p?theme=sky">
+	<div class="caption">
+		 Full-page fluid placeholder
+	</div>
+</div>
+<div class="fullpage thumb">
+	<object data-src="holder.js/90px80p?theme=vine"></object>
+	<div class="caption">
+		 Full-page fluid <code>object</code> placeholder
+	</div>
+</div>
+<div class="fullpage thumb">
+	<img data-src="holder.js/90px80p?theme=lava&textmode=literal">
+	<div class="caption">
+		 Full-page fluid placeholder in literal mode
+	</div>
+</div>
+<div class="fullpage thumb">
+	<img data-src="holder.js/90px80p?theme=sky&text=Placeholder dimensions: holder_dimensions">
+	<div class="caption">
+		 Full-page fluid placeholder with embedded dimension text
+	</div>
+</div>
+<div class="fullpage thumb">
+	<img data-src="holder.js/90px80" id="toggleResize">
+	<div class="caption">
+		 Full-page fluid placeholder that toggles resizable updates when clicked
+	</div>
+</div>
+<div class="fullpage thumb">
+	<div id="invisible" style="display:none;width:90%;height:80%;margin:0 auto">
+		<img data-src="holder.js/100px100p?theme=sky">
+	</div>
+	<div class="caption">
+		Fluid placeholder inside invisible parent element.
+	</div>
+</div>
+<div class="fullpage thumb">
+	<img data-src="holder.js/90px80p?theme=sky&outline=yes">
+	<div class="caption">
+		 Full-page fluid placeholder with outline enabled
+	</div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../holder.js"></script>
+<!--
+<script src="require.js" data-main="test.js"></script>
+-->
+<script>
+
+Holder.run({'renderer':'html'});
+
+Holder.addImage("holder.js/300x200?theme=sky", "#thumb1");
+
+Holder.run();
+
+Holder.addTheme("custom", {foreground: "#fff", background: "#000", size: 15}).run({
+	domain: "custom.holder",
+	renderer: "canvas"
+});
+
+Holder.addImage("holder.js/300x200?theme=social&text=Added using addImage with a DOM node", document.querySelector('#holderAddImageDomTest')).run();
+
+Holder.run({
+	domain: "holder.canvas",
+	renderer: "canvas"
+});
+
+Holder.run({
+	domain: "no-bg-size",
+	noBackgroundSize: true
+});
+
+$(function () {
+	$("#invisible").show();
+
+	var resize = true;
+	$("#toggleResize").on("click", function () {
+		resize = !resize;
+		Holder.setResizeUpdate($(this).get(0), resize);
+	});
+});
+</script>
+</body>
+</html>

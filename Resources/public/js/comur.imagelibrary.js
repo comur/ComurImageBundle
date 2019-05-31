@@ -64,6 +64,8 @@ function initializeImageManager(id, options, cb){
         dataType: 'json',
         formData: {'config': JSON.stringify(options) },
         dropZone: $('#image_upload_drop_zone'),
+        maxFileSize: 1024,
+        // acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         done: function (e, data) {
             // console.log('uploaded');
             if(data.result['image_upload_file'][0].error){
@@ -87,6 +89,12 @@ function initializeImageManager(id, options, cb){
                 'width',
                 progress + '%'
             );
+        },
+        fail: function (e, data) {
+            console.log(e, data);
+            // data.errorThrown
+            // data.textStatus;
+            // data.jqXHR;
         }
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
@@ -127,7 +135,7 @@ function initJCrop(id, options){
         var now = new Date().getTime();
         $('#image_preview img').remove();
         $('#image_preview').html('<img src="/'+options.uploadConfig.webDir + '/'+$('#selected_image').val()+'?'+now+'" id="image_preview_image"/>');
-        $('#image_preview img').load(function(){
+        $($('#image_preview img')[0]).on('load', function(){
 
             
             $('#image_preview img').Jcrop({
@@ -248,7 +256,7 @@ function addImageToGallery(filename, id, thumb, options)
     var nb = $('#gallery_preview_'+id+' input').length;
     var name = $('#gallery_preview_'+id).data('name');
     $('#gallery_preview_'+id).append('<div class="gallery-image-container" data-image="'+filename+'">' +
-        '<span class="remove-image"><i class="glyphicon glyphicon-remove"></i></span>' +
+        '<span class="remove-image"><i class="fa fa-remove"></i></span>' +
         '<span class="gallery-image-helper"></span>' +
         '<input type="text" id="'+id+'_'+nb+'" name="'+name+'['+nb+']" style="padding:0; border: 0; margin: 0; opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;" value="'+filename+'">' +
         '<img src="/'+options.uploadConfig.webDir + '/' + thumb+'?'+ new Date().getTime()+'"/>' +

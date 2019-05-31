@@ -1,0 +1,27 @@
+{
+  "name": "ComurImageBundle",
+  "homepage": "https://github.com/comur/ComurImageBundle",
+  "authors": [
+    "Can OMUR <omur.can@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Resources/public/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "blueimp-file-upload": "^9.31.0",
+    "Jcrop": "jcrop#0.9.15",
+    "jquery": "^3.4.1",
+    "holderjs": "^2.9.6",
+    "bootstrap": "^4.3.1",
+    "Font-Awesome": "FortAwesome/Font-Awesome#^5.8.2"
+  }
+}
