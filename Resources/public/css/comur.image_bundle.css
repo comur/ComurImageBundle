@@ -123,9 +123,19 @@
     box-shadow: 0px 0px 15px #000;
 }
 
+/* Fixes #33*/
+/*
 #image_upload_modal .modal-dialog
 {
     width: 850px;
+}
+*/
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 800px;
+        margin: 30px auto;
+        max-width: 80%;
+    }
 }
 
 #image_upload_modal .tab-content
