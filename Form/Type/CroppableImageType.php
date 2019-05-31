@@ -25,7 +25,7 @@ class CroppableImageType extends AbstractType
         'uploadUrl' => null,
         'webDir' => null,
         'fileExt' => '*.jpg;*.gif;*.png;*.jpeg',
-        'maxFileSize' => 10,
+        'maxFileSize' => 50,
         'libraryDir' => null,
         'libraryRoute' => 'comur_api_image_library',
         'showLibrary' => true,

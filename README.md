@@ -269,7 +269,7 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
 	            'uploadUrl' => $myEntity->getUploadRootDir(),       // required - see explanation below (you can also put just a dir path)
 	            'webDir' => $myEntity->getUploadDir(),				// required - see explanation below (you can also put just a dir path)
 	            'fileExt' => '*.jpg;*.gif;*.png;*.jpeg', 	//optional
-	            'maxFileSize' => 10, //optional
+	            'maxFileSize' => 50, //optional
 	            'libraryDir' => null, 						//optional
 	            'libraryRoute' => 'comur_api_image_library', //optional
 	            'showLibrary' => true, 						//optional
@@ -444,7 +444,7 @@ Permitted image extensions.
 
 Permitted maximum image weight in MB.
 
-**Default value:** 10 (10Mb)
+**Default value:** 50 (50Mb)
 
 ### libraryDir (optional) ###
 
