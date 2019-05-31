@@ -134,6 +134,10 @@ function destroyImageManager(){
     destroyJCrop();
     $('#image_crop_go_now').unbind('click');
     $('#image_preview').html('<p>'+comurImageTranslations['Please select or upload an image']+'</p>');
+    $('#image_file_upload_progress .progress-bar').css(
+      'width',
+      '0%'
+    );
     // $('#image_crop_cancel').addClass('hidden');
     reinitModal();
 }

@@ -30,7 +30,7 @@ class ComurImageExtension extends Extension
         $container->setParameter('comur_image.gallery_dir', $config['config']['gallery_dir']);
         $container->setParameter('comur_image.media_lib_thumb_size', $config['config']['media_lib_thumb_size']);
         $container->setParameter('comur_image.gallery_thumb_size', $config['config']['gallery_thumb_size']);
-        $container->setParameter('comur_image.web_dirname', $config['config']['web_dirname']);
+        $container->setParameter('comur_image.public_dir', $config['config']['public_dir']);
         $container->setParameter('comur_image.translation_domain', $config['config']['translation_domain']);
     }
 }

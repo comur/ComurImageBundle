@@ -22,7 +22,8 @@ class CroppableImageType extends AbstractType
 
     static $uploadConfig = array(
         'uploadRoute' => 'comur_api_upload',
-        'uploadUrl' => null,
+        'uploadUrl' => null, // DEPRECATED
+        'uploadDir' => null,
         'webDir' => null,
         'fileExt' => '*.jpg;*.gif;*.png;*.jpeg',
         'maxFileSize' => 50,
@@ -87,13 +88,29 @@ class CroppableImageType extends AbstractType
             $config = array_merge($uploadConfig, $value);
 
             if ($isGallery) {
-                $config['uploadUrl'] = $config['uploadUrl'] . '/' . $galleryDir;
+                if ($config['uploadDir']) {
+                    $config['uploadDir'] = $config['uploadDir'] . '/' . $galleryDir;
+                }
+                else {
+                    /**
+                     * @deprecated since comur/image-bundle 2.0.3 due to security issue, to be removed in 2.1. Use uploadDir instead.
+                     */
+                    $config['uploadUrl'] = $config['uploadUrl'] . '/' . $galleryDir;
+                }
                 $config['webDir'] = $config['webDir'] . '/' . $galleryDir;
                 $config['saveOriginal'] = false;
             }
 
             if (!isset($config['libraryDir'])) {
-                $config['libraryDir'] = $config['uploadUrl'];
+                if ($config['uploadDir']) {
+                    $config['libraryDir'] = $config['uploadDir'];
+                }
+                else {
+                    /**
+                     * @deprecated since comur/image-bundle 2.0.3 due to security issue, to be removed in 2.1. Use uploadDir instead.
+                     */
+                    $config['libraryDir'] = $config['uploadUrl'];
+                }
             }
             // if($config['saveOriginal']){
             //     $options['compound']=true;

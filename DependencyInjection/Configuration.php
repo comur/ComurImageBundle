@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('gallery_dir')->defaultValue('gallery')->cannotBeEmpty()->end()
                         ->scalarNode('media_lib_thumb_size')->defaultValue(150)->cannotBeEmpty()->end()
                         ->scalarNode('gallery_thumb_size')->defaultValue(150)->cannotBeEmpty()->end()
-                        ->scalarNode('web_dirname')->defaultValue('web')->cannotBeEmpty()->end()
+                        ->scalarNode('public_dir')->defaultValue('%kernel.project_dir%/public/uploads')->cannotBeEmpty()->end()
                         ->scalarNode('translation_domain')->defaultValue('ComurImageBundle')->cannotBeEmpty()->end()
                     ->end()
                 ->end()

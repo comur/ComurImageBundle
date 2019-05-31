@@ -27,14 +27,22 @@ class UploadController extends Controller
 
         $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
         $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
-        $uploadUrl = $config['uploadConfig']['uploadUrl'];
+        if (isset($config['uploadConfig']['uploadDir'])) {
+            $uploadUrl = $this->container->getParameter('comur_image.public_dir') . '/' . $config['uploadConfig']['uploadDir'];
+        } else {
+            // For backward compatibility
+            /**
+             * @deprecated since comur/image-bundle 2.0.3 due to security issue, to be removed in 2.1. Use uploadDir instead.
+             */
+            $uploadUrl = $config['uploadConfig']['uploadUrl'];
+        }
         $uploadUrl = substr($uploadUrl, -strlen('/')) === '/' ? $uploadUrl : $uploadUrl . '/';
 
         // We must use a streamed response because the UploadHandler echoes directly
         $response = new StreamedResponse();
 
-        $webDir = $config['uploadConfig']['webDir'];
-        $webDir = substr($webDir, -strlen('/')) === '/' ? $webDir : $webDir . '/';
+//        $webDir = $config['uploadConfig']['webDir'];
+//        $webDir = substr($webDir, -strlen('/')) === '/' ? $webDir : $webDir . '/';
         if($config['uploadConfig']['generateFilename']) {
             $filename = sha1(uniqid(mt_rand(), true));
         }
@@ -137,8 +145,16 @@ class UploadController extends Controller
         $forceResize = $config['cropConfig']['forceResize'];
         // $disableCrop = $config['cropConfig']['disableCrop'];
 
-        $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
-        $webDir = urldecode($config['uploadConfig']['webDir']);
+        if (isset($config['uploadConfig']['uploadDir'])) {
+            $uploadUrl = $this->container->getParameter('comur_image.public_dir') . '/' . urldecode($config['uploadConfig']['uploadDir']);
+        } else {
+            // For backward compatibility
+            /**
+             * @deprecated since comur/image-bundle 2.0.3 due to security issue, to be removed in 2.1. Use uploadDir instead.
+             */
+            $uploadUrl = urldecode($config['uploadConfig']['uploadUrl']);
+        }
+
 
         $imageName = $params['imageName'];
 
@@ -299,11 +315,13 @@ class UploadController extends Controller
 
         $result['thumbsDir'] = $this->container->getParameter('comur_image.thumbs_dir');
 
-        if (!is_dir($request->request->get('dir'))) {
-            mkdir($request->request->get('dir').'/', 0755, true);
+        $libDir = $this->container->getParameter('comur_image.public_dir') . '/' .  $request->request->get('dir');
+
+        if (!is_dir($libDir)) {
+            mkdir($libDir.'/', 0755, true);
         }
 
-        foreach ($finder->in($request->request->get('dir'))->files() as $file) {
+        foreach ($finder->in($libDir)->files() as $file) {
             $files[] = $file->getFilename();
         }
         $result['files'] = $files;

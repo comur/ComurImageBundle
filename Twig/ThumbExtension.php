@@ -9,12 +9,12 @@ class ThumbExtension extends \Twig_Extension implements \Twig_Extension_GlobalsI
     protected $webDir;
     protected $transDomain;
 
-    public function __construct($croppedDir, $thumbsDir, $container, $webDirName, $transDomain, $galleryDir)
+    public function __construct($croppedDir, $thumbsDir, $webDir, $transDomain, $galleryDir)
     {
         $this->croppedDir = $croppedDir;
         $this->thumbsDir = $thumbsDir;
         $this->transDomain = $transDomain;
-        $this->webDir = $container->get('kernel')->getRootdir().'/../' . $webDirName;
+        $this->webDir = $webDir;
         $this->galleryDir = $galleryDir;
     }
 
