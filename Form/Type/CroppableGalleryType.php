@@ -38,10 +38,10 @@ class CroppableGalleryType extends CroppableImageType
             'allow_delete' => true,
             'entry_options' => array(
                 'attr' => array_merge(
+                    isset($options['attr']) ? $options['attr'] : array(),
                     array(
-                        'style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;padding: 0; position: absolute;' . (isset($options['attr']) && isset($options['attr']['style']) ? $options['attr']['style'] : '')
-                    ),
-                    isset($options['attr']) ? $options['attr'] : array()
+                        'style' => 'opacity: 0;width: 0; max-width: 0; height: 0; max-height: 0;padding: 0; position: absolute;'
+                    )
                 )
             )
         ));

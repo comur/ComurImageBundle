@@ -77,7 +77,10 @@ function initializeImageManager(id, options, cb){
             }
             if(uploadErrors.length > 0) {
                 $('#image_upload_widget_error').html(uploadErrors.join("<br/>"));
+                $('#image_upload_widget_error').parent().show();
             } else {
+                $('#image_upload_widget_error').html('');
+                $('#image_upload_widget_error').parent().hide();
                 data.submit();
             }
         },
