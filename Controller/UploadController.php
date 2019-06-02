@@ -330,6 +330,27 @@ class UploadController extends Controller
         return new Response(json_encode($result));
     }
 
+    private function isGifAnimated($filename) {
+        if(!($fh = @fopen($filename, 'rb')))
+            return false;
+        $count = 0;
+        //an animated gif contains multiple "frames", with each frame having a
+        //header made up of:
+        // * a static 4-byte sequence (\x00\x21\xF9\x04)
+        // * 4 variable bytes
+        // * a static 2-byte sequence (\x00\x2C) (some variants may use \x00\x21 ?)
+
+        // We read through the file til we reach the end of the file, or we've found
+        // at least 2 frame headers
+        while(!feof($fh) && $count < 2) {
+            $chunk = fread($fh, 1024 * 100); //read 100kb at a time
+            $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches);
+        }
+
+        fclose($fh);
+        return $count > 1;
+    }
+
     /**
      * Crops or resizes image and writes it on disk
      */
@@ -345,9 +366,25 @@ class UploadController extends Controller
                 $imageQuality = 100;
                 break;
             case 'gif':
-                $srcFunc = 'imagecreatefromgif';
-                $writeFunc = 'imagegif';
-                $imageQuality = null;
+                if ($this->isGifAnimated($imgSrc) && extension_loaded('imagick')) {
+                    $image = new \Imagick($imgSrc);
+
+                    $image = $image->coalesceImages();
+
+                    foreach ($image as $frame) {
+                        $frame->cropImage($srcW, $srcH, $srcX, $srcY);
+                        $frame->thumbnailImage($destW, $destH);
+                        $frame->setImagePage($destW, $destH, $destX, $destY);
+                    }
+
+                    $image = $image->deconstructImages();
+                    $image->writeImages($destSrc, true);
+                    return false;
+                } else {
+                    $srcFunc = 'imagecreatefromgif';
+                    $writeFunc = 'imagegif';
+                    $imageQuality = null;
+                }
                 break;
             case 'png':
                 $srcFunc = 'imagecreatefrompng';

@@ -33,6 +33,8 @@ If this bundle helps you reduce time to develop, you can pay me a cup of coffee 
 
 :warning: **I won't maintain Symfony 2 anymore, I will only merge PR on 1.2 branch for compatibility with SF2. If you need something you can always create a PR and I will merge it.**
 
+:warning: **Animated gif cropping is only available with imagick**
+
 Screen shots
 ------------
 
