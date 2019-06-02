@@ -88,16 +88,26 @@ function initializeImageManager(id, options, cb){
             // console.log('uploaded');
             if(data.result['image_upload_file'][0].error){
                 $('#image_upload_widget_error').text(data.result['image_upload_file'][0].error);
-                $('#image_upload_widget_error').parent().removeClass('hidden');
+                $('#image_upload_widget_error').parent().show();
             }
             else{
                 $('#image_upload_widget_error').text('');
-                $('#image_upload_widget_error').parent().addClass('hidden');
+                $('#image_upload_widget_error').parent().hide();
                 // console.log(data.result, data.result['image_upload_file']);
                 // $('#image_preview img').remove();
                 // $('#image_preview').html('<img src="/'+data.result['image_upload_file'][0].url+'" id="image_preview_image"/>');
                 $('#selected_image').val(data.result['image_upload_file'][0].name); 
-                initJCrop(id, options);
+                if (options.cropConfig.disable) {
+                    $('#'+id).val(data.result['image_upload_file'][0].name);
+                    $('#image_preview_image_'+id).html('<img src="'+options.uploadConfig.webDir + '/' + data.result['image_upload_file'][0].name +'?'+ new Date().getTime()+'" id="'+id+'_preview"/>');
+                    reinitModal();
+                    cb({
+                        previewSrc: '/' + options.uploadConfig.webDir + '/' + data.result['image_upload_file'][0].name +'?'+ new Date().getTime(),
+                        filename: data.result['image_upload_file'][0].name
+                    });
+                } else {
+                    initJCrop(id, options);
+                }
             }
             
         },

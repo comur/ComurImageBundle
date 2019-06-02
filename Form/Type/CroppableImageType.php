@@ -41,7 +41,8 @@ class CroppableImageType extends AbstractType
         'aspectRatio' => true,
         'cropRoute' => 'comur_api_crop',
         'forceResize' => false,
-        'thumbs' => null
+        'thumbs' => null,
+        'disable' => false
     );
 
     // public function getParent()

@@ -937,7 +937,8 @@ class UploadHandler
     }
 
     protected function get_image_size($file_path) {
-        if ($this->options['image_library']) {
+        // Disabled cause not works with animated gifs ans getimagesize works well with everything
+        if (false && $this->options['image_library']) {
             if (extension_loaded('imagick')) {
                 $image = new \Imagick();
                 try {

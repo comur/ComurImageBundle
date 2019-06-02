@@ -279,6 +279,7 @@ Use widget in your forms (works with SonataAdmin too) to create a simple image f
               'generateFilename' => true      //optional
           ),
           'cropConfig' => array(
+              'disable' => false,      //optional
               'minWidth' => 588,
               'minHeight' => 300,
               'aspectRatio' => true,         //optional
@@ -412,6 +413,10 @@ Route called to send uploaded file. It's recommended to not change this paramete
 
 ### uploadDir (required) ###
 
+**Since 2.0.3**
+
+**Replaces uploadUrl removed because a security issue (see #80)**
+
 Public dir relative path to directory where put uploaded image. I recommend you to create a function in your entity and call it like it's shown in the example:
 
 ```PHP
@@ -482,6 +487,14 @@ This parameter is used to generate an uniq file name. Setted to false, it will k
 **Default value:** true
 
 ## cropConfig ##
+
+### disable (optional) ###
+
+**Since 2.0.4**
+
+Disables cropping feature and saves directly original image
+
+**Default value:** false
 
 ### minWidth (optional) ###
 
