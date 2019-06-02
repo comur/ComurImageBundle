@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.4](https://github.com/comur/ComurImageBundle/tree/2.0.4) (2019-05-31)
+[Full Changelog](https://github.com/comur/ComurImageBundle/compare/2.0.3...2.0.4)
+
+**Implemented enhancements:**
+
+- Animated GIF support [\#56](https://github.com/comur/ComurImageBundle/issues/56)
+- add disable crop option [\#48](https://github.com/comur/ComurImageBundle/issues/48)
+
 ## [2.0.3](https://github.com/comur/ComurImageBundle/tree/2.0.3) (2019-05-31)
 [Full Changelog](https://github.com/comur/ComurImageBundle/compare/2.0.2...2.0.3)
 

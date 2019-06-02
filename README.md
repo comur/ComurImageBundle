@@ -35,6 +35,11 @@ If this bundle helps you reduce time to develop, you can pay me a cup of coffee 
 
 :warning: **Animated gif cropping is only available with imagick**
 
+Changelog
+---------
+
+Please see on [CHANGELOG.md](CHANGELOG.md)
+
 Screen shots
 ------------
 
