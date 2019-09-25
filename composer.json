@@ -1,7 +1,7 @@
 {
     "name": "comur/image-bundle",
     "type": "symfony-bundle",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "description": "A bundle providing fields for image upload with jquery upload and image cropping with jcrop for symfony2",
     "keywords": ["Form Type", "image", "upload", "crop", "jcrop", "jquery upload"],
     "homepage": "https://github.com/comur/ComurImageBundle",
