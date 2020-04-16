@@ -115,6 +115,22 @@ return [
         ];
 ```
 
+### Step 3: Create routing files
+ 
+Two of the bundles provides routes, which must be enabled by creating these files:
+
+```yaml
+# config/routes/fos_js_routing.yaml
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing-sf4.xml"
+```
+```yaml
+# config/routes/comur_image.yaml
+comur_image:
+    resource: "@ComurImageBundle/Resources/config/routing.yml"
+    prefix:   /
+```
+ 
 
 Applications that don't use Symfony Flex
 ----------------------------------------
