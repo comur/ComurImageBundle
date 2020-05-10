@@ -20,11 +20,11 @@
         "symfony/validator": "~3.4 || ~4.2",
         "symfony/routing": "~3.4 || ~4.2",
         "symfony/config": "~3.4 || ~4.2",
+        "symfony/translation": "^3.4 || ~4.2",
         "symfony/twig-bridge": "~3.4 || ~4.2",
         "twig/twig": "~1.35 || ~2.5",
         "twig/extensions": "~1.0",
-        "friendsofsymfony/jsrouting-bundle": "@stable",
-	    "jms/translation-bundle": "^1.2.2"
+        "friendsofsymfony/jsrouting-bundle": "@stable"
     },
     "autoload": {
         "psr-4": {

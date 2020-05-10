@@ -1,5 +1,11 @@
 # Change Log
 
+## dev-master
+
+- Removed dependency on JMS Translation Bundle. If you have no other need for this bundle it can be removed by running 
+`composer remove jms/translation-bundle` and taking the relevant line out of `config/bundles.php` (or 
+`app/AppKernel.php` for projects that do not use Flex)
+
 ## [2.0.4](https://github.com/comur/ComurImageBundle/tree/2.0.4) (2019-05-31)
 [Full Changelog](https://github.com/comur/ComurImageBundle/compare/2.0.3...2.0.4)
 
