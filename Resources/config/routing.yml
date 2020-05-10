@@ -1,17 +1,17 @@
 comur_api_upload:
     path: /upload #/{paramName}/{uploadUrl}/{webDir}/{minWidth}/{minHeight}
-    defaults: {_controller: "ComurImageBundle:Upload:uploadImage"}
+    defaults: {_controller: \Comur\ImageBundle\Controller\UploadController::uploadImageAction }
     options:
         expose: true
 
 comur_api_crop:
     path: /crop #/{uploadUrl}/{webDir}/{imageName}/{x}/{y}/{w}/{h}/{tarW}/{tarH}
-    defaults: {_controller: "ComurImageBundle:Upload:cropImage"}
+    defaults: {_controller: \Comur\ImageBundle\Controller\UploadController::cropImageAction }
     options:
         expose: true
 
 comur_api_image_library:
     path: /image-library
-    defaults: {_controller: "ComurImageBundle:Upload:getLibraryImages"}
+    defaults: {_controller: \Comur\ImageBundle\Controller\UploadController::getLibraryImagesAction }
     options:
         expose: true
