@@ -21,7 +21,7 @@
         "symfony/routing": "~3.4 || ~4.2",
         "symfony/config": "~3.4 || ~4.2",
         "symfony/twig-bridge": "~3.4 || ~4.2",
-        "twig/twig": "~1.35 || ~2.5",
+        "twig/twig": "^1.41 || ^2.10",
         "twig/extensions": "~1.0",
         "friendsofsymfony/jsrouting-bundle": "@stable",
 	    "jms/translation-bundle": "^1.2.2"
