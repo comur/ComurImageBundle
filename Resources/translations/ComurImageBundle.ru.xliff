@@ -130,6 +130,10 @@
         <source>Close</source>
         <target>Закрыть</target>
       </trans-unit>
+      <trans-unit id="bbfa773e5a63a5ea58c9b6207e608ca0120e512a" resname="Cancel">
+        <source>Cancel</source>
+        <target>отменить</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
