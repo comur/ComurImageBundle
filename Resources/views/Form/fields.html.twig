@@ -1,7 +1,7 @@
 {% block comur_image_widget %}
     {% trans_default_domain comur_translation_domain %}
     {# trans_default_domain 'ComurImageBundle' #}
-    {% spaceless %}
+    {% apply spaceless %}
         {# block('form_widget_simple') #}
         {{ form_widget(form[name])}}
         {% if options.uploadConfig.saveOriginal %}
@@ -35,7 +35,7 @@
 
             </div>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 
     <script>
         $(document).ready(function(){
@@ -80,7 +80,7 @@
     {% trans_default_domain comur_translation_domain %}
     {# trans_default_domain 'ComurImageBundle' #}
 
-    {% spaceless %}
+    {% apply spaceless %}
         {{- form_errors(form) -}}
         <div class="field-error clearfix hidden">
             <div id="{{form[name].vars.id}}_widget_error" class="alert alert-danger span6">
@@ -108,7 +108,7 @@
         </div>
 
 
-    {% endspaceless %}
+    {% endapply %}
 
     <script>
 
