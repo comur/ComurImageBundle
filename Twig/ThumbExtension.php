@@ -2,9 +2,10 @@
 namespace Comur\ImageBundle\Twig;
 
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
 
-class ThumbExtension extends AbstractExtension
+class ThumbExtension extends AbstractExtension implements GlobalsInterface
 {
     protected $croppedDir;
     protected $thumbsDir;
@@ -65,7 +66,7 @@ class ThumbExtension extends AbstractExtension
         return 'comur_thumb_extension';
     }
 
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return array('comur_translation_domain' => $this->transDomain);
     }
