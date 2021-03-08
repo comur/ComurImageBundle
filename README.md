@@ -185,22 +185,22 @@ class AppKernel extends Kernel
     comur_image:
         resource: "@ComurImageBundle/Resources/config/routing.yml"
         prefix:   /
-    ```
+```
  
 ### Step 4: Add Modal template after body tag of your layout:
   
-  ```twig
+```twig
   <body>
-  {% include "ComurImageBundle:Form:croppable_image_modal.html.twig"%}
+  {% include "ComurImage/Form/croppable_image_modal.html.twig"%}
   …
   </body>
 
-  ```
+```
 
 **Note:** This template includes many script and styles including jquery and bootstrap. You can use following parameters to avoid jquery and/or bootstrap being included:
 
 ```twig
-{% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_fontawesome': false, 'include_jquery': false, 'include_bootstrap': false, 'bootstrap_version': 4} %}
+{% include "ComurImage/Form/croppable_image_modal.html.twig" with {'include_fontawesome': false, 'include_jquery': false, 'include_bootstrap': false, 'bootstrap_version': 4} %}
 ```
   
 :warning: **bootstrap_version** is used for bootstrap 4 compatibility issues. If you include bootstrap using bundle, it will use bootstrap 4 and set it to 4 automatically. If you need to use bootstrap 3, remove bootstrap_version parameter or put 3. 
@@ -224,7 +224,7 @@ Configuration
       cropped_image_dir: 'cropped'
       thumbs_dir: 'thumbnails'
       media_lib_thumb_size: 150
-      public_dir: '%kernel.project_dir%/public/uploads'
+      public_dir: '%kernel.project_dir%/public'
       translation_domain: 'ComurImageBundle'
       gallery_thumb_size: 150
       gallery_dir: 'gallery'
