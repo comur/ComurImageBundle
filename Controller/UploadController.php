@@ -115,7 +115,7 @@ class UploadController extends AbstractController
             new UploadHandler($handlerConfig, true, $errorMessages);
         });
 
-        return $response->send();
+        return $response;
     }
 
     /**
