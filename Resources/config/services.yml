@@ -17,3 +17,8 @@ services:
         tags:
             - { name: twig.extension }
         arguments: ["%comur_image.cropped_image_dir%", "%comur_image.thumbs_dir%", "%comur_image.public_dir%", "%comur_image.translation_domain%", "%comur_image.gallery_dir%"]
+
+    Comur\ImageBundle\Controller\:
+        autowire: true
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
